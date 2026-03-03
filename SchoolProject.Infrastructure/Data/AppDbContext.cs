@@ -1,4 +1,4 @@
-namespace SchoolProject.Infrustructure.Data;
+namespace SchoolProject.Infrastructure.Data;
 
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
