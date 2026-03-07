@@ -16,6 +16,9 @@ public class StudentRepository : IStudentRepository
 
     public async Task<List<Student>> GetAllStudentsAsync()
     {
-        return await _context.Students.ToListAsync();
+        return await
+         _context.Students
+            .Include(s => s.Department)
+            .ToListAsync();
     }
 }

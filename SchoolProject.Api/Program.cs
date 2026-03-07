@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Core;
 using SchoolProject.Infrastructure;
-using SchoolProject.Infrastructure.Data;
 using SchoolProject.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,14 +13,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-// Todo: Move this to the infrastructure module
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext")));
-
-
-builder.Services.AddInfrastructureDependencies();
-builder.Services.AddCoreDependencies();
-builder.Services.AddServiceDependencies();
+builder.Services.AddInfrastructureDependencies(builder.Configuration)
+    .AddCoreDependencies()
+    .AddServiceDependencies();
 
 var app = builder.Build();
 
