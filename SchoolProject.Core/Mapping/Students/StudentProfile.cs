@@ -6,7 +6,8 @@ public partial class StudentProfile : Profile
 {
     public StudentProfile()
     {
-        MapStudentToStudentDtoForListMapping();
+        MapStudentToStudentDtoForList();
+        MapStudentToSingleStudentDto();
     }
 
 

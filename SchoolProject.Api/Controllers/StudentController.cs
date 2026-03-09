@@ -19,4 +19,11 @@ public class StudentController : ControllerBase
         var students = await _mediator.Send(new GetAllStudentsQuery());
         return Ok(students);
     }
+
+    [HttpGet("Student/{id}")]
+    public async Task<IActionResult> GetStudentById(int id)
+    {
+        var students = await _mediator.Send(new GetSingleStudentQuery() { Id = id });
+        return Ok(students);
+    }
 }
