@@ -7,4 +7,6 @@ public interface IStudentService
     public Task<List<Student>> GetAllStudentsAsync();
 
     public Task<Student> GetStudentByIdAsync(int id);
+
+    public Task<bool> AddStudentAsync(Student student);
 }
