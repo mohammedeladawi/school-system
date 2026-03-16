@@ -7,13 +7,14 @@ public class ResponseHandler
 
     }
 
-    public Response<T> Deleted<T>()
+    public Response<T> Deleted<T>(string message = null)
     {
         return new Response<T>()
         {
             StatusCode = System.Net.HttpStatusCode.OK,
             Succeeded = true,
-            Message = "Deleted Successfully"
+            Message = message == null ? "Deleted Successfully" : message
+
         };
     }
 

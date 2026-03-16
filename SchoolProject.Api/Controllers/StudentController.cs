@@ -29,4 +29,18 @@ public class StudentController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpPut(Router.Student.Edit)]
+    public async Task<IActionResult> EditStudent([FromBody] EditStudentCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
+    [HttpDelete(Router.Student.Delete)]
+    public async Task<IActionResult> DeleteStudent(int id)
+    {
+        var result = await Mediator.Send(new DeleteStudentCommand(id));
+        return NewResult(result);
+    }
 }

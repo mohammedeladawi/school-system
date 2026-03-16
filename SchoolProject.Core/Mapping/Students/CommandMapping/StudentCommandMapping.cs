@@ -10,4 +10,9 @@ public partial class StudentProfile
     {
         CreateMap<AddStudentCommand, Student>();
     }
+
+    private void MapEditStudentCommandToStudent()
+    {
+        CreateMap<EditStudentCommand, Student>();
+    }
 }

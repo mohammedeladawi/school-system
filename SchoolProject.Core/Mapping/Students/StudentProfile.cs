@@ -9,6 +9,7 @@ public partial class StudentProfile : Profile
         MapStudentToStudentDtoForList();
         MapStudentToSingleStudentDto();
         MapAddStudentCommandToStudent();
+        MapEditStudentCommandToStudent();
     }
 
 

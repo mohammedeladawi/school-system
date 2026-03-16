@@ -12,5 +12,10 @@ public static class Router
         public const string GetById = Base + "/Student/{id}";
 
         public const string Add = Base + "/Student/Add";
+
+        public const string Edit = Base + "/Student/Edit";
+
+        public const string Delete = Base + "/Student/{id}";
+
     }
 }

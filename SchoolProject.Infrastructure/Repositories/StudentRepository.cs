@@ -22,4 +22,6 @@ public class StudentRepository :
          _students.Include(s => s.Department)
             .ToListAsync();
     }
+
+
 }
