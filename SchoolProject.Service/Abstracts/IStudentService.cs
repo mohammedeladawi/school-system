@@ -14,5 +14,9 @@ public interface IStudentService
 
     public Task<bool> DeleteByIdAsync(int id);
 
+    public Task<List<Student>> GetPaginatedStudentsAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null);
+
+    public Task<int> GetTotalStudentsCountAsync();
+
 
 }

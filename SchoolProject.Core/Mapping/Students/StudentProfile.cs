@@ -10,6 +10,7 @@ public partial class StudentProfile : Profile
         MapStudentToSingleStudentDto();
         MapAddStudentCommandToStudent();
         MapEditStudentCommandToStudent();
+        MapStudentToPaginatedStudentDto();
     }
 
 

@@ -16,6 +16,13 @@ public class StudentController : AppControllerBase
         return NewResult(students);
     }
 
+    [HttpGet(Router.Student.PaginatedList)]
+    public async Task<IActionResult> GetPaginatedStudents([FromQuery] GetPaginatedStudentsQuery query)
+    {
+        var paginatedStudents = await Mediator.Send(query);
+        return Ok(paginatedStudents);
+    }
+
     [HttpGet(Router.Student.GetById)]
     public async Task<IActionResult> GetStudentById(int id)
     {

@@ -107,5 +107,10 @@ public class GenericRepositoryAsync<T> : IGenericRepositoryAsync<T> where T : cl
         _dbContext.Set<T>().UpdateRange(entities);
         await _dbContext.SaveChangesAsync();
     }
+
+    public virtual async Task<int> GetTotalCountAsync()
+    {
+        return await _dbContext.Set<T>().CountAsync();
+    }
     #endregion
 }

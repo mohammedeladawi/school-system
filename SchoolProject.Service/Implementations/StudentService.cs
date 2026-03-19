@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
@@ -31,33 +32,16 @@ public class StudentService : IStudentService
 
     public async Task<bool> AddStudentAsync(Student student)
     {
-        if (await _IsNameExistsAsync(student.Name)) return false;
+        if (await _studentRepository.IsNameExistAsync(student.Name)) return false;
 
-        // Add the student to the database
         await _studentRepository.AddAsync(student);
 
         return true;
     }
 
-    private async Task<bool> _IsNameExistsAsync(string name)
-    {
-        var isExist = await _studentRepository.GetTableNoTracking()
-                            .Where(s => s.Name == name)
-                            .AnyAsync();
-        return isExist;
-    }
-
-    private async Task<bool> _IsNameExistsExceptIdAsync(string name, int id)
-    {
-        var isExist = await _studentRepository.GetTableNoTracking()
-                            .Where(s => s.Name == name && s.Id != id)
-                            .AnyAsync();
-        return isExist;
-    }
-
     public async Task<bool> EditStudentAsync(Student student)
     {
-        if (await _IsNameExistsExceptIdAsync(student.Name, student.Id))
+        if (await _studentRepository.IsNameExistExceptIdAsync(student.Name, student.Id))
             return false;
 
         await _studentRepository.UpdateAsync(student);
@@ -79,5 +63,16 @@ public class StudentService : IStudentService
             throw new InvalidOperationException($"Error while deleting student with id {id}");
         }
 
+    }
+
+    public async Task<List<Student>> GetPaginatedStudentsAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null)
+    {
+        var students = await _studentRepository.GetPaginatedAsync(pageNumber, pageSize, searchTerm, orderBy);
+        return students;
+    }
+
+    public async Task<int> GetTotalStudentsCountAsync()
+    {
+        return await _studentRepository.GetTotalCountAsync();
     }
 }

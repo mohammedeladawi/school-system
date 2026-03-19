@@ -8,14 +8,18 @@ public static class Router
 
     public static class Student
     {
-        public const string List = Base + "/Student/List";
-        public const string GetById = Base + "/Student/{id}";
+        private const string StudentBase = Base + "/Student";
 
-        public const string Add = Base + "/Student/Add";
+        public const string List = StudentBase + "/List";
+        public const string GetById = StudentBase + "/{id}";
 
-        public const string Edit = Base + "/Student/Edit";
+        public const string Add = StudentBase + "/Add";
 
-        public const string Delete = Base + "/Student/{id}";
+        public const string Edit = StudentBase + "/Edit";
+
+        public const string Delete = StudentBase + "/{id}";
+
+        public const string PaginatedList = StudentBase + "/PaginatedList";
 
     }
 }

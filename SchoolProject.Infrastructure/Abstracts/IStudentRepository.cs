@@ -8,5 +8,8 @@ public interface IStudentRepository : IGenericRepositoryAsync<Student>
 {
     public Task<List<Student>> GetAllStudentsAsync();
 
+    public Task<List<Student>> GetPaginatedAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null);
 
+    public Task<bool> IsNameExistAsync(string studentName);
+    public Task<bool> IsNameExistExceptIdAsync(string studentName, int id);
 }

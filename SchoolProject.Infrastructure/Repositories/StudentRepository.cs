@@ -18,10 +18,42 @@ public class StudentRepository :
 
     public async Task<List<Student>> GetAllStudentsAsync()
     {
-        return await
-         _students.Include(s => s.Department)
-            .ToListAsync();
+        var studentsList = await _students.Include(s => s.Department)
+                                          .ToListAsync();
+
+        return studentsList;
     }
 
+    public async Task<List<Student>> GetPaginatedAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null)
+    {
+        // Todo: Implement orderBy logic if needed
+        var query = _students.Include(s => s.Department).AsQueryable();
 
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            query = query.Where(s => s.Name.Contains(searchTerm));
+        }
+
+        var pagintedStudents = await query.Skip((pageNumber - 1) * pageSize)
+                                      .Take(pageSize)
+                                      .ToListAsync();
+
+        return pagintedStudents;
+    }
+
+    public async Task<bool> IsNameExistExceptIdAsync(string studentName, int id)
+    {
+        var isExist = await _students.AsNoTracking()
+                            .Where(s => s.Name == studentName && s.Id != id)
+                            .AnyAsync();
+        return isExist;
+    }
+
+    public async Task<bool> IsNameExistAsync(string studentName)
+    {
+        var isExist = await _students.AsNoTracking()
+                            .Where(s => s.Name == studentName)
+                            .AnyAsync();
+        return isExist;
+    }
 }
