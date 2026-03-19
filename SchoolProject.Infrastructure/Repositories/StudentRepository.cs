@@ -3,6 +3,7 @@ using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.InfrastructureBases;
+using StudentProject.Data.Enums;
 
 namespace SchoolProject.Infrastructure.Repositories;
 
@@ -24,14 +25,29 @@ public class StudentRepository :
         return studentsList;
     }
 
-    public async Task<List<Student>> GetPaginatedAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null)
+    public async Task<List<Student>> GetPaginatedAsync(int pageNumber, int pageSize, string? searchTerm = null, StudentOrderingEnum? orderBy = null)
     {
-        // Todo: Implement orderBy logic if needed
         var query = _students.Include(s => s.Department).AsQueryable();
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
             query = query.Where(s => s.Name.Contains(searchTerm));
+        }
+
+        switch (orderBy)
+        {
+            case StudentOrderingEnum.Id:
+                query = query.OrderBy(s => s.Id);
+                break;
+            case StudentOrderingEnum.StudentName:
+                query = query.OrderBy(s => s.Name);
+                break;
+            case StudentOrderingEnum.Address:
+                query = query.OrderBy(s => s.Address);
+                break;
+            case StudentOrderingEnum.DepartmentName:
+                query = query.OrderBy(s => s.Department.Name);
+                break;
         }
 
         var pagintedStudents = await query.Skip((pageNumber - 1) * pageSize)

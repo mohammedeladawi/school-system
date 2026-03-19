@@ -39,8 +39,8 @@ public class StudentQueryHandler :
         var students = await _studentService.GetPaginatedStudentsAsync(pageNumber, pageSize, request.SearchTerm, request.OrderBy);
         var studentsDto = _mapper.Map<List<PaginatedStudentsDto>>(students);
 
-        var PaginatedResponse = new PaginatedResponse<PaginatedStudentsDto>(studentsDto, pageNumber, pageSize, totalRecords);
-        return PaginatedResponse;
+        var paginatedResponse = new PaginatedResponse<PaginatedStudentsDto>(studentsDto, pageNumber, pageSize, totalRecords);
+        return paginatedResponse;
     }
 
     public async Task<Response<SingleStudentDto>> Handle(GetSingleStudentQuery request, CancellationToken cancellationToken)

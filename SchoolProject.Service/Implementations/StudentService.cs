@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
+using StudentProject.Data.Enums;
 
 namespace SchoolProject.Service.Implementations;
 
@@ -65,7 +66,7 @@ public class StudentService : IStudentService
 
     }
 
-    public async Task<List<Student>> GetPaginatedStudentsAsync(int pageNumber, int pageSize, string? searchTerm = null, string[]? orderBy = null)
+    public async Task<List<Student>> GetPaginatedStudentsAsync(int pageNumber, int pageSize, string? searchTerm = null, StudentOrderingEnum? orderBy = null)
     {
         var students = await _studentRepository.GetPaginatedAsync(pageNumber, pageSize, searchTerm, orderBy);
         return students;
