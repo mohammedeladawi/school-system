@@ -1,9 +1,15 @@
+using SchoolProject.Data.Helpers;
+
 namespace SchoolProject.Data.Entities;
 
 public class Student
 {
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public string NameEn { get; set; } = null!;
+    public string NameAr { get; set; } = null!;
+
+    // This property is not mapped to the database, it's used to get the localized name based on the current culture
+    public string Name => GeneralLocalizableEntity.LocalizeText(NameEn, NameAr);
     public string Address { get; set; } = null!;
     public string Phone { get; set; } = null!;
 

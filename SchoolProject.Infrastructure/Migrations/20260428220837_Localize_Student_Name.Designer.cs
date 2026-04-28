@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260428220837_Localize_Student_Name")]
+    partial class Localize_Student_Name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,12 +33,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("NameEn")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -48,32 +46,27 @@ namespace SchoolProject.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            NameAr = "علوم الحاسوب",
-                            NameEn = "Computer Science"
+                            Name = "Computer Science"
                         },
                         new
                         {
                             Id = 2,
-                            NameAr = "الرياضيات",
-                            NameEn = "Mathematics"
+                            Name = "Mathematics"
                         },
                         new
                         {
                             Id = 3,
-                            NameAr = "الفيزياء",
-                            NameEn = "Physics"
+                            Name = "Physics"
                         },
                         new
                         {
                             Id = 4,
-                            NameAr = "الكيمياء",
-                            NameEn = "Chemistry"
+                            Name = "Chemistry"
                         },
                         new
                         {
                             Id = 5,
-                            NameAr = "الأحياء",
-                            NameEn = "Biology"
+                            Name = "Biology"
                         });
                 });
 

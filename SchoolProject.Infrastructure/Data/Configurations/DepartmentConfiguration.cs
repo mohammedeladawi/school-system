@@ -10,7 +10,8 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
         builder.HasKey(d => d.Id);
 
-        builder.Property(d => d.Name).IsRequired().HasMaxLength(500);
+        builder.Property(d => d.NameEn).IsRequired().HasMaxLength(500);
+        builder.Property(d => d.NameAr).IsRequired().HasMaxLength(500);
 
         // Seed data
         builder.HasData(SeedData.Departments);

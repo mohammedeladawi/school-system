@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Api.Middlewares;
 using SchoolProject.Core;
 using SchoolProject.Infrastructure;
 using SchoolProject.Service;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,9 +20,33 @@ builder.Services.AddInfrastructureDependencies(builder.Configuration)
     .AddCoreDependencies()
     .AddServiceDependencies();
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "");
+
 var app = builder.Build();
 
-// Configure middleware pipeline
+
+#region Localization Configurations
+
+// Supported cultures
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
+
+// Configure localization options
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+
+// Enable localization middleware
+app.UseRequestLocalization(localizationOptions);
+
+#endregion
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -30,7 +56,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 

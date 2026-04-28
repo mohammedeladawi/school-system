@@ -1,8 +1,10 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Students.Queries.Models;
 using SchoolProject.Core.Features.Students.Queries.Responses;
+using SchoolProject.Core.Resources;
 using SchoolProject.Core.Responses;
 using SchoolProject.Service.Abstracts;
 
@@ -16,8 +18,9 @@ public class StudentQueryHandler :
 {
     private readonly IStudentService _studentService;
     private readonly IMapper _mapper;
-
-    public StudentQueryHandler(IStudentService studentService, IMapper mapper)
+    public StudentQueryHandler(IStudentService studentService, IMapper mapper,
+        IStringLocalizer<SharedResource> localizer)
+        : base(localizer)
     {
         this._studentService = studentService;
         this._mapper = mapper;
@@ -46,7 +49,7 @@ public class StudentQueryHandler :
     public async Task<Response<SingleStudentDto>> Handle(GetSingleStudentQuery request, CancellationToken cancellationToken)
     {
         var student = await _studentService.GetStudentByIdAsync(request.Id);
-        if (student is null) return NotFound<SingleStudentDto>();
+        if (student is null) return NotFound<SingleStudentDto>(_localizer["NotFound"]);
 
         var studentDto = _mapper.Map<SingleStudentDto>(student);
         return Success(studentDto);

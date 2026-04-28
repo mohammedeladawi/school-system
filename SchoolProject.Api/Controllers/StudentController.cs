@@ -34,7 +34,7 @@ public class StudentController : AppControllerBase
     public async Task<IActionResult> AddStudent([FromBody] AddStudentCommand command)
     {
         var result = await Mediator.Send(command);
-        return NewResult(result);
+        return Ok(result);
     }
 
     [HttpPut(Router.Student.Edit)]

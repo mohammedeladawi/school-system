@@ -10,9 +10,15 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
         builder.HasKey(s => s.Id);
 
-        builder.Property(s => s.Name)
+        builder.Property(s => s.NameEn)
             .IsRequired()
             .HasMaxLength(200);
+
+        builder.Property(s => s.NameAr)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.Ignore(s => s.Name);
 
         builder.Property(s => s.Address)
             .IsRequired()
@@ -21,6 +27,7 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder.Property(s => s.Phone)
             .IsRequired()
             .HasMaxLength(500);
+
 
         // Seed data for Students
         builder.HasData(SeedData.Students);

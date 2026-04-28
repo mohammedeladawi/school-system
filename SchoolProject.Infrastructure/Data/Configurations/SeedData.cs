@@ -6,25 +6,25 @@ public static class SeedData
 {
     public static readonly Department[] Departments = new[]
     {
-        new Department { Id = 1, Name = "Computer Science" },
-        new Department { Id = 2, Name = "Mathematics" },
-        new Department { Id = 3, Name = "Physics" },
-        new Department { Id = 4, Name = "Chemistry" },
-        new Department { Id = 5, Name = "Biology" }
+        new Department { Id = 1, NameEn = "Computer Science", NameAr = "علوم الحاسوب" },
+        new Department { Id = 2, NameEn = "Mathematics", NameAr = "الرياضيات" },
+        new Department { Id = 3, NameEn = "Physics", NameAr = "الفيزياء" },
+        new Department { Id = 4, NameEn = "Chemistry", NameAr = "الكيمياء" },
+        new Department { Id = 5, NameEn = "Biology", NameAr = "الأحياء" }
     };
 
     public static readonly Student[] Students = new[]
     {
-           new Student { Id = 1, Name = "Ahmed Hassan", Address = "Cairo, Egypt", Phone = "01001234567", DepartmentId = 1 },
-            new Student { Id = 2, Name = "Fatima Mohamed", Address = "Giza, Egypt", Phone = "01101234567", DepartmentId = 1 },
-            new Student { Id = 3, Name = "Omar Ali", Address = "Alexandria, Egypt", Phone = "01201234567", DepartmentId = 2 },
-            new Student { Id = 4, Name = "Layla Ibrahim", Address = "Cairo, Egypt", Phone = "01001234568", DepartmentId = 2 },
-            new Student { Id = 5, Name = "Mustafa Karim", Address = "Helwan, Egypt", Phone = "01101234568", DepartmentId = 3 },
-            new Student { Id = 6, Name = "Amira Hassan", Address = "New Cairo, Egypt", Phone = "01201234568", DepartmentId = 3 },
-            new Student { Id = 7, Name = "Khaled Ahmed", Address = "Cairo, Egypt", Phone = "01001234569", DepartmentId = 4 },
-            new Student { Id = 8, Name = "Noor Saleh", Address = "Giza, Egypt", Phone = "01101234569", DepartmentId = 4 },
-            new Student { Id = 9, Name = "Youssef Nasr", Address = "Cairo, Egypt", Phone = "01201234569", DepartmentId = 5 },
-            new Student { Id = 10, Name = "Dina Khalil", Address = "Helwan, Egypt", Phone = "01001234570", DepartmentId = 5 }
+           new Student { Id = 1, NameEn = "Ahmed Hassan", NameAr = "أحمد حسن", Address = "Cairo, Egypt", Phone = "01001234567", DepartmentId = 1 },
+            new Student { Id = 2, NameEn = "Fatima Mohamed", NameAr = "فاطمة محمد", Address = "Giza, Egypt", Phone = "01101234567", DepartmentId = 1 },
+            new Student { Id = 3, NameEn = "Omar Ali", NameAr = "عمر علي", Address = "Alexandria, Egypt", Phone = "01201234567", DepartmentId = 2 },
+            new Student { Id = 4, NameEn = "Layla Ibrahim", NameAr = "ليلى إبراهيم", Address = "Cairo, Egypt", Phone = "01001234568", DepartmentId = 2 },
+            new Student { Id = 5, NameEn = "Mustafa Karim", NameAr = "مصطفى كريم", Address = "Helwan, Egypt", Phone = "01101234568", DepartmentId = 3 },
+            new Student { Id = 6, NameEn = "Amira Hassan", NameAr = "أميرة حسن", Address = "New Cairo, Egypt", Phone = "01201234568", DepartmentId = 3 },
+            new Student { Id = 7, NameEn = "Khaled Ahmed", NameAr = "خالد أحمد", Address = "Cairo, Egypt", Phone = "01001234569", DepartmentId = 4 },
+            new Student { Id = 8, NameEn = "Noor Saleh", NameAr = "نور صالح", Address = "Giza, Egypt", Phone = "01101234569", DepartmentId = 4 },
+            new Student { Id = 9, NameEn = "Youssef Nasr", NameAr = "يوسف نصر", Address = "Cairo, Egypt", Phone = "01201234569", DepartmentId = 5 },
+            new Student { Id = 10, NameEn = "Dina Khalil", NameAr = "دينا خليل", Address = "Helwan, Egypt", Phone = "01001234570", DepartmentId = 5 }
     };
 
     public static readonly Subject[] Subjects = new[]

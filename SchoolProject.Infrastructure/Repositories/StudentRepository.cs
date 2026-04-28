@@ -31,7 +31,7 @@ public class StudentRepository :
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
-            query = query.Where(s => s.Name.Contains(searchTerm));
+            query = query.Where(s => s.NameEn.Contains(searchTerm) || s.NameAr.Contains(searchTerm));
         }
 
         switch (orderBy)
@@ -40,7 +40,7 @@ public class StudentRepository :
                 query = query.OrderBy(s => s.Id);
                 break;
             case StudentOrderingEnum.StudentName:
-                query = query.OrderBy(s => s.Name);
+                query = query.OrderBy(s => s.NameEn);
                 break;
             case StudentOrderingEnum.Address:
                 query = query.OrderBy(s => s.Address);
@@ -60,7 +60,7 @@ public class StudentRepository :
     public async Task<bool> IsNameExistExceptIdAsync(string studentName, int id)
     {
         var isExist = await _students.AsNoTracking()
-                            .Where(s => s.Name == studentName && s.Id != id)
+                            .Where(s => (s.NameEn == studentName || s.NameAr == studentName) && s.Id != id)
                             .AnyAsync();
         return isExist;
     }
@@ -68,7 +68,7 @@ public class StudentRepository :
     public async Task<bool> IsNameExistAsync(string studentName)
     {
         var isExist = await _students.AsNoTracking()
-                            .Where(s => s.Name == studentName)
+                            .Where(s => s.NameEn == studentName || s.NameAr == studentName)
                             .AnyAsync();
         return isExist;
     }

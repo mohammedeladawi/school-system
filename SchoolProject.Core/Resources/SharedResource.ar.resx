@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- ResX Schema -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="xml:space" default="preserve" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <!-- Required Headers -->
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+
+  <!-- Resource Entries -->
+<data name="Welcome" xml:space="preserve">
+  <value>مرحباً</value>
+</data>
+<data name="NotFound" xml:space="preserve">
+  <value>لم يتم العثور على المورد</value>
+</data>
+<data name="DeletedSuccessfully" xml:space="preserve">
+  <value>تم الحذف بنجاح</value>
+</data>
+<data name="AddedSuccessfully" xml:space="preserve">
+  <value>تم الإضافة بنجاح</value>
+</data>
+<data name="CreatedSuccessfully" xml:space="preserve">
+  <value>تم الإنشاء بنجاح</value>
+</data>
+<data name="Unauthorized" xml:space="preserve">
+  <value>غير مصرح</value>
+</data>
+<data name="BadRequest" xml:space="preserve">
+  <value>طلب غير صالح</value>
+</data>
+<data name="UnprocessableEntity" xml:space="preserve">
+  <value>الكيان غير قابل للمعالجة</value>
+</data>
+<data name="NameRequired" xml:space="preserve">
+  <value>الاسم مطلوب.</value>
+</data>
+<data name="NameTooLong" xml:space="preserve">
+  <value>لا يمكن أن يتجاوز الاسم 100 حرف.</value>
+</data>
+<data name="PhoneRequired" xml:space="preserve">
+  <value>الهاتف مطلوب.</value>
+</data>
+<data name="PhoneTooLong" xml:space="preserve">
+  <value>لا يمكن أن يتجاوز الهاتف 20 حرفًا.</value>
+</data>
+<data name="AddressRequired" xml:space="preserve">
+  <value>العنوان مطلوب.</value>
+</data>
+<data name="AddressTooLong" xml:space="preserve">
+  <value>لا يمكن أن يتجاوز العنوان 200 حرف.</value>
+</data>
+<data name="DepartmentIdGreaterThanZero" xml:space="preserve">
+  <value>يجب أن يكون DepartmentId أكبر من 0.</value>
+</data>
+<data name="PageNumberRequired" xml:space="preserve">
+  <value>رقم الصفحة مطلوب.</value>
+</data>
+<data name="PageNumberGreaterThanZero" xml:space="preserve">
+  <value>يجب أن يكون رقم الصفحة أكبر من 0.</value>
+</data>
+<data name="PageSizeRequired" xml:space="preserve">
+  <value>حجم الصفحة مطلوب.</value>
+</data>
+<data name="PageSizeGreaterThanZero" xml:space="preserve">
+  <value>يجب أن يكون حجم الصفحة أكبر من 0.</value>
+</data>
+</root>
