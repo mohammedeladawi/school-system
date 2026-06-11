@@ -26,7 +26,7 @@ public class StudentController : AppControllerBase
     [HttpGet(Router.Student.GetById)]
     public async Task<IActionResult> GetStudentById(int id)
     {
-        var students = await Mediator.Send(new GetSingleStudentQuery() { Id = id });
+        var students = await Mediator.Send(new GetSingleStudentQuery(id));
         return NewResult(students);
     }
 
@@ -34,7 +34,7 @@ public class StudentController : AppControllerBase
     public async Task<IActionResult> AddStudent([FromBody] AddStudentCommand command)
     {
         var result = await Mediator.Send(command);
-        return Ok(result);
+        return NewResult(result);
     }
 
     [HttpPut(Router.Student.Edit)]

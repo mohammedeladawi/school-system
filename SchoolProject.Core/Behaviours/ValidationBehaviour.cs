@@ -8,8 +8,8 @@ namespace SchoolProject.Core.Behaviours;
 /// MediatR Pipeline Behavior that intercepts all requests and validates them before executing the handler.
 /// This behavior automatically runs all registered validators for the request type and throws an exception if validation fails.
 /// </summary>
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class ValidationBehavior<TRequest, TResponse> :
+    IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     // Collection of all registered validators for the request type
     private readonly IEnumerable<IValidator<TRequest>> _validators;

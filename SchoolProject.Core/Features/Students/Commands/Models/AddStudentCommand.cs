@@ -3,13 +3,12 @@ using SchoolProject.Core.Bases;
 
 namespace SchoolProject.Core.Features.Students.Commands.Models
 {
-    public class AddStudentCommand : IRequest<Response<string>>
+    public record AddStudentCommand : IRequest<Response<string>>
     {
-        public string Name { get; set; } = null!;
-        public string Phone { get; set; } = null!;
-
-        public string Address { get; set; } = null!;
-
-        public int? DepartmentId { get; set; }
+        public string NameEn { get; init; } = null!;
+        public string NameAr { get; init; } = null!;
+        public string Phone { get; init; } = null!;
+        public string Address { get; init; } = null!;
+        public int? DepartmentId { get; init; }
     }
 }

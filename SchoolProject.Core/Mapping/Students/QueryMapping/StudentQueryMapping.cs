@@ -9,7 +9,8 @@ public partial class StudentProfile
     private void MapStudentToStudentDtoForList()
     {
         CreateMap<Student, StudentDtoForList>()
-            .ForMember(dest => dest.DepartmentName,
+            .ForMember(
+                dest => dest.DepartmentName,
                 opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
 
     }
@@ -17,14 +18,16 @@ public partial class StudentProfile
     private void MapStudentToSingleStudentDto()
     {
         CreateMap<Student, SingleStudentDto>()
-           .ForMember(dest => dest.DepartmentName,
-               opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
+           .ForMember(
+                dest => dest.DepartmentName,
+                opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
     }
 
     private void MapStudentToPaginatedStudentDto()
     {
         CreateMap<Student, PaginatedStudentsDto>()
-           .ForMember(dest => dest.DepartmentName,
-               opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
+           .ForMember(
+                dest => dest.DepartmentName,
+                opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
     }
 }

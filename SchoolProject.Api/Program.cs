@@ -20,8 +20,6 @@ builder.Services.AddInfrastructureDependencies(builder.Configuration)
     .AddCoreDependencies()
     .AddServiceDependencies();
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "");
-
 var app = builder.Build();
 
 

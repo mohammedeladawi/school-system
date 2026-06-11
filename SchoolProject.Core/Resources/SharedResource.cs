@@ -1,6 +1,3 @@
 namespace SchoolProject.Core.Resources;
 
-public class SharedResource
-{
-
-}
+public record SharedResource;

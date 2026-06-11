@@ -90,6 +90,12 @@
   <data name="NameTooLong" xml:space="preserve">
     <value>Name cannot exceed 100 characters.</value>
   </data>
+  <data name="NameArRequired" xml:space="preserve">
+    <value>Arabic name is required.</value>
+  </data>
+  <data name="NameEnRequired" xml:space="preserve">
+    <value>English name is required.</value>
+  </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>Phone is required.</value>
   </data>

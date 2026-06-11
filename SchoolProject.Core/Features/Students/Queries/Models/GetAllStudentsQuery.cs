@@ -4,7 +4,4 @@ using SchoolProject.Core.Features.Students.Queries.Responses;
 
 namespace SchoolProject.Core.Features.Students.Queries.Models;
 
-public class GetAllStudentsQuery : IRequest<Response<List<StudentDtoForList>>>
-{
-
-}
+public record GetAllStudentsQuery : IRequest<Response<List<StudentDtoForList>>>;

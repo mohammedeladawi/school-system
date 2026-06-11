@@ -12,18 +12,26 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     public EditStudentValidator(IStringLocalizer<SharedResource> localizer)
     {
         _localizer = localizer;
-        ValidateName();
+        ValidateNameEn();
+        ValidateNameAr();
         ValidatePhone();
         ValidateAddress();
         ValidateDepartmentId();
     }
 
-    private void ValidateName()
+    private void ValidateNameAr()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameRequired])
+        RuleFor(x => x.NameAr)
+            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameArRequired])
             .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
     }
+    private void ValidateNameEn()
+    {
+        RuleFor(x => x.NameEn)
+            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
+            .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
+    }
+
 
     private void ValidatePhone()
     {

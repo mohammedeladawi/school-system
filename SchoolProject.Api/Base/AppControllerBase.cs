@@ -5,7 +5,6 @@ namespace SchoolProject.Api.Base
     using Microsoft.AspNetCore.Mvc;
     using SchoolProject.Core.Bases;
 
-    // [ApiController]
     public class AppControllerBase : ControllerBase
     {
         private IMediator _mediatorInstance;

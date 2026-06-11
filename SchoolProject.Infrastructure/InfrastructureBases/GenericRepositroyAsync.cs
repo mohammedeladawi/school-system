@@ -4,7 +4,8 @@ using SchoolProject.Infrastructure.Data;
 
 namespace SchoolProject.Infrastructure.InfrastructureBases;
 
-public class GenericRepositoryAsync<T> : IGenericRepositoryAsync<T> where T : class
+public class GenericRepositoryAsync<T> :
+    IGenericRepositoryAsync<T> where T : class
 {
     #region Vars / Props
 

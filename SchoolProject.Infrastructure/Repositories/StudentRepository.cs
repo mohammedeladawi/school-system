@@ -8,7 +8,8 @@ using StudentProject.Data.Enums;
 namespace SchoolProject.Infrastructure.Repositories;
 
 public class StudentRepository :
-    GenericRepositoryAsync<Student>, IStudentRepository
+    GenericRepositoryAsync<Student>,
+    IStudentRepository
 {
     private readonly DbSet<Student> _students;
 
@@ -21,7 +22,6 @@ public class StudentRepository :
     {
         var studentsList = await _students.Include(s => s.Department)
                                           .ToListAsync();
-
         return studentsList;
     }
 
@@ -57,18 +57,18 @@ public class StudentRepository :
         return pagintedStudents;
     }
 
-    public async Task<bool> IsNameExistExceptIdAsync(string studentName, int id)
+    public async Task<bool> IsNameExistExceptIdAsync(string studentNameEn, string studentNameAr, int id)
     {
         var isExist = await _students.AsNoTracking()
-                            .Where(s => (s.NameEn == studentName || s.NameAr == studentName) && s.Id != id)
+                            .Where(s => (s.NameEn == studentNameEn || s.NameAr == studentNameAr) && s.Id != id)
                             .AnyAsync();
         return isExist;
     }
 
-    public async Task<bool> IsNameExistAsync(string studentName)
+    public async Task<bool> IsNameExistAsync(string studentNameEn, string studentNameAr)
     {
         var isExist = await _students.AsNoTracking()
-                            .Where(s => s.NameEn == studentName || s.NameAr == studentName)
+                            .Where(s => s.NameEn == studentNameEn || s.NameAr == studentNameAr)
                             .AnyAsync();
         return isExist;
     }

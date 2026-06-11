@@ -18,9 +18,10 @@ public class StudentQueryHandler :
 {
     private readonly IStudentService _studentService;
     private readonly IMapper _mapper;
-    public StudentQueryHandler(IStudentService studentService, IMapper mapper,
-        IStringLocalizer<SharedResource> localizer)
-        : base(localizer)
+    public StudentQueryHandler(
+        IStudentService studentService,
+        IMapper mapper,
+        IStringLocalizer<SharedResource> localizer) : base(localizer)
     {
         this._studentService = studentService;
         this._mapper = mapper;

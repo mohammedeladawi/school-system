@@ -33,7 +33,7 @@ public class StudentService : IStudentService
 
     public async Task<bool> AddStudentAsync(Student student)
     {
-        if (await _studentRepository.IsNameExistAsync(student.NameEn)) return false;
+        if (await _studentRepository.IsNameExistAsync(student.NameEn, student.NameAr)) return false;
 
         await _studentRepository.AddAsync(student);
 
@@ -42,7 +42,7 @@ public class StudentService : IStudentService
 
     public async Task<bool> EditStudentAsync(Student student)
     {
-        if (await _studentRepository.IsNameExistExceptIdAsync(student.NameEn, student.Id))
+        if (await _studentRepository.IsNameExistExceptIdAsync(student.NameEn, student.NameAr, student.Id))
             return false;
 
         await _studentRepository.UpdateAsync(student);

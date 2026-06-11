@@ -90,6 +90,12 @@
 <data name="NameTooLong" xml:space="preserve">
   <value>لا يمكن أن يتجاوز الاسم 100 حرف.</value>
 </data>
+<data name="NameArRequired" xml:space="preserve">
+  <value>الاسم العربي مطلوب.</value>
+</data>
+<data name="NameEnRequired" xml:space="preserve">
+  <value>الاسم الإنجليزي مطلوب.</value>
+</data>
 <data name="PhoneRequired" xml:space="preserve">
   <value>الهاتف مطلوب.</value>
 </data>

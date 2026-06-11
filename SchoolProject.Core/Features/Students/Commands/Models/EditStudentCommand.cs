@@ -6,7 +6,8 @@ namespace SchoolProject.Core.Features.Students.Commands.Models
     public class EditStudentCommand : IRequest<Response<string>>
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string NameEn { get; set; } = null!;
+        public string NameAr { get; set; } = null!;
         public string Phone { get; set; } = null!;
 
         public string Address { get; set; } = null!;

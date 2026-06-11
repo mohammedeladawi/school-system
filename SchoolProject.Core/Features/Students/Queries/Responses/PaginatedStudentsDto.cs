@@ -1,9 +1,9 @@
 namespace SchoolProject.Core.Responses;
 
-public class PaginatedStudentsDto
+public record PaginatedStudentsDto
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Address { get; set; } = null!;
-    public string? DepartmentName { get; set; }
+    public int Id { get; init; }
+    public string Name { get; init; } = null!;
+    public string Address { get; init; } = null!;
+    public string? DepartmentName { get; init; } = null!;
 }
