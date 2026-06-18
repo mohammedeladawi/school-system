@@ -28,7 +28,8 @@ public class ResponseHandler
             Data = entity,
             StatusCode = System.Net.HttpStatusCode.OK,
             Succeeded = true,
-            Message = _localizer[SharedResourceKeys.AddedSuccessfully].Value,
+            // Todo: Add a new Key for RetrievedSuccessfully in SharedResourceKeys and use it here instead of AddedSuccessfully
+            Message = _localizer[SharedResourceKeys.SuccessfulOperation].Value,
             Meta = Meta
         };
     }

@@ -7,6 +7,8 @@ using SchoolProject.Data.AppMetaData;
 
 namespace SchoolProject.Api.Controllers;
 
+
+[ApiController]
 public class StudentController : AppControllerBase
 {
     [HttpGet(Router.Student.List)]

@@ -75,6 +75,9 @@
   <data name="CreatedSuccessfully" xml:space="preserve">
     <value>Created Successfully</value>
   </data>
+  <data name="SuccessfulOperation" xml:space="preserve">
+    <value>Operation completed successfully.</value>
+  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Unauthorized</value>
   </data>

@@ -22,4 +22,20 @@ public static class Router
         public const string PaginatedList = StudentBase + "PaginatedList";
 
     }
+
+    public static class Department
+    {
+        private const string DepartmentBase = Base + "/" + "Department" + "/";
+
+        public const string List = DepartmentBase + "List";
+        public const string GetById = DepartmentBase + "{id}";
+
+        public const string Add = DepartmentBase + "Add";
+
+        public const string Edit = DepartmentBase + "Edit";
+
+        public const string Delete = DepartmentBase + "{id}";
+
+        public const string PaginatedList = DepartmentBase + "PaginatedList";
+    }
 }

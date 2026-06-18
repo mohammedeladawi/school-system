@@ -17,4 +17,15 @@ public class DepartmentRepository :
         _departments = context.Set<Department>();
     }
 
+    public async Task<Department?> GetDepartmentByIdAsync(int id)
+    {
+        return await _departments
+                        .AsNoTracking()
+                        .Where(d => d.Id == id)
+                        .Include(d => d.Instructors)
+                        .Include(d => d.Students)
+                        .Include(d => d.Subjects)
+                        .AsSplitQuery()
+                        .FirstOrDefaultAsync();
+    }
 }

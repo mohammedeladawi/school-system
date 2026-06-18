@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using SchoolProject.Service.Abstracts;
 using SchoolProject.Service.Implementations;
 
@@ -9,6 +9,7 @@ public static class ModuleServiceDependencies
     public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
     {
         services.AddScoped<IStudentService, StudentService>();
+        services.AddScoped<IDepartmentService, DepartmentService>();
         return services;
     }
 

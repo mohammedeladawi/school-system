@@ -7,6 +7,7 @@ public static class SharedResourceKeys
     public static string DeletedSuccessfully = "DeletedSuccessfully";
     public static string AddedSuccessfully = "AddedSuccessfully";
     public static string CreatedSuccessfully = "CreatedSuccessfully";
+    public static string SuccessfulOperation = "SuccessfulOperation";
     public static string Unauthorized = "Unauthorized";
     public static string BadRequest = "BadRequest";
     public static string UnprocessableEntity = "UnprocessableEntity";
