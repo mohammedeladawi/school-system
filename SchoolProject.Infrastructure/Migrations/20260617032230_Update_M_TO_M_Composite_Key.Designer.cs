@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260617032230_Update_M_TO_M_Composite_Key")]
+    partial class Update_M_TO_M_Composite_Key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -44,10 +44,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ManagerId")
-                        .IsUnique()
-                        .HasFilter("[ManagerId] IS NOT NULL");
 
                     b.ToTable("Departments");
 
@@ -142,194 +138,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         new
                         {
                             DepartmentId = 5,
-                            SubjectId = 9
-                        });
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameAr")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DepartmentId = 1,
-                            NameAr = "د. علي منصور",
-                            NameEn = "Dr. Ali Mansour"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DepartmentId = 1,
-                            NameAr = "د. سارة يوسف",
-                            NameEn = "Dr. Sarah Youssef",
-                            SupervisorId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DepartmentId = 2,
-                            NameAr = "د. كريم عادل",
-                            NameEn = "Dr. Karim Adel"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DepartmentId = 2,
-                            NameAr = "د. منى سمير",
-                            NameEn = "Dr. Mona Samir",
-                            SupervisorId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DepartmentId = 3,
-                            NameAr = "د. طارق نجيب",
-                            NameEn = "Dr. Tarek Naguib"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            DepartmentId = 3,
-                            NameAr = "د. نور فتحي",
-                            NameEn = "Dr. Nour Fathy",
-                            SupervisorId = 5
-                        },
-                        new
-                        {
-                            Id = 7,
-                            DepartmentId = 4,
-                            NameAr = "د. حنان عباس",
-                            NameEn = "Dr. Hanan Abbas"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            DepartmentId = 4,
-                            NameAr = "د. يارا حامد",
-                            NameEn = "Dr. Yara Hamed",
-                            SupervisorId = 7
-                        },
-                        new
-                        {
-                            Id = 9,
-                            DepartmentId = 5,
-                            NameAr = "د. رانيا فاضل",
-                            NameEn = "Dr. Rania Fadel"
-                        });
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.InstructorSubject", b =>
-                {
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InstructorId", "SubjectId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("InstructorSubjects", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            InstructorId = 1,
-                            SubjectId = 1
-                        },
-                        new
-                        {
-                            InstructorId = 1,
-                            SubjectId = 2
-                        },
-                        new
-                        {
-                            InstructorId = 1,
-                            SubjectId = 3
-                        },
-                        new
-                        {
-                            InstructorId = 2,
-                            SubjectId = 1
-                        },
-                        new
-                        {
-                            InstructorId = 2,
-                            SubjectId = 3
-                        },
-                        new
-                        {
-                            InstructorId = 3,
-                            SubjectId = 4
-                        },
-                        new
-                        {
-                            InstructorId = 3,
-                            SubjectId = 5
-                        },
-                        new
-                        {
-                            InstructorId = 4,
-                            SubjectId = 4
-                        },
-                        new
-                        {
-                            InstructorId = 5,
-                            SubjectId = 6
-                        },
-                        new
-                        {
-                            InstructorId = 5,
-                            SubjectId = 7
-                        },
-                        new
-                        {
-                            InstructorId = 6,
-                            SubjectId = 7
-                        },
-                        new
-                        {
-                            InstructorId = 7,
-                            SubjectId = 8
-                        },
-                        new
-                        {
-                            InstructorId = 8,
-                            SubjectId = 8
-                        },
-                        new
-                        {
-                            InstructorId = 9,
                             SubjectId = 9
                         });
                 });
@@ -472,10 +280,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Grade")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
-
                     b.HasKey("StudentId", "SubjectId");
 
                     b.HasIndex("SubjectId");
@@ -486,104 +290,87 @@ namespace SchoolProject.Infrastructure.Migrations
                         new
                         {
                             StudentId = 1,
-                            SubjectId = 1,
-                            Grade = 85.5m
+                            SubjectId = 1
                         },
                         new
                         {
                             StudentId = 1,
-                            SubjectId = 2,
-                            Grade = 90.0m
+                            SubjectId = 2
                         },
                         new
                         {
                             StudentId = 1,
-                            SubjectId = 3,
-                            Grade = 78.0m
+                            SubjectId = 3
                         },
                         new
                         {
                             StudentId = 2,
-                            SubjectId = 1,
-                            Grade = 92.5m
+                            SubjectId = 1
                         },
                         new
                         {
                             StudentId = 2,
-                            SubjectId = 3,
-                            Grade = 88.0m
+                            SubjectId = 3
                         },
                         new
                         {
                             StudentId = 3,
-                            SubjectId = 4,
-                            Grade = 65.0m
+                            SubjectId = 4
                         },
                         new
                         {
                             StudentId = 3,
-                            SubjectId = 5,
-                            Grade = 72.5m
+                            SubjectId = 5
                         },
                         new
                         {
                             StudentId = 4,
-                            SubjectId = 4,
-                            Grade = 81.0m
+                            SubjectId = 4
                         },
                         new
                         {
                             StudentId = 4,
-                            SubjectId = 5,
-                            Grade = 89.5m
+                            SubjectId = 5
                         },
                         new
                         {
                             StudentId = 5,
-                            SubjectId = 6,
-                            Grade = 95.0m
+                            SubjectId = 6
                         },
                         new
                         {
                             StudentId = 5,
-                            SubjectId = 7,
-                            Grade = 87.0m
+                            SubjectId = 7
                         },
                         new
                         {
                             StudentId = 6,
-                            SubjectId = 6,
-                            Grade = 74.5m
+                            SubjectId = 6
                         },
                         new
                         {
                             StudentId = 6,
-                            SubjectId = 7,
-                            Grade = 80.0m
+                            SubjectId = 7
                         },
                         new
                         {
                             StudentId = 7,
-                            SubjectId = 8,
-                            Grade = 83.0m
+                            SubjectId = 8
                         },
                         new
                         {
                             StudentId = 8,
-                            SubjectId = 8,
-                            Grade = 91.5m
+                            SubjectId = 8
                         },
                         new
                         {
                             StudentId = 9,
-                            SubjectId = 9,
-                            Grade = 77.0m
+                            SubjectId = 9
                         },
                         new
                         {
                             StudentId = 10,
-                            SubjectId = 9,
-                            Grade = 86.5m
+                            SubjectId = 9
                         });
                 });
 
@@ -595,11 +382,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("NameAr")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NameEn")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -615,76 +398,57 @@ namespace SchoolProject.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            NameAr = "هياكل البيانات",
-                            NameEn = "Data Structures",
+                            Name = "Data Structures",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            NameAr = "الخوارزميات",
-                            NameEn = "Algorithms",
+                            Name = "Algorithms",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            NameAr = "تطوير الويب",
-                            NameEn = "Web Development",
+                            Name = "Web Development",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            NameAr = "حسبان 1",
-                            NameEn = "Calculus I",
+                            Name = "Calculus I",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            NameAr = "الجبر الخطي",
-                            NameEn = "Linear Algebra",
+                            Name = "Linear Algebra",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
-                            NameAr = "الميكانيكا",
-                            NameEn = "Mechanics",
+                            Name = "Mechanics",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
-                            NameAr = "الكهرومغناطيسية",
-                            NameEn = "Electromagnetism",
+                            Name = "Electromagnetism",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 8,
-                            NameAr = "الكيمياء العضوية",
-                            NameEn = "Organic Chemistry",
+                            Name = "Organic Chemistry",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 9,
-                            NameAr = "علم الوراثة",
-                            NameEn = "Genetics",
+                            Name = "Genetics",
                             Period = new DateTime(2026, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.Department", b =>
-                {
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Manager")
-                        .WithOne()
-                        .HasForeignKey("SchoolProject.Data.Entities.Department", "ManagerId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.DepartmentSubject", b =>
@@ -702,42 +466,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
-                {
-                    b.HasOne("SchoolProject.Data.Entities.Department", "Department")
-                        .WithMany("Instructors")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Supervisor")
-                        .WithMany("Subordinates")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.InstructorSubject", b =>
-                {
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SchoolProject.Data.Entities.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
 
                     b.Navigation("Subject");
                 });
@@ -774,14 +502,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("SchoolProject.Data.Entities.Department", b =>
                 {
-                    b.Navigation("Instructors");
-
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
-                {
-                    b.Navigation("Subordinates");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,9 @@
 namespace SchoolProject.Data.Entities;
 
-public class DepartmentSubject
+public class InstructorSubject
 {
-    public int DepartmentId { get; set; }
-    public Department Department { get; set; } = null!;
+    public int InstructorId { get; set; }
+    public Instructor Instructor { get; set; } = null!;
 
     public int SubjectId { get; set; }
     public Subject Subject { get; set; } = null!;

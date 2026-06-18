@@ -31,12 +31,5 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
 
         // Seed data for Students
         builder.HasData(SeedData.Students);
-
-        // Seed data for StudentSubject relationships
-        builder.HasMany(s => s.Subjects)
-            .WithMany(s => s.Students)
-            .UsingEntity<StudentSubject>(
-                build => build.HasData(SeedData.StudentSubjects)
-            );
     }
 }

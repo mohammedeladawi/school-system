@@ -4,10 +4,10 @@ namespace SchoolProject.Data.Helpers;
 
 public static class GeneralLocalizableEntity
 {
-    public static string LocalizeText(string textEn, string textAr)
+    public static string LocalizeText(string textEn, string? textAr)
     {
         var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-        if (currentCulture == "ar")
+        if (currentCulture == "ar" && !string.IsNullOrWhiteSpace(textAr))
             return textAr;
 
         return textEn;
