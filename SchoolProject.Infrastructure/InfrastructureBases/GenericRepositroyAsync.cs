@@ -66,6 +66,7 @@ public class GenericRepositoryAsync<T> :
         _dbContext.Set<T>().Remove(entity);
         await _dbContext.SaveChangesAsync();
     }
+
     public virtual async Task DeleteRangeAsync(ICollection<T> entities)
     {
         foreach (var entity in entities)

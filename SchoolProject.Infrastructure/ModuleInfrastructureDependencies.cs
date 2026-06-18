@@ -15,6 +15,10 @@ public static class ModuleInfrastructureDependencies
             options.UseSqlServer(configuration.GetConnectionString("dbcontext")));
 
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IInstructorRepository, InstructorRepository>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<ISubjectRepository, SubjectRepository>();
+
         return services;
     }
 
