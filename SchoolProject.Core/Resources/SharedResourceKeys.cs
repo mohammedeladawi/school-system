@@ -7,9 +7,11 @@ public static class SharedResourceKeys
     public static string DeletedSuccessfully = "DeletedSuccessfully";
     public static string AddedSuccessfully = "AddedSuccessfully";
     public static string CreatedSuccessfully = "CreatedSuccessfully";
+    public static string UpdatedSuccessfully = "UpdatedSuccessfully";
     public static string SuccessfulOperation = "SuccessfulOperation";
     public static string Unauthorized = "Unauthorized";
     public static string BadRequest = "BadRequest";
+    public static string Conflict = "Conflict";
     public static string UnprocessableEntity = "UnprocessableEntity";
     public static string NameRequired = "NameRequired";
     public static string NameTooLong = "NameTooLong";
@@ -19,7 +21,9 @@ public static class SharedResourceKeys
     public static string PhoneTooLong = "PhoneTooLong";
     public static string AddressRequired = "AddressRequired";
     public static string AddressTooLong = "AddressTooLong";
+
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
+    public static string NotExist = "NotExist";
     public static string PageNumberRequired = "PageNumberRequired";
     public static string PageNumberGreaterThanZero = "PageNumberGreaterThanZero";
     public static string PageSizeRequired = "PageSizeRequired";

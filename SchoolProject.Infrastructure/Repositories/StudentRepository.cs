@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
@@ -18,6 +19,22 @@ public class StudentRepository :
         _students = context.Set<Student>();
     }
 
+    #region Private Methods
+    private async Task<bool> IsStudentNameExistAsync(
+    Expression<Func<Student, bool>> expression,
+    int? excludedId)
+    {
+        var query = _students.AsNoTracking().Where(expression);
+
+        if (excludedId != null)
+            query = query.Where(s => s.Id != excludedId.Value);
+
+        return await query.AnyAsync();
+    }
+    #endregion
+
+
+    #region Public Methods
     public async Task<List<Student>> GetAllStudentsAsync()
     {
         var studentsList = await _students.Include(s => s.Department)
@@ -25,7 +42,11 @@ public class StudentRepository :
         return studentsList;
     }
 
-    public async Task<List<Student>> GetPaginatedAsync(int pageNumber, int pageSize, string? searchTerm = null, StudentOrderingEnum? orderBy = null)
+    public async Task<List<Student>> GetPaginatedStudentsAsync(
+        int pageNumber,
+        int pageSize,
+        string? searchTerm = null,
+        StudentOrderingEnum? orderBy = null)
     {
         var query = _students.Include(s => s.Department).AsQueryable();
 
@@ -57,19 +78,28 @@ public class StudentRepository :
         return pagintedStudents;
     }
 
-    public async Task<bool> IsNameExistExceptIdAsync(string studentNameEn, string studentNameAr, int id)
+    public async Task<Student?> GetStudentByIdAsync(int id)
     {
-        var isExist = await _students.AsNoTracking()
-                            .Where(s => (s.NameEn == studentNameEn || s.NameAr == studentNameAr) && s.Id != id)
-                            .AnyAsync();
-        return isExist;
+        return await _students.AsNoTracking()
+                              .Include(s => s.Department)
+                              .Where(s => s.Id == id)
+                              .FirstOrDefaultAsync();
     }
 
-    public async Task<bool> IsNameExistAsync(string studentNameEn, string studentNameAr)
+
+    public async Task<bool> IsStudentNameEnExistAsync(
+        string studentNameEn,
+        int? excludedId = null)
     {
-        var isExist = await _students.AsNoTracking()
-                            .Where(s => s.NameEn == studentNameEn || s.NameAr == studentNameAr)
-                            .AnyAsync();
-        return isExist;
+        return await IsStudentNameExistAsync(s => s.NameEn == studentNameEn, excludedId);
     }
+
+    public async Task<bool> IsStudentNameArExistAsync(
+        string studentNameAr,
+        int? excludedId = null)
+    {
+        return await IsStudentNameExistAsync(s => s.NameEn == studentNameAr, excludedId);
+    }
+    #endregion
+
 }

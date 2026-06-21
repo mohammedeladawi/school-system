@@ -33,12 +33,10 @@ public class GenericRepositoryAsync<T> :
         return await _dbContext.Set<T>().FindAsync(id);
     }
 
-
     public IQueryable<T> GetTableNoTracking()
     {
         return _dbContext.Set<T>().AsNoTracking().AsQueryable();
     }
-
 
     public virtual async Task AddRangeAsync(ICollection<T> entities)
     {
@@ -58,6 +56,7 @@ public class GenericRepositoryAsync<T> :
     {
         _dbContext.Set<T>().Update(entity);
         await _dbContext.SaveChangesAsync();
+
 
     }
 
@@ -113,6 +112,14 @@ public class GenericRepositoryAsync<T> :
     public virtual async Task<int> GetTotalCountAsync()
     {
         return await _dbContext.Set<T>().CountAsync();
+    }
+
+    public async Task<bool> IsExistByIdAsync(int id)
+    {
+        return
+        await _dbContext.Set<T>()
+                        .AsNoTracking()
+                        .AnyAsync(e => EF.Property<int>(e, "Id") == id);
     }
     #endregion
 }

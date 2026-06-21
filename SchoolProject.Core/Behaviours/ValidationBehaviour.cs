@@ -29,9 +29,10 @@ public class ValidationBehavior<TRequest, TResponse> :
             var context = new ValidationContext<TRequest>(request);
 
             // Execute all registered validators against the request object and collect validation failures
-            var failures = _validators
-                // Run validation on each registered validator
-                .Select(v => v.Validate(context))
+            var validationResults = await Task.WhenAll(_validators
+                .Select(v => v.ValidateAsync(context, cancellationToken)));
+
+            var failures = validationResults
                 // Flatten all errors from all validators into a single collection
                 .SelectMany(result => result.Errors)
                 // Filter out any null errors
@@ -42,7 +43,7 @@ public class ValidationBehavior<TRequest, TResponse> :
             // If any validation errors were found, throw a ValidationException with all collected errors
             if (failures.Count != 0)
             {
-                string errorMessage = failures.Select(f => f.ErrorMessage).FirstOrDefault();
+                string errorMessage = failures.Select(f => $"{f.PropertyName}: {f.ErrorMessage}").FirstOrDefault();
                 throw new ValidationException(errorMessage);
             }
         }

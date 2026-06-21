@@ -2,16 +2,26 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Students.Commands.Models;
 using SchoolProject.Core.Resources;
+using SchoolProject.Data.CustomExceptions;
+using SchoolProject.Service.Abstracts;
 
 namespace SchoolProject.Core.Features.Students.Commands.Validators;
 
 public class EditStudentValidator : AbstractValidator<EditStudentCommand>
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly IStudentService _studentService;
+    private readonly IDepartmentService _departmentService;
 
-    public EditStudentValidator(IStringLocalizer<SharedResource> localizer)
+    public EditStudentValidator(
+        IStringLocalizer<SharedResource> localizer,
+        IStudentService studentService,
+        IDepartmentService departmentService)
     {
         _localizer = localizer;
+        _studentService = studentService;
+        _departmentService = departmentService;
+
         ValidateNameEn();
         ValidateNameAr();
         ValidatePhone();
@@ -22,14 +32,37 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     private void ValidateNameAr()
     {
         RuleFor(x => x.NameAr)
-            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameArRequired])
-            .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
+            .NotEmpty()
+            .WithMessage(_localizer[SharedResourceKeys.NameArRequired])
+
+            .MaximumLength(100)
+            .WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+
+            .MustAsync(async (dto, studentNameAr, cancellationToken) =>
+            {
+                if (await _studentService.IsStudentNameArExistAsync(studentNameAr, dto.Id))
+                    throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+
+                return true;
+            });
     }
+
     private void ValidateNameEn()
     {
         RuleFor(x => x.NameEn)
-            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
-            .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
+            .NotEmpty()
+            .WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
+
+            .MaximumLength(100)
+            .WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+
+            .MustAsync(async (dto, studentNameEn, cancellationToken) =>
+            {
+                if (await _studentService.IsStudentNameEnExistAsync(studentNameEn, dto.Id))
+                    throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+
+                return true;
+            });
     }
 
 
@@ -50,6 +83,11 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     private void ValidateDepartmentId()
     {
         RuleFor(x => x.DepartmentId)
-            .GreaterThan(0).WithMessage(_localizer[SharedResourceKeys.DepartmentIdGreaterThanZero]);
+            .GreaterThan(0)
+            .WithMessage(_localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
+
+            .MustAsync(async (departmentId, CancellationToken) =>
+                await _departmentService.IsExistByIdAsync(departmentId.Value))
+            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
     }
 }

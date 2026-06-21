@@ -13,7 +13,7 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
         ResponseHandler,
         IRequestHandler<AddStudentCommand, Response<string>>,
         IRequestHandler<EditStudentCommand, Response<string>>,
-        IRequestHandler<DeleteStudentCommand, Response<string>>
+        IRequestHandler<DeleteStudentByIdCommand, Response<string>>
 
     {
 
@@ -30,34 +30,21 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
         public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
         {
             var student = _mapper.Map<Student>(request);
-            bool result = await _studentService.AddStudentAsync(student);
-
-            if (result)
-                return Created<string>("Student added successfully.");
-            else
-                return UnprocessableEntity<string>("Failed to add student.");
+            await _studentService.AddAsync(student);
+            return Created<string>();
         }
 
         public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
         {
             var student = _mapper.Map<Student>(request);
-            bool result = await _studentService.EditStudentAsync(student);
-
-            if (result)
-                return Success<string>("Student updated successfully.");
-            else
-                return UnprocessableEntity<string>("Failed to update student.");
+            await _studentService.UpdateAsync(student);
+            return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
 
-        public async Task<Response<string>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(DeleteStudentByIdCommand request, CancellationToken cancellationToken)
         {
-            bool isDeleted = await _studentService.DeleteByIdAsync(request.Id);
-
-            if (isDeleted)
-                return Deleted<string>("Student deleted successfully.");
-            else
-                return NotFound<string>("Failed to delete student.");
-
+            await _studentService.DeleteByIdAsync(request.Id);
+            return Deleted<string>();
         }
     }
 }

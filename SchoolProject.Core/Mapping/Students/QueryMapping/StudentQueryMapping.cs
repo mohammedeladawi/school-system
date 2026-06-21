@@ -6,18 +6,18 @@ namespace SchoolProject.Core.Mapping.Students;
 
 public partial class StudentProfile
 {
-    private void MapStudentToStudentDtoForList()
+    private void MapStudentToGetAllStudentsQueryResponse()
     {
-        CreateMap<Student, StudentDtoForList>()
+        CreateMap<Student, GetAllStudentsQueryResponse>()
             .ForMember(
                 dest => dest.DepartmentName,
                 opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
 
     }
 
-    private void MapStudentToSingleStudentDto()
+    private void MapStudentToGetStudentByIdQueryResponse()
     {
-        CreateMap<Student, SingleStudentDto>()
+        CreateMap<Student, GetStudentByIdQueryResponse>()
            .ForMember(
                 dest => dest.DepartmentName,
                 opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
@@ -25,7 +25,7 @@ public partial class StudentProfile
 
     private void MapStudentToPaginatedStudentDto()
     {
-        CreateMap<Student, PaginatedStudentsDto>()
+        CreateMap<Student, GetPaginatedStudentsQueryResponse>()
            .ForMember(
                 dest => dest.DepartmentName,
                 opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));

@@ -4,4 +4,4 @@ using SchoolProject.Core.Features.Students.Queries.Responses;
 
 namespace SchoolProject.Core.Features.Students.Queries.Models;
 
-public record GetSingleStudentQuery(int Id) : IRequest<Response<SingleStudentDto>>;
+public record GetStudentByIdQuery(int Id) : IRequest<Response<GetStudentByIdQueryResponse>>;

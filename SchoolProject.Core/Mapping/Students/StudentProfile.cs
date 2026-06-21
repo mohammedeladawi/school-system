@@ -6,8 +6,8 @@ public partial class StudentProfile : Profile
 {
     public StudentProfile()
     {
-        MapStudentToStudentDtoForList();
-        MapStudentToSingleStudentDto();
+        MapStudentToGetAllStudentsQueryResponse();
+        MapStudentToGetStudentByIdQueryResponse();
         MapAddStudentCommandToStudent();
         MapEditStudentCommandToStudent();
         MapStudentToPaginatedStudentDto();

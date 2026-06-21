@@ -1,6 +1,6 @@
 namespace SchoolProject.Core.Features.Students.Queries.Responses;
 
-public record SingleStudentDto
+public record GetStudentByIdQueryResponse
 {
     public int Id { get; init; }
     public string Name { get; init; } = null!;

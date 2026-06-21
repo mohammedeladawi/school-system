@@ -1,6 +1,6 @@
 namespace SchoolProject.Core.Responses;
 
-public record PaginatedStudentsDto
+public record GetPaginatedStudentsQueryResponse
 {
     public int Id { get; init; }
     public string Name { get; init; } = null!;

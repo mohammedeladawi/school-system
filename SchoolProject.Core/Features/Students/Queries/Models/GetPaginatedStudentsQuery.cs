@@ -5,7 +5,7 @@ using StudentProject.Data.Enums;
 
 namespace SchoolProject.Core.Features.Students.Queries.Models;
 
-public record GetPaginatedStudentsQuery : IRequest<PaginatedResponse<PaginatedStudentsDto>>
+public record GetPaginatedStudentsQuery : IRequest<PaginatedResponse<GetPaginatedStudentsQueryResponse>>
 {
     public int PageNumber { get; init; }
     public int PageSize { get; init; }

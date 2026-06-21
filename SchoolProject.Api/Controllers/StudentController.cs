@@ -28,7 +28,7 @@ public class StudentController : AppControllerBase
     [HttpGet(Router.Student.GetById)]
     public async Task<IActionResult> GetStudentById(int id)
     {
-        var students = await Mediator.Send(new GetSingleStudentQuery(id));
+        var students = await Mediator.Send(new GetStudentByIdQuery(id));
         return NewResult(students);
     }
 
@@ -49,7 +49,7 @@ public class StudentController : AppControllerBase
     [HttpDelete(Router.Student.Delete)]
     public async Task<IActionResult> DeleteStudent(int id)
     {
-        var result = await Mediator.Send(new DeleteStudentCommand(id));
+        var result = await Mediator.Send(new DeleteStudentByIdCommand(id));
         return NewResult(result);
     }
 }

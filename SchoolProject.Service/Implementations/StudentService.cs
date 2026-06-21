@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
+using SchoolProject.Data.CustomExceptions;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
@@ -16,64 +17,60 @@ public class StudentService : IStudentService
         this._studentRepository = studentRepository;
     }
 
-    public async Task<List<Student>> GetAllStudentsAsync()
-    {
-        return await _studentRepository.GetAllStudentsAsync();
-    }
-
-    public async Task<Student> GetStudentByIdAsync(int id)
-    {
-
-        var student = await _studentRepository.GetTableNoTracking()
-                            .Include(s => s.Department)
-                            .Where(s => s.Id == id)
-                            .FirstOrDefaultAsync();
-        return student;
-    }
-
-    public async Task<bool> AddStudentAsync(Student student)
-    {
-        if (await _studentRepository.IsNameExistAsync(student.NameEn, student.NameAr)) return false;
-
-        await _studentRepository.AddAsync(student);
-
-        return true;
-    }
-
-    public async Task<bool> EditStudentAsync(Student student)
-    {
-        if (await _studentRepository.IsNameExistExceptIdAsync(student.NameEn, student.NameAr, student.Id))
-            return false;
-
-        await _studentRepository.UpdateAsync(student);
-        return true;
-    }
-
-    public async Task<bool> DeleteByIdAsync(int id)
-    {
-        var student = await _studentRepository.GetByIdAsync(id);
-        if (student is null) return false;
-
-        try
-        {
-            await _studentRepository.DeleteAsync(student);
-            return true;
-        }
-        catch (Exception e)
-        {
-            throw new InvalidOperationException($"Error while deleting student with id {id}");
-        }
-
-    }
-
     public async Task<List<Student>> GetPaginatedStudentsAsync(int pageNumber, int pageSize, string? searchTerm = null, StudentOrderingEnum? orderBy = null)
     {
-        var students = await _studentRepository.GetPaginatedAsync(pageNumber, pageSize, searchTerm, orderBy);
+        var students = await _studentRepository.GetPaginatedStudentsAsync(pageNumber, pageSize, searchTerm, orderBy);
         return students;
     }
 
     public async Task<int> GetTotalStudentsCountAsync()
     {
         return await _studentRepository.GetTotalCountAsync();
+    }
+
+    public async Task<Student?> GetByIdAsync(int id)
+    {
+        var student = await _studentRepository.GetStudentByIdAsync(id);
+        return student;
+    }
+
+    public async Task<List<Student>> GetAllAsync()
+    {
+        return await _studentRepository.GetAllStudentsAsync();
+    }
+
+    public async Task AddAsync(Student student)
+    {
+        await _studentRepository.AddAsync(student);
+    }
+
+    public async Task UpdateAsync(Student student)
+    {
+        await _studentRepository.UpdateAsync(student);
+    }
+
+    public async Task DeleteByIdAsync(int id)
+    {
+        var student = await _studentRepository.GetByIdAsync(id);
+        await _studentRepository.DeleteAsync(student);
+    }
+
+    public async Task<bool> IsStudentExistByIdAsync(int id)
+    {
+        return await _studentRepository.IsExistByIdAsync(id);
+    }
+
+    public async Task<bool> IsStudentNameEnExistAsync(string nameEn, int? excludedId = null)
+    {
+        return await _studentRepository.IsStudentNameEnExistAsync(nameEn, excludedId);
+    }
+    public async Task<bool> IsStudentNameArExistAsync(string nameAr, int? excludedId = null)
+    {
+        return await _studentRepository.IsStudentNameArExistAsync(nameAr, excludedId);
+    }
+
+    public async Task<bool> IsExistByIdAsync(int id)
+    {
+        return await _studentRepository.IsExistByIdAsync(id);
     }
 }

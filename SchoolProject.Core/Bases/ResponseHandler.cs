@@ -44,23 +44,33 @@ public class ResponseHandler
         };
     }
 
-    public Response<T> BadRequest<T>(string? Message = null)
+    public Response<T> BadRequest<T>(string? message = null)
     {
         return new Response<T>()
         {
             StatusCode = System.Net.HttpStatusCode.BadRequest,
             Succeeded = false,
-            Message = Message ?? _localizer[SharedResourceKeys.BadRequest].Value
+            Message = message ?? _localizer[SharedResourceKeys.BadRequest].Value
         };
     }
 
-    public Response<T> UnprocessableEntity<T>(string? Message = null)
+    public Response<T> Conflict<T>(string? message = null)
+    {
+        return new Response<T>()
+        {
+            StatusCode = System.Net.HttpStatusCode.Conflict,
+            Succeeded = false,
+            Message = message ?? _localizer[SharedResourceKeys.Conflict].Value
+        };
+    }
+
+    public Response<T> UnprocessableEntity<T>(string? message = null)
     {
         return new Response<T>()
         {
             StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
             Succeeded = false,
-            Message = Message ?? _localizer[SharedResourceKeys.UnprocessableEntity].Value
+            Message = message ?? _localizer[SharedResourceKeys.UnprocessableEntity].Value
         };
     }
 
@@ -74,14 +84,13 @@ public class ResponseHandler
         };
     }
 
-    public Response<T> Created<T>(T entity, object? Meta = null)
+    public Response<T> Created<T>(string? message = null, object? Meta = null)
     {
         return new Response<T>()
         {
-            Data = entity,
             StatusCode = System.Net.HttpStatusCode.Created,
             Succeeded = true,
-            Message = _localizer[SharedResourceKeys.CreatedSuccessfully].Value,
+            Message = message ?? _localizer[SharedResourceKeys.CreatedSuccessfully].Value,
             Meta = Meta
         };
     }

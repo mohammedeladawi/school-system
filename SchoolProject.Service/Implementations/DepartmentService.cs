@@ -18,7 +18,7 @@ public class DepartmentService : IDepartmentService
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Department entity)
+    public Task DeleteByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
@@ -28,13 +28,18 @@ public class DepartmentService : IDepartmentService
         throw new NotImplementedException();
     }
 
-    public Task<Department> GetByIdAsync(int id)
+    public async Task<Department?> GetByIdAsync(int id)
     {
-        return _departmentRepository.GetDepartmentByIdAsync(id);
+        return await _departmentRepository.GetDepartmentByIdAsync(id);
     }
 
     public Task UpdateAsync(Department entity)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<bool> IsExistByIdAsync(int id)
+    {
+        return await _departmentRepository.IsExistByIdAsync(id);
     }
 }

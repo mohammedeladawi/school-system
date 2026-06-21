@@ -18,4 +18,5 @@ public interface IGenericRepositoryAsync<T> where T : class
     Task UpdateRangeAsync(ICollection<T> entities);
     Task DeleteAsync(T entity);
     Task<int> GetTotalCountAsync();
+    Task<bool> IsExistByIdAsync(int id);
 }

@@ -2,7 +2,10 @@ using System.Net;
 using System.Text.Json;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
+using SchoolProject.Core.Resources;
+using SchoolProject.Data.CustomExceptions;
 
 namespace SchoolProject.Api.Middlewares;
 
@@ -30,40 +33,46 @@ public class ErrorHandlerMiddleware
             //TODO:: cover all validation errors
             switch (error)
             {
-                case UnauthorizedAccessException e:
+                case UnauthorizedAccessException:
                     // custom application error
                     responseModel.Message = error.Message;
                     responseModel.StatusCode = HttpStatusCode.Unauthorized;
                     response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     break;
 
-                case ValidationException e:
+                case ValidationException:
                     // custom validation error
                     responseModel.Message = error.Message;
                     responseModel.StatusCode = HttpStatusCode.UnprocessableEntity;
                     response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
                     break;
 
-                case KeyNotFoundException e:
+                case KeyNotFoundException:
                     // not found error
                     responseModel.Message = error.Message; ;
                     responseModel.StatusCode = HttpStatusCode.NotFound;
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     break;
 
-                case DbUpdateException e:
+                case DbUpdateException:
                     // can't update error
-                    responseModel.Message = e.Message;
+                    responseModel.Message = error.Message;
                     responseModel.StatusCode = HttpStatusCode.BadRequest;
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
 
-                case Exception e:
+                case ConflictException:
+                    responseModel.Message = error.Message;
+                    responseModel.StatusCode = HttpStatusCode.Conflict;
+                    response.StatusCode = (int)HttpStatusCode.Conflict;
+                    break;
+
+                case Exception:
                     // Generic exception handling
-                    responseModel.Message = e.Message;
-                    if (e.InnerException != null)
+                    responseModel.Message = error.Message;
+                    if (error.InnerException != null)
                     {
-                        responseModel.Message += "\n" + e.InnerException.Message;
+                        responseModel.Message += "\n" + error.InnerException.Message;
                     }
                     responseModel.StatusCode = HttpStatusCode.InternalServerError;
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
