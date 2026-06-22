@@ -16,7 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddInfrastructureDependencies(builder.Configuration)
+builder.Services.AddInfrastructureDependencies()
+    .AddServiceRegisteration(builder.Configuration)
     .AddCoreDependencies()
     .AddServiceDependencies();
 
