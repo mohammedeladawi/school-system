@@ -9,11 +9,8 @@ namespace SchoolProject.Infrastructure;
 
 public static class ModuleInfrastructureDependencies
 {
-    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
     {
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("dbcontext")));
-
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IInstructorRepository, InstructorRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
