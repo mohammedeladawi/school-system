@@ -1,4 +1,4 @@
-namespace SchoolProject.Data.CustomExceptions;
+namespace SchoolProject.Shared.CustomExceptions;
 
 public class ConflictException : Exception
 {

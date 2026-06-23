@@ -1,8 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Core.Resources;
-using SchoolProject.Data.CustomExceptions;
+using SchoolProject.Shared.CustomExceptions;
+using SchoolProject.Shared.Resources;
 using SchoolProject.Service.Abstracts;
 
 namespace SchoolProject.Core.Features.Students.Commands.Validators;

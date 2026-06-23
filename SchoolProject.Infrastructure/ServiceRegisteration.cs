@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SchoolProject.Infrastructure.Abstracts;
+using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.Repositories;
 
 namespace SchoolProject.Infrastructure;
 
@@ -14,6 +13,10 @@ public static class ServiceRegisteration
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("dbcontext")));
+
+        services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -33,7 +36,7 @@ public static class ServiceRegisteration
             // User settings.
             options.User.AllowedUserNameCharacters =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            options.User.RequireUniqueEmail = false;
+            options.User.RequireUniqueEmail = true;
         });
 
         return services;

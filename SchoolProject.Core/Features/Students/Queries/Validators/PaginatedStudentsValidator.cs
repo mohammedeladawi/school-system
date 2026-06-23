@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Students.Queries.Models;
-using SchoolProject.Core.Resources;
+using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Students.Query.Validators;
 

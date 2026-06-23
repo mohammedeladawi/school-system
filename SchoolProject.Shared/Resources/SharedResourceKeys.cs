@@ -1,4 +1,4 @@
-namespace SchoolProject.Core.Resources;
+namespace SchoolProject.Shared.Resources;
 
 public static class SharedResourceKeys
 {
@@ -17,6 +17,19 @@ public static class SharedResourceKeys
     public static string NameTooLong = "NameTooLong";
     public static string NameArRequired = "NameArRequired";
     public static string NameEnRequired = "NameEnRequired";
+    public static string UsernameRequired = "UsernameRequired";
+    public static string UsernameInvalid = "UsernameInvalid";
+    public static string UsernameTooLong = "UsernameTooLong";
+    public static string EmailRequired = "EmailRequired";
+    public static string EmailInvalid = "EmailInvalid";
+    public static string PasswordRequired = "PasswordRequired";
+    public static string PasswordMinimumLength = "PasswordMinimumLength";
+    public static string PasswordRequireUppercase = "PasswordRequireUppercase";
+    public static string PasswordRequireLowercase = "PasswordRequireLowercase";
+    public static string PasswordRequireDigit = "PasswordRequireDigit";
+    public static string PasswordRequireNonAlphanumeric = "PasswordRequireNonAlphanumeric";
+    public static string ConfirmPasswordRequired = "ConfirmPasswordRequired";
+    public static string PasswordsDoNotMatch = "PasswordsDoNotMatch";
     public static string PhoneRequired = "PhoneRequired";
     public static string PhoneTooLong = "PhoneTooLong";
     public static string AddressRequired = "AddressRequired";

@@ -4,6 +4,7 @@
     <ProjectReference Include="..\SchoolProject.Data\SchoolProject.Data.csproj" />
     <ProjectReference Include="..\SchoolProject.Infrastructure\SchoolProject.Infrastructure.csproj" />
     <ProjectReference Include="..\SchoolProject.Service\SchoolProject.Service.csproj" />
+    <ProjectReference Include="..\SchoolProject.Shared\SchoolProject.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -11,7 +12,6 @@
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.6" />
   </ItemGroup>
 
   <PropertyGroup>

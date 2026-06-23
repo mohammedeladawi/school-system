@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SchoolProject.Core\SchoolProject.Core.csproj" />
+    <ProjectReference Include="..\SchoolProject.Shared\SchoolProject.Shared.csproj" />
   </ItemGroup>
 
 </Project>
