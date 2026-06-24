@@ -98,4 +98,11 @@ public class ApplicationUserService : IApplicationUserService
         if (!deleteResult.Succeeded)
             throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));
     }
+    public async Task ChangeApplicaitonUserPasswordAsync(int id, string currentPassword, string newPassword)    
+    {   var user = await _userManager.FindByIdAsync(id.ToString());
+        var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+        if (!changePasswordResult.Succeeded)
+            throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));                       
+    }
 }

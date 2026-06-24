@@ -19,4 +19,6 @@ public interface IApplicationUserService
     public Task<bool> IsApplicationUserIdExist(int id);
 
     public Task DeleteApplicationUserById(ApplicationUser user);
+
+    public Task ChangeApplicaitonUserPasswordAsync(int id, string currentPassword, string newPassword);
 }

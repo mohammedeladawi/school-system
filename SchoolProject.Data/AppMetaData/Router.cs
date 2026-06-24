@@ -49,6 +49,7 @@ public static class Router
         public const string GetById = ApplicationUserBase + "{id}";
         public const string Edit = ApplicationUserBase + "Edit";
         public const string Delete = ApplicationUserBase + "{id}";
+        public const string ChangePassword = ApplicationUserBase + "ChangePassword";
 
 
     }

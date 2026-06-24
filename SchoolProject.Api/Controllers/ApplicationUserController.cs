@@ -45,4 +45,11 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
+    [HttpPut(Router.ApplicationUser.ChangePassword)]
+    public async Task<IActionResult> DeleteApplicationUserById( ChangePasswordCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
 }

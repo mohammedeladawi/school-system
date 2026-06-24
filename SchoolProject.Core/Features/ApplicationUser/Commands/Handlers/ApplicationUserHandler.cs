@@ -12,8 +12,9 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
     public class ApplicationUserCommandHandler :
         ResponseHandler,
         IRequestHandler<AddApplicationUserCommand, Response<string>>,
-        IRequestHandler<EditApplicationUserCommand, Response<string>>, 
-        IRequestHandler<DeleteApplicationUserByIdCommand, Response<string>>
+        IRequestHandler<EditApplicationUserCommand, Response<string>>,
+        IRequestHandler<DeleteApplicationUserByIdCommand, Response<string>>,
+        IRequestHandler<ChangePasswordCommand, Response<string>>
     {
         private readonly IApplicationUserService _applicationUserService;
 
@@ -51,6 +52,12 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
             await _applicationUserService.DeleteApplicationUserById(user);
 
             return Deleted<string>();
+        }
+
+        public async Task<Response<string>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+        {
+            await _applicationUserService.ChangeApplicaitonUserPasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
+            return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
     }
 }
