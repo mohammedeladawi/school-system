@@ -10,7 +10,7 @@ public partial class StudentProfile : Profile
         MapStudentToGetStudentByIdQueryResponse();
         MapAddStudentCommandToStudent();
         MapEditStudentCommandToStudent();
-        MapStudentToPaginatedStudentDto();
+        MapStudentToGetPaginatedStudentsQueryResponse();
     }
 
 

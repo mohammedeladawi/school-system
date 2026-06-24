@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Students.Queries.Models;
 using SchoolProject.Core.Features.Students.Queries.Responses;
-using SchoolProject.Core.Resources;
+using SchoolProject.Shared.Resources;
 using SchoolProject.Core.Responses;
 using SchoolProject.Service.Abstracts;
 
@@ -17,14 +17,12 @@ public class StudentQueryHandler :
     IRequestHandler<GetPaginatedStudentsQuery, PaginatedResponse<GetPaginatedStudentsQueryResponse>>
 {
     private readonly IStudentService _studentService;
-    private readonly IMapper _mapper;
     public StudentQueryHandler(
         IStudentService studentService,
         IMapper mapper,
-        IStringLocalizer<SharedResource> localizer) : base(localizer)
+        IStringLocalizer<SharedResource> localizer) : base(localizer, mapper)
     {
         this._studentService = studentService;
-        this._mapper = mapper;
     }
 
     public async Task<Response<List<GetAllStudentsQueryResponse>>> Handle(GetAllStudentsQuery request, CancellationToken cancellationToken)

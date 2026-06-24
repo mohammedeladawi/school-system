@@ -118,103 +118,163 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome</value>
+    <value>مرحباً</value>
     <comment/>
   </data>
   <data name="NotFound" xml:space="preserve">
-    <value>Resource not found</value>
+    <value>لم يتم العثور على المورد</value>
     <comment/>
   </data>
   <data name="DeletedSuccessfully" xml:space="preserve">
-    <value>Deleted Successfully</value>
+    <value>تم الحذف بنجاح</value>
     <comment/>
   </data>
   <data name="AddedSuccessfully" xml:space="preserve">
-    <value>Added Successfully</value>
+    <value>تم الإضافة بنجاح</value>
     <comment/>
   </data>
   <data name="CreatedSuccessfully" xml:space="preserve">
-    <value>Created Successfully</value>
+    <value>تم الإنشاء بنجاح</value>
     <comment/>
   </data>
   <data name="UpdatedSuccessfully" xml:space="preserve">
-    <value>Updated Successfully</value>
+    <value>تم التحديث بنجاح</value>
     <comment/>
   </data>
   <data name="SuccessfulOperation" xml:space="preserve">
-    <value>Operation completed successfully.</value>
+    <value>تمت العملية بنجاح</value>
     <comment/>
   </data>
   <data name="Unauthorized" xml:space="preserve">
-    <value>Unauthorized</value>
+    <value>غير مصرح</value>
     <comment/>
   </data>
   <data name="BadRequest" xml:space="preserve">
-    <value>Bad Request</value>
+    <value>طلب غير صالح</value>
     <comment/>
   </data>
   <data name="Conflict" xml:space="preserve">
-    <value>Conflict occurred.</value>
+    <value>حدث تعارض.</value>
     <comment/>
   </data>
   <data name="UnprocessableEntity" xml:space="preserve">
-    <value>Unprocessable Entity</value>
+    <value>الكيان غير قابل للمعالجة</value>
     <comment/>
   </data>
   <data name="NameRequired" xml:space="preserve">
-    <value>Name is required.</value>
+    <value>الاسم مطلوب.</value>
     <comment/>
   </data>
   <data name="NameTooLong" xml:space="preserve">
-    <value>Name cannot exceed 100 characters.</value>
+    <value>لا يمكن أن يتجاوز الاسم 100 حرف.</value>
     <comment/>
   </data>
   <data name="NameArRequired" xml:space="preserve">
-    <value>Arabic name is required.</value>
+    <value>الاسم العربي مطلوب.</value>
     <comment/>
   </data>
   <data name="NameEnRequired" xml:space="preserve">
-    <value>English name is required.</value>
+    <value>الاسم الإنجليزي مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>اسم المستخدم مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="UsernameInvalid" xml:space="preserve">
+    <value>اسم المستخدم يحتوي على أحرف غير صالحة.</value>
+    <comment/>
+  </data>
+  <data name="UsernameTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز اسم المستخدم 256 حرفًا.</value>
+    <comment/>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>البريد الإلكتروني مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>تنسيق البريد الإلكتروني غير صالح.</value>
+    <comment/>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>كلمة المرور مطلوبة.</value>
+    <comment/>
+  </data>
+  <data name="PasswordMinimumLength" xml:space="preserve">
+    <value>يجب أن تكون كلمة المرور 6 أحرف على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="PasswordRequireUppercase" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="PasswordRequireLowercase" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="PasswordRequireDigit" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على رقم واحد على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="PasswordRequireNonAlphanumeric" xml:space="preserve">
+    <value>يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>تأكيد كلمة المرور مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>كلمة المرور وتأكيد كلمة المرور غير متطابقتين.</value>
     <comment/>
   </data>
   <data name="PhoneRequired" xml:space="preserve">
-    <value>Phone is required.</value>
+    <value>الهاتف مطلوب.</value>
     <comment/>
   </data>
   <data name="PhoneTooLong" xml:space="preserve">
-    <value>Phone cannot exceed 20 characters.</value>
+    <value>لا يمكن أن يتجاوز الهاتف 20 حرفًا.</value>
     <comment/>
   </data>
   <data name="AddressRequired" xml:space="preserve">
-    <value>Address is required.</value>
+    <value>العنوان مطلوب.</value>
     <comment/>
   </data>
   <data name="AddressTooLong" xml:space="preserve">
-    <value>Address cannot exceed 200 characters.</value>
+    <value>لا يمكن أن يتجاوز العنوان 200 حرف.</value>
+    <comment/>
+  </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>المعرف مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="IdGreaterThanZero" xml:space="preserve">
+    <value>يجب أن يكون المعرف أكبر من 0.</value>
     <comment/>
   </data>
   <data name="DepartmentIdGreaterThanZero" xml:space="preserve">
-    <value>DepartmentId must be greater than 0.</value>
+    <value>يجب أن يكون DepartmentId أكبر من 0.</value>
     <comment/>
   </data>
   <data name="NotExist" xml:space="preserve">
-    <value>Resource does not exist.</value>
+    <value>المورد غير موجود.</value>
     <comment/>
   </data>
   <data name="PageNumberRequired" xml:space="preserve">
-    <value>PageNumber is required.</value>
+    <value>رقم الصفحة مطلوب.</value>
     <comment/>
   </data>
   <data name="PageNumberGreaterThanZero" xml:space="preserve">
-    <value>PageNumber must be greater than 0.</value>
+    <value>يجب أن يكون رقم الصفحة أكبر من 0.</value>
     <comment/>
   </data>
   <data name="PageSizeRequired" xml:space="preserve">
-    <value>PageSize is required.</value>
+    <value>حجم الصفحة مطلوب.</value>
     <comment/>
   </data>
   <data name="PageSizeGreaterThanZero" xml:space="preserve">
-    <value>PageSize must be greater than 0.</value>
+    <value>يجب أن يكون حجم الصفحة أكبر من 0.</value>
     <comment/>
   </data>
 </root>

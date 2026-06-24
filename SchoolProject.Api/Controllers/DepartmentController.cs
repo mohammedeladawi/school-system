@@ -5,7 +5,6 @@ using SchoolProject.Data.AppMetaData;
 
 namespace SchoolProject.Api.Controllers;
 
-[ApiController]
 public class DepartmentController : AppControllerBase
 {
     [HttpGet(Router.Department.GetById)]

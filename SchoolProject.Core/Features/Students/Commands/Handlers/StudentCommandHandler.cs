@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Core.Resources;
+using SchoolProject.Shared.Resources;
 using SchoolProject.Data.Entities;
 using SchoolProject.Service.Abstracts;
 
@@ -16,14 +16,14 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
         IRequestHandler<DeleteStudentByIdCommand, Response<string>>
 
     {
-
-        private readonly IMapper _mapper;
         private readonly IStudentService _studentService;
 
-        public StudentCommandHandler(IMapper mapper, IStudentService studentService,
-             IStringLocalizer<SharedResource> localizer) : base(localizer)
+        public StudentCommandHandler(
+            IMapper mapper,
+            IStudentService studentService,
+            IStringLocalizer<SharedResource> localizer)
+            : base(localizer, mapper)
         {
-            _mapper = mapper;
             _studentService = studentService;
         }
 

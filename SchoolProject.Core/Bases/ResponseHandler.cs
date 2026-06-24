@@ -1,14 +1,20 @@
+using AutoMapper;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Core.Resources;
+using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Bases;
 
 public class ResponseHandler
 {
     protected readonly IStringLocalizer<SharedResource> _localizer;
-    public ResponseHandler(IStringLocalizer<SharedResource> localizer)
+    protected readonly IMapper _mapper;
+
+    public ResponseHandler(
+        IStringLocalizer<SharedResource> localizer,
+        IMapper mapper)
     {
         _localizer = localizer;
+        _mapper = mapper;
     }
 
     public Response<T> Deleted<T>(string? message = null)

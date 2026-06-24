@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
-using SchoolProject.Data.CustomExceptions;
+using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
