@@ -43,10 +43,13 @@ public static class Router
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
+
         public const string Add = ApplicationUserBase + "Add";
         public const string PaginatedList = ApplicationUserBase + "PaginatedList";
         public const string GetById = ApplicationUserBase + "{id}";
         public const string Edit = ApplicationUserBase + "Edit";
+        public const string Delete = ApplicationUserBase + "{id}";
+
 
     }
 }

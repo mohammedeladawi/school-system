@@ -17,4 +17,6 @@ public interface IApplicationUserService
 
     public Task UpdateApplicationUserAsync(ApplicationUser user);
     public Task<bool> IsApplicationUserIdExist(int id);
+
+    public Task DeleteApplicationUserById(ApplicationUser user);
 }

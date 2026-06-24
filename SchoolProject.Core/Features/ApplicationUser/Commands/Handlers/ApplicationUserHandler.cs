@@ -12,9 +12,8 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
     public class ApplicationUserCommandHandler :
         ResponseHandler,
         IRequestHandler<AddApplicationUserCommand, Response<string>>,
-        IRequestHandler<EditApplicationUserCommand, Response<string>>
-
-
+        IRequestHandler<EditApplicationUserCommand, Response<string>>, 
+        IRequestHandler<DeleteApplicationUserByIdCommand, Response<string>>
     {
         private readonly IApplicationUserService _applicationUserService;
 
@@ -41,6 +40,17 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
             _mapper.Map(request, user);
             await _applicationUserService.UpdateApplicationUserAsync(user);
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
+        }
+
+        public async Task<Response<string>> Handle(DeleteApplicationUserByIdCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _applicationUserService.GetApplicationUserByIdAsync(request.Id);
+            if (user == null)
+                return NotFound<string>();
+
+            await _applicationUserService.DeleteApplicationUserById(user);
+
+            return Deleted<string>();
         }
     }
 }

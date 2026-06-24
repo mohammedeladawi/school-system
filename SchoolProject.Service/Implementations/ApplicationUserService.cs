@@ -91,4 +91,11 @@ public class ApplicationUserService : IApplicationUserService
     {
         return _userManager.Users.AnyAsync(u => u.Id == id);
     }
+
+    public async Task DeleteApplicationUserById(ApplicationUser user)
+    {
+        var deleteResult = await _userManager.DeleteAsync(user);
+        if (!deleteResult.Succeeded)
+            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));
+    }
 }

@@ -38,4 +38,11 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
+    [HttpDelete(Router.ApplicationUser.Delete)]
+    public async Task<IActionResult> DeleteApplicationUserById( int id)
+    {
+        var result = await Mediator.Send(new DeleteApplicationUserByIdCommand(id));
+        return NewResult(result);
+    }
+
 }
