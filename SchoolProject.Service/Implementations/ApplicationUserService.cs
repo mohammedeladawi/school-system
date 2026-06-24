@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
@@ -44,5 +45,31 @@ public class ApplicationUserService : IApplicationUserService
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
+    }
+
+    public async Task<List<ApplicationUser>> GetAllApplicationUsersAsync()
+    {
+        return await _userManager.Users.ToListAsync();
+    }
+
+    public async Task<List<ApplicationUser>> GetPaginatedApplicationUsersAsync(int pageNumber, int pageSize)
+    {
+        var paginatedApplicationUsers = await _userManager.Users.OrderBy(au => au.Id)
+                                      .Skip((pageNumber - 1) * pageSize)
+                                      .Take(pageSize)
+                                      .ToListAsync();
+        return paginatedApplicationUsers;
+    }
+
+    public async Task<int> GetTotalApplicationUsersCountAsync()
+    {
+        int usersCount = await _userManager.Users.CountAsync();
+        return usersCount;
+    }
+
+    public async Task<ApplicationUser?> GetApplicationUserByIdAsync(int id)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        return user;
     }
 }

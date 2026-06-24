@@ -7,5 +7,7 @@ public partial class ApplicationUser : Profile
     public ApplicationUser()
     {
         MapAddApplicationUserCommandToApplicationUser();
+        MapApplicationUserToGetPaginatedApplicationUsersQueryResponse();
+        MapApplicationUserToGetApplicationUserByIdQueryResponse();
     }
 }

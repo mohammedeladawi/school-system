@@ -23,7 +23,7 @@ public partial class StudentProfile
                 opt => opt.MapFrom(src => src.Department.Name ?? string.Empty));
     }
 
-    private void MapStudentToPaginatedStudentDto()
+    private void MapStudentToGetPaginatedStudentsQueryResponse()
     {
         CreateMap<Student, GetPaginatedStudentsQueryResponse>()
            .ForMember(

@@ -17,9 +17,9 @@ public static class SharedResourceKeys
     public static string NameTooLong = "NameTooLong";
     public static string NameArRequired = "NameArRequired";
     public static string NameEnRequired = "NameEnRequired";
-    public static string UsernameRequired = "UsernameRequired";
-    public static string UsernameInvalid = "UsernameInvalid";
-    public static string UsernameTooLong = "UsernameTooLong";
+    public static string UserNameRequired = "UserNameRequired";
+    public static string UserNameInvalid = "UserNameInvalid";
+    public static string UserNameTooLong = "UserNameTooLong";
     public static string EmailRequired = "EmailRequired";
     public static string EmailInvalid = "EmailInvalid";
     public static string PasswordRequired = "PasswordRequired";

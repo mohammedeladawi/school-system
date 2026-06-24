@@ -1,15 +1,15 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Core.Features.Students.Queries.Models;
+using SchoolProject.Core.Features.ApplicationUser.Queries.Models;
 using SchoolProject.Shared.Resources;
 
-namespace SchoolProject.Core.Features.Students.Query.Validators;
+namespace SchoolProject.Core.Features.SApplicationUsers.Query.Validators;
 
-public class PaginatedStudentsValidator : AbstractValidator<GetPaginatedStudentsQuery>
+public class PaginatedSApplicationUsersValidator : AbstractValidator<GetPaginatedApplicationUsersQuery>
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public PaginatedStudentsValidator(IStringLocalizer<SharedResource> localizer)
+    public PaginatedSApplicationUsersValidator(IStringLocalizer<SharedResource> localizer)
     {
         _localizer = localizer;
         ValidatePageNumber();

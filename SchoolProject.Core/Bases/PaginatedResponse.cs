@@ -13,7 +13,11 @@ public class PaginatedResponse<T>
     public bool Success { get; } = true;
     public object Meta { get; }
 
-    public PaginatedResponse(IEnumerable<T> data, int pageNumber, int pageSize, int totalRecords)
+    public PaginatedResponse(
+        IEnumerable<T> data,
+        int pageNumber,
+        int pageSize,
+        int totalRecords)
     {
         Data = data;
         PageNumber = pageNumber;
@@ -21,7 +25,14 @@ public class PaginatedResponse<T>
         TotalRecords = totalRecords;
     }
 
-    public PaginatedResponse(IEnumerable<T> data, int pageNumber, int pageSize, int totalRecords, IEnumerable<string> messages, bool success = true, object meta = null)
+    public PaginatedResponse(
+        IEnumerable<T> data,
+        int pageNumber,
+        int pageSize,
+        int totalRecords,
+        IEnumerable<string> messages,
+        bool success = true,
+        object meta = null)
         : this(data, pageNumber, pageSize, totalRecords)
     {
         Messages = messages;
@@ -29,7 +40,13 @@ public class PaginatedResponse<T>
         Meta = meta;
     }
 
-    public static PaginatedResponse<T> SuccessResult(IEnumerable<T> data, int pageNumber, int pageSize, int totalRecords, IEnumerable<string> messages = null, object meta = null)
+    public static PaginatedResponse<T> SuccessResult(
+        IEnumerable<T> data,
+        int pageNumber,
+        int pageSize,
+        int totalRecords,
+        IEnumerable<string> messages = null,
+        object meta = null)
     {
         return new PaginatedResponse<T>(data, pageNumber, pageSize, totalRecords, messages ?? new List<string>(), true, meta);
     }
