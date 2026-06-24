@@ -25,9 +25,6 @@ public class ApplicationUserService : IApplicationUserService
 
     public async Task AddApplicationUserAsync(ApplicationUser user, string password)
     {
-        ArgumentNullException.ThrowIfNull(user.UserName);
-        ArgumentNullException.ThrowIfNull(user.Email);
-
         // Check if Username Exists, if yes throw conflict error
         if (await _userManager.FindByNameAsync(user.UserName) is not null)
             throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
@@ -58,6 +55,7 @@ public class ApplicationUserService : IApplicationUserService
                                       .Skip((pageNumber - 1) * pageSize)
                                       .Take(pageSize)
                                       .ToListAsync();
+
         return paginatedApplicationUsers;
     }
 
@@ -71,5 +69,26 @@ public class ApplicationUserService : IApplicationUserService
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
         return user;
+    }
+
+
+    public async Task UpdateApplicationUserAsync(ApplicationUser user)
+    {
+        var IsUserNameExist = await _userManager.Users.AnyAsync(u => u.UserName == user.UserName && u.Id != user.Id);
+        if ( IsUserNameExist )
+            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+
+        var IsEmailExist = await _userManager.Users.AnyAsync(u => u.Email == user.Email && u.Id != user.Id);
+        if ( IsEmailExist )
+            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+
+        var updatedUser = await _userManager.UpdateAsync(user);
+        if (!updatedUser.Succeeded)
+            throw new Exception(string.Join(" ", updatedUser.Errors.Select(e => e.Description)));
+    }
+
+    public Task<bool> IsApplicationUserIdExist(int id)
+    {
+        return _userManager.Users.AnyAsync(u => u.Id == id);
     }
 }

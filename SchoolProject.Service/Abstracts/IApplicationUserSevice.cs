@@ -14,4 +14,7 @@ public interface IApplicationUserService
         int pageSize);
 
     public Task<ApplicationUser> GetApplicationUserByIdAsync(int id);
+
+    public Task UpdateApplicationUserAsync(ApplicationUser user);
+    public Task<bool> IsApplicationUserIdExist(int id);
 }

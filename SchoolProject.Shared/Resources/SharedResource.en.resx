@@ -245,6 +245,14 @@
     <value>Address cannot exceed 200 characters.</value>
     <comment/>
   </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>Id is required.</value>
+    <comment/>
+  </data>
+  <data name="IdGreaterThanZero" xml:space="preserve">
+    <value>Id must be greater than 0.</value>
+    <comment/>
+  </data>
   <data name="DepartmentIdGreaterThanZero" xml:space="preserve">
     <value>DepartmentId must be greater than 0.</value>
     <comment/>

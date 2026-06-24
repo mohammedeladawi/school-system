@@ -36,6 +36,8 @@ public static class SharedResourceKeys
     public static string AddressTooLong = "AddressTooLong";
 
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
+    public static string IdRequired = "IdRequired";
+    public static string IdGreaterThanZero = "IdGreaterThanZero";
     public static string NotExist = "NotExist";
     public static string PageNumberRequired = "PageNumberRequired";
     public static string PageNumberGreaterThanZero = "PageNumberGreaterThanZero";

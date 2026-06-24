@@ -9,5 +9,6 @@ public partial class ApplicationUser : Profile
         MapAddApplicationUserCommandToApplicationUser();
         MapApplicationUserToGetPaginatedApplicationUsersQueryResponse();
         MapApplicationUserToGetApplicationUserByIdQueryResponse();
+        MapEditpplicationUserCommandToApplicationUser();
     }
 }

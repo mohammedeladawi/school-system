@@ -245,6 +245,14 @@
     <value>لا يمكن أن يتجاوز العنوان 200 حرف.</value>
     <comment/>
   </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>المعرف مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="IdGreaterThanZero" xml:space="preserve">
+    <value>يجب أن يكون المعرف أكبر من 0.</value>
+    <comment/>
+  </data>
   <data name="DepartmentIdGreaterThanZero" xml:space="preserve">
     <value>يجب أن يكون DepartmentId أكبر من 0.</value>
     <comment/>

@@ -17,17 +17,24 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
-    [HttpPost(Router.ApplicationUser.PaginatedList)]
+    [HttpGet(Router.ApplicationUser.PaginatedList)]
     public async Task<IActionResult> GetPaginatedApplicationUsers([FromQuery] GetPaginatedApplicationUsersQuery query)
     {
         var result = await Mediator.Send(query);
         return Ok(result);
     }
 
-    [HttpPost(Router.ApplicationUser.GetById)]
+    [HttpGet(Router.ApplicationUser.GetById)]
     public async Task<IActionResult> GetApplicationUserById( int id)
     {
         var result = await Mediator.Send(new GetApplicationUserByIdQuery(id));
+        return NewResult(result);
+    }
+
+    [HttpPut(Router.ApplicationUser.Edit)]
+    public async Task<IActionResult> UpdateApplicationUser( EditApplicationUserCommand command)
+    {
+        var result = await Mediator.Send(command);
         return NewResult(result);
     }
 

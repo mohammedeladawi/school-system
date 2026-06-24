@@ -46,5 +46,7 @@ public static class Router
         public const string Add = ApplicationUserBase + "Add";
         public const string PaginatedList = ApplicationUserBase + "PaginatedList";
         public const string GetById = ApplicationUserBase + "{id}";
+        public const string Edit = ApplicationUserBase + "Edit";
+
     }
 }

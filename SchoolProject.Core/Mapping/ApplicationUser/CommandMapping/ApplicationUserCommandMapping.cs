@@ -9,4 +9,8 @@ public partial class ApplicationUser
     {
         CreateMap<AddApplicationUserCommand, Data.Entities.Identities.ApplicationUser>();
     }
+    public void MapEditpplicationUserCommandToApplicationUser()
+    {
+        CreateMap<EditApplicationUserCommand, Data.Entities.Identities.ApplicationUser>();
+    }
 }
