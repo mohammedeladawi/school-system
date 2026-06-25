@@ -193,6 +193,10 @@
     <value>اسم المستخدم موجود بالفعل.</value>
     <comment/>
   </data>
+  <data name="UsernameAlreadyInUse" xml:space="preserve">
+    <value>اسم المستخدم مستخدم بالفعل.</value>
+    <comment/>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>البريد الإلكتروني مطلوب.</value>
     <comment/>
@@ -203,6 +207,10 @@
   </data>
   <data name="EmailInvalid" xml:space="preserve">
     <value>تنسيق البريد الإلكتروني غير صالح.</value>
+    <comment/>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>البريد الإلكتروني مستخدم بالفعل.</value>
     <comment/>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
@@ -283,6 +291,10 @@
   </data>
   <data name="PageSizeGreaterThanZero" xml:space="preserve">
     <value>يجب أن يكون حجم الصفحة أكبر من 0.</value>
+    <comment/>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>اسم المستخدم أو كلمة المرور غير صحيحة.</value>
     <comment/>
   </data>
 </root>

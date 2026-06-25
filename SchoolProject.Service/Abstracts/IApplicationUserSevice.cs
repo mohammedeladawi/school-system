@@ -15,4 +15,5 @@ public interface IApplicationUserService
     public Task<bool> DoesEmailExist(string email, int? excludeUserId = null);
     public Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize);
     public Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
+    public Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password);
 }

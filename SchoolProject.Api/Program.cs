@@ -13,7 +13,6 @@ builder.Services.AddControllers();
 
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddInfrastructureDependencies()
@@ -22,7 +21,7 @@ builder.Services.AddInfrastructureDependencies()
     .AddServiceDependencies();
 
 #region Localization Configurations
-builder.Services.AddLocalization(options => options.ResourcesPath = "");
+builder.Services.AddLocalization();
 
 // Supported cultures
 var supportedCultures = new[]
@@ -60,6 +59,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

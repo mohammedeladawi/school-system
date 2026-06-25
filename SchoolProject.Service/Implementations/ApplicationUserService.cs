@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -53,7 +54,7 @@ public class ApplicationUserService : IApplicationUserService
 
     public async Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null)
     {
-        return await IsExistAsync(u => u.Email == userName, excludeUserId);
+        return await IsExistAsync(u => u.UserName == userName, excludeUserId);
     }
 
     public async Task<ApplicationUser?> GetByIdAsync(int id)
@@ -103,6 +104,17 @@ public class ApplicationUserService : IApplicationUserService
 
         if (!changePasswordResult.Succeeded)
             throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
+    }
+
+    public async Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+
+        if (user is null)
+            return null;
+
+        var isValid = await _userManager.CheckPasswordAsync(user, password);
+        return isValid ? user : null;
     }
     #endregion
 }

@@ -24,20 +24,20 @@ public class CommonUserCommandValidator : AbstractValidator<CommonUserDto>
     {
         RuleFor(x => x.NameAr)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.NameArRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameArRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong]);
     }
 
     public void ValidateNameEn()
     {
         RuleFor(x => x.NameEn)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameEnRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameTooLong]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong]);
     }
 
 }

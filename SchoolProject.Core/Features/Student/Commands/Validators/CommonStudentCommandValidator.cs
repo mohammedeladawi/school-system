@@ -28,19 +28,19 @@ public class CommonStudentCommandValidator : AbstractValidator<CommonStudentDto>
     {
         RuleFor(x => x.Phone)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PhoneRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PhoneRequired])
 
             .MaximumLength(20)
-            .WithMessage(_localizer[SharedResourceKeys.PhoneTooLong]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PhoneTooLong]);
     }
     private void ValidateAddress()
     {
         RuleFor(x => x.Address)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.AddressRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.AddressRequired])
 
             .MaximumLength(200)
-            .WithMessage(_localizer[SharedResourceKeys.AddressTooLong]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.AddressTooLong]);
     }
     #endregion
 }

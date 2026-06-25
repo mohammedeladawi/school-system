@@ -21,9 +21,11 @@ public static class SharedResourceKeys
     public static string UserNameInvalid = "UsernameInvalid";
     public static string UserNameTooLong = "UsernameTooLong";
     public static string UserNameAlreadyExist = "UsernameAlreadyExist";
+    public static string UserNameAlreadyInUse = "UsernameAlreadyInUse";
     public static string EmailRequired = "EmailRequired";
     public static string EmailInvalid = "EmailInvalid";
     public static string EmailAlreadyExist = "EmailAlreadyExist";
+    public static string EmailAlreadyInUse = "EmailAlreadyInUse";
     public static string PasswordRequired = "PasswordRequired";
     public static string PasswordMinimumLength = "PasswordMinimumLength";
     public static string PasswordRequireUppercase = "PasswordRequireUppercase";
@@ -36,6 +38,8 @@ public static class SharedResourceKeys
     public static string PhoneTooLong = "PhoneTooLong";
     public static string AddressRequired = "AddressRequired";
     public static string AddressTooLong = "AddressTooLong";
+
+    public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
 
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
     public static string IdRequired = "IdRequired";

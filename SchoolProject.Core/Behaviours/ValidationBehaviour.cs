@@ -43,7 +43,7 @@ public class ValidationBehavior<TRequest, TResponse> :
             // If any validation errors were found, throw a ValidationException with all collected errors
             if (failures.Count != 0)
             {
-                string errorMessage = failures.Select(f => $"{f.PropertyName}: {f.ErrorMessage}").FirstOrDefault();
+                string errorMessage = failures.Select(f =>  f.ErrorMessage.ToString()).FirstOrDefault();;
                 throw new ValidationException(errorMessage);
             }
         }

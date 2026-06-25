@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
@@ -10,6 +11,7 @@ namespace SchoolProject.Api.Controllers;
 
 public class StudentController : AppControllerBase
 {
+    [Authorize]
     [HttpGet(Router.Student.List)]
     public async Task<IActionResult> GetAll()
     {

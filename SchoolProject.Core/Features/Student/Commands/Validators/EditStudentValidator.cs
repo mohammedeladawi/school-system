@@ -38,10 +38,10 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     {
         RuleFor(x => x.NameAr)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.NameArRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameArRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
 
             .MustAsync(async (dto, studentNameAr, cancellationToken) =>
             {
@@ -56,10 +56,10 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     {
         RuleFor(x => x.NameEn)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameEnRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
 
             .MustAsync(async (dto, studentNameEn, cancellationToken) =>
             {
@@ -74,11 +74,11 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     {
         RuleFor(x => x.DepartmentId)
             .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
+            .WithMessage(_ => _localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
 
             .MustAsync(async (departmentId, CancellationToken) =>
                 await _departmentService.DoesExistByIdAsync(departmentId.Value))
-            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
     }
     #endregion
 }

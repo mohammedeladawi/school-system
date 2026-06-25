@@ -37,28 +37,28 @@ public class EditApplicationUserValidator :
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.IdRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.IdRequired])
 
             .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.IdGreaterThanZero])
+            .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, CancellationToken) =>
                 await _applicationUserService.DoesExistByIdAsync((id)))
-            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
     }
 
     private void ValidateEmail()
     {
         RuleFor(x => x.Email)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.EmailRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
 
             .Matches(CommonUserCommandValidator.EmailPattern)
-            .WithMessage(_localizer[SharedResourceKeys.EmailInvalid])
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
 
             .MustAsync(async (user, email, cancellationToken) =>
                 !await _applicationUserService.DoesEmailExist(email, user.Id))
-            .WithMessage(_localizer[SharedResourceKeys.EmailAlreadyExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
 
     }
 
@@ -66,17 +66,17 @@ public class EditApplicationUserValidator :
     {
         RuleFor(x => x.UserName)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.UserNameRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
 
             .MaximumLength(256)
-            .WithMessage(_localizer[SharedResourceKeys.UserNameTooLong])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
 
             .Matches(CommonUserCommandValidator.UserNamePattern)
-            .WithMessage(_localizer[SharedResourceKeys.UserNameInvalid])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
   
             .MustAsync(async (user, userName, cancellationToken) =>
                 !await _applicationUserService.DoesUserNameExist(userName, user.Id))
-            .WithMessage(_localizer[SharedResourceKeys.UserNameAlreadyExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
 
     }
     #endregion

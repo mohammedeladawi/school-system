@@ -193,6 +193,10 @@
     <value>Username already exists.</value>
     <comment/>
   </data>
+  <data name="UsernameAlreadyInUse" xml:space="preserve">
+    <value>Username is already in use.</value>
+    <comment/>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
     <comment/>
@@ -203,6 +207,10 @@
   </data>
   <data name="EmailInvalid" xml:space="preserve">
     <value>Email format is invalid.</value>
+    <comment/>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>Email is already in use.</value>
     <comment/>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
@@ -283,6 +291,10 @@
   </data>
   <data name="PageSizeGreaterThanZero" xml:space="preserve">
     <value>PageSize must be greater than 0.</value>
+    <comment/>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>Invalid username or password.</value>
     <comment/>
   </data>
 </root>

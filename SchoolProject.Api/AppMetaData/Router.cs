@@ -53,4 +53,13 @@ public static class Router
 
 
     }
+
+    public static class Authentication
+    {
+        private const string AuthBase = Base + "/" + "Authentication" + "/";
+
+        public const string Login = AuthBase + "Login";
+        public const string RefreshToken = AuthBase + "Refresh-Token";
+        public const string Logout = AuthBase + "Logout";
+    }
 }
