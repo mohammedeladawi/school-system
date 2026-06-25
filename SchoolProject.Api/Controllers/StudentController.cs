@@ -5,6 +5,7 @@ using SchoolProject.Api.Base;
 using SchoolProject.Core.Features.Student.Commands.Models;
 using SchoolProject.Core.Features.Student.Queries.Models;
 
+
 namespace SchoolProject.Api.Controllers;
 
 public class StudentController : AppControllerBase
