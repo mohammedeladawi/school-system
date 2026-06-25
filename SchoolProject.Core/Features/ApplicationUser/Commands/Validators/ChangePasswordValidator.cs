@@ -8,9 +8,12 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
 
 public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
 {
+    #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly IApplicationUserService _applicationUserService;
+    #endregion
 
+    #region Constructors
     public ChangePasswordValidator(
         IStringLocalizer<SharedResource> localizer,
         IApplicationUserService applicationUserService)
@@ -22,7 +25,9 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
         ValidateCurrentPassword();
         ValidateNewPassword();
     }
+    #endregion
 
+    #region Private Methods
     private void ValidateId()
     {
         RuleFor(x => x.Id)
@@ -33,7 +38,7 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
             .WithMessage(_localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, CancellationToken) =>
-                await _applicationUserService.IsApplicationUserIdExist(id))
+                await _applicationUserService.DoesExistByIdAsync((id)))
             .WithMessage(_localizer[SharedResourceKeys.NotExist]);
     }
 
@@ -72,5 +77,6 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
             .Equal(x => x.NewPassword)
             .WithMessage(_localizer[SharedResourceKeys.PasswordsDoNotMatch]);
     }
+    #endregion
 
 }

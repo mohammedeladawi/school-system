@@ -1,4 +1,4 @@
-using SchoolProject.Core.Features.Students.Queries.Responses;
+using SchoolProject.Core.Features.Student.Queries.Responses;
 using SchoolProject.Core.Responses;
 using SchoolProject.Data.Entities;
 

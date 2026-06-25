@@ -15,7 +15,7 @@ public static class Router
 
         public const string Add = StudentBase + "Add";
 
-        public const string Edit = StudentBase + "Edit";
+        public const string Update = StudentBase + "Update";
 
         public const string Delete = StudentBase + "{id}";
 
@@ -32,7 +32,7 @@ public static class Router
 
         public const string Add = DepartmentBase + "Add";
 
-        public const string Edit = DepartmentBase + "Edit";
+        public const string Update = DepartmentBase + "Update";
 
         public const string Delete = DepartmentBase + "{id}";
 
@@ -44,12 +44,12 @@ public static class Router
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
 
-        public const string Add = ApplicationUserBase + "Add";
+        public const string Register = ApplicationUserBase + "Register";
         public const string PaginatedList = ApplicationUserBase + "PaginatedList";
         public const string GetById = ApplicationUserBase + "{id}";
-        public const string Edit = ApplicationUserBase + "Edit";
+        public const string Update = ApplicationUserBase + "Update";
         public const string Delete = ApplicationUserBase + "{id}";
-        public const string ChangePassword = ApplicationUserBase + "ChangePassword";
+        public const string ChangePassword = ApplicationUserBase + "Change-Password";
 
 
     }
