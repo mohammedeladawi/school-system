@@ -2,6 +2,8 @@ namespace SchoolProject.Core.Bases;
 
 public class PaginatedResponse<T>
 {
+    #region Properties
+
     public int PageNumber { get; }
     public int PageSize { get; }
     public int TotalPages => (int)Math.Ceiling((double)TotalRecords / PageSize);
@@ -13,6 +15,9 @@ public class PaginatedResponse<T>
     public bool Success { get; } = true;
     public object Meta { get; }
 
+    #endregion
+
+    #region Constructors
     public PaginatedResponse(
         IEnumerable<T> data,
         int pageNumber,
@@ -39,7 +44,9 @@ public class PaginatedResponse<T>
         Success = success;
         Meta = meta;
     }
+    #endregion
 
+    #region Static Methods (Response Creation)
     public static PaginatedResponse<T> SuccessResult(
         IEnumerable<T> data,
         int pageNumber,
@@ -50,4 +57,5 @@ public class PaginatedResponse<T>
     {
         return new PaginatedResponse<T>(data, pageNumber, pageSize, totalRecords, messages ?? new List<string>(), true, meta);
     }
+    #endregion
 }

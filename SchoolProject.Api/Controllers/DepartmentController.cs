@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
 using SchoolProject.Core.Features.Department.Queries.Models;
-using SchoolProject.Data.AppMetaData;
 
 namespace SchoolProject.Api.Controllers;
 

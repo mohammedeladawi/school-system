@@ -1,22 +1,22 @@
 using SchoolProject.Data.Entities;
-using SchoolProject.Service.ServiceBases;
 using StudentProject.Data.Enums;
 
 namespace SchoolProject.Service.Abstracts;
 
-public interface IStudentService : IGenericService<Student>
+public interface IStudentService
 {
-    public Task<List<Student>> GetPaginatedStudentsAsync(
+    public Task<List<Student>> GetAllAsync();
+    public Task AddAsync(Student student);
+    public Task<Student?> GetByIdAsync(int id);
+    public Task UpdateAsync(Student student);
+    public Task DeleteAsync(Student student);
+    public Task<bool> DoesExistByIdAsync(int id);
+    public Task<int> GetTotalCountAsync();
+    public Task<List<Student>> GetPaginatedListAsync(
         int pageNumber,
         int pageSize,
         string? searchTerm = null,
         StudentOrderingEnum? orderBy = null);
-
-    public Task<int> GetTotalStudentsCountAsync();
-
-    public Task<bool> IsStudentExistByIdAsync(int id);
-
-    public Task<bool> IsStudentNameEnExistAsync(string nameEn, int? excludedId = null);
-
-    public Task<bool> IsStudentNameArExistAsync(string nameAr, int? excludedId = null);
+    public Task<bool> DoesNameEnExistAsync(string nameEn, int? excludedId = null);
+    public Task<bool> DoesNameArExistAsync(string nameAr, int? excludedId = null);
 }

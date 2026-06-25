@@ -189,8 +189,16 @@
     <value>لا يمكن أن يتجاوز اسم المستخدم 256 حرفًا.</value>
     <comment/>
   </data>
+  <data name="UsernameAlreadyExist" xml:space="preserve">
+    <value>اسم المستخدم موجود بالفعل.</value>
+    <comment/>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>البريد الإلكتروني مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>البريد الإلكتروني موجود بالفعل.</value>
     <comment/>
   </data>
   <data name="EmailInvalid" xml:space="preserve">

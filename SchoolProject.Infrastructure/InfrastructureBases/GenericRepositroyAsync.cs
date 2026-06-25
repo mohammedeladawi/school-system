@@ -7,7 +7,7 @@ namespace SchoolProject.Infrastructure.InfrastructureBases;
 public class GenericRepositoryAsync<T> :
     IGenericRepositoryAsync<T> where T : class
 {
-    #region Vars / Props
+    #region Protected Fields
 
     protected readonly AppDbContext _dbContext;
 
@@ -21,12 +21,7 @@ public class GenericRepositoryAsync<T> :
 
     #endregion
 
-
-    #region Methods
-
-    #endregion
-
-    #region Actions
+    #region Public Methods
     public virtual async Task<T> GetByIdAsync(int id)
     {
 
@@ -114,7 +109,7 @@ public class GenericRepositoryAsync<T> :
         return await _dbContext.Set<T>().CountAsync();
     }
 
-    public async Task<bool> IsExistByIdAsync(int id)
+    public async Task<bool> DoesExistByIdAsync(int id)
     {
         return
         await _dbContext.Set<T>()

@@ -1,24 +1,18 @@
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Service.ServiceBases;
 
 namespace SchoolProject.Service.Abstracts;
 
 public interface IApplicationUserService
 {
-    public Task AddApplicationUserAsync(ApplicationUser user, string password);
-    public Task<int> GetTotalApplicationUsersCountAsync();
-
-    public Task<List<ApplicationUser>> GetPaginatedApplicationUsersAsync(
-        int pageNumber,
-        int pageSize);
-
-    public Task<ApplicationUser> GetApplicationUserByIdAsync(int id);
-
-    public Task UpdateApplicationUserAsync(ApplicationUser user);
-    public Task<bool> IsApplicationUserIdExist(int id);
-
-    public Task DeleteApplicationUserById(ApplicationUser user);
-
-    public Task ChangeApplicaitonUserPasswordAsync(int id, string currentPassword, string newPassword);
+    public Task AddAsync(ApplicationUser user, string password);
+    public Task<ApplicationUser?> GetByIdAsync(int id);
+    public Task UpdateAsync(ApplicationUser user);
+    public Task DeleteAsync(ApplicationUser user);
+    public Task<bool> DoesExistByIdAsync(int id);
+    public Task<int> GetTotalCountAsync();
+    public Task ChangePasswordAsync(int id, string currentPassword, string newPassword);
+    public Task<bool> DoesEmailExist(string email, int? excludeUserId = null);
+    public Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize);
+    public Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
 }

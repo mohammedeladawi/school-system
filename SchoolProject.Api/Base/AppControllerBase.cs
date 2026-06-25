@@ -8,11 +8,13 @@ namespace SchoolProject.Api.Base
     [ApiController]
     public class AppControllerBase : ControllerBase
     {
+        #region Fields
         private IMediator _mediatorInstance;
         protected IMediator Mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
 
+        #endregion
 
-        #region Actions
+        #region Methods
         public ObjectResult NewResult<T>(Response<T> response)
         {
             switch (response.StatusCode)

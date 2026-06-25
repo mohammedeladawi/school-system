@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -12,44 +13,81 @@ namespace SchoolProject.Service.Implementations;
 
 public class ApplicationUserService : IApplicationUserService
 {
+    #region Private Fields
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IStringLocalizer<SharedResource> _localizer;
+    #endregion
 
+    #region Constructor
     public ApplicationUserService(
-        UserManager<ApplicationUser> userManager,
-        IStringLocalizer<SharedResource> localizer)
+        UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
-        _localizer = localizer;
     }
+    #endregion
 
-    public async Task AddApplicationUserAsync(ApplicationUser user, string password)
+    #region Private Methods
+    private async Task<bool> IsExistAsync(
+        Expression<Func<ApplicationUser, bool>> predicate,
+        int? excludeUserId = null)
     {
-        // Check if Username Exists, if yes throw conflict error
-        if (await _userManager.FindByNameAsync(user.UserName) is not null)
-            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+        var query = _userManager.Users.Where(predicate);
+        if (excludeUserId.HasValue)
+            query = query.Where(u => u.Id != excludeUserId.Value);
 
-        // Check if Email Exists, if yes throw conflict error
-        if (await _userManager.FindByEmailAsync(user.Email) is not null)
-            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
+        return await query.AnyAsync();
+    }
+    #endregion
 
-        // Add role
-        // var addRoleResult = await _userManager.AddToRoleAsync(user, "USER");
-        // if (!addRoleResult.Succeeded)
-        //     throw new Exception(string.Join(" ", addRoleResult.Errors.Select(e => e.Description)));
-
-        // Create 
+    #region Public Methods
+    public async Task AddAsync(ApplicationUser user, string password)
+    {
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
     }
 
-    public async Task<List<ApplicationUser>> GetAllApplicationUsersAsync()
+    public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
     {
-        return await _userManager.Users.ToListAsync();
+        return await IsExistAsync(u => u.Email == email, excludeUserId);
     }
 
-    public async Task<List<ApplicationUser>> GetPaginatedApplicationUsersAsync(int pageNumber, int pageSize)
+    public async Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null)
+    {
+        return await IsExistAsync(u => u.Email == userName, excludeUserId);
+    }
+
+    public async Task<ApplicationUser?> GetByIdAsync(int id)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        return user;
+    }
+
+    public async Task UpdateAsync(ApplicationUser user)
+    {
+        var updatedUser = await _userManager.UpdateAsync(user);
+        if (!updatedUser.Succeeded)
+            throw new Exception(string.Join(" ", updatedUser.Errors.Select(e => e.Description)));
+    }
+
+    public async Task DeleteAsync(ApplicationUser user)
+    {
+        var deleteResult = await _userManager.DeleteAsync(user);
+        if (!deleteResult.Succeeded)
+            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));    }
+
+    public Task<bool> DoesExistByIdAsync(int id)
+    {
+        var isExist = IsExistAsync(u => u.Id == id);
+        return isExist;
+    }
+
+    public async Task<int> GetTotalCountAsync()
+    {
+        int usersCount = await _userManager.Users.CountAsync();
+        return usersCount;
+    }
+
+    public async Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize)
     {
         var paginatedApplicationUsers = await _userManager.Users.OrderBy(au => au.Id)
                                       .Skip((pageNumber - 1) * pageSize)
@@ -59,50 +97,12 @@ public class ApplicationUserService : IApplicationUserService
         return paginatedApplicationUsers;
     }
 
-    public async Task<int> GetTotalApplicationUsersCountAsync()
-    {
-        int usersCount = await _userManager.Users.CountAsync();
-        return usersCount;
-    }
-
-    public async Task<ApplicationUser?> GetApplicationUserByIdAsync(int id)
-    {
-        var user = await _userManager.FindByIdAsync(id.ToString());
-        return user;
-    }
-
-
-    public async Task UpdateApplicationUserAsync(ApplicationUser user)
-    {
-        var IsUserNameExist = await _userManager.Users.AnyAsync(u => u.UserName == user.UserName && u.Id != user.Id);
-        if ( IsUserNameExist )
-            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
-
-        var IsEmailExist = await _userManager.Users.AnyAsync(u => u.Email == user.Email && u.Id != user.Id);
-        if ( IsEmailExist )
-            throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
-
-        var updatedUser = await _userManager.UpdateAsync(user);
-        if (!updatedUser.Succeeded)
-            throw new Exception(string.Join(" ", updatedUser.Errors.Select(e => e.Description)));
-    }
-
-    public Task<bool> IsApplicationUserIdExist(int id)
-    {
-        return _userManager.Users.AnyAsync(u => u.Id == id);
-    }
-
-    public async Task DeleteApplicationUserById(ApplicationUser user)
-    {
-        var deleteResult = await _userManager.DeleteAsync(user);
-        if (!deleteResult.Succeeded)
-            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));
-    }
-    public async Task ChangeApplicaitonUserPasswordAsync(int id, string currentPassword, string newPassword)    
+    public async Task ChangePasswordAsync(int id, string currentPassword, string newPassword)
     {   var user = await _userManager.FindByIdAsync(id.ToString());
         var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
         if (!changePasswordResult.Succeeded)
-            throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));                       
+            throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
     }
+    #endregion
 }
