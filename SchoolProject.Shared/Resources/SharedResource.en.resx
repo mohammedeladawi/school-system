@@ -189,8 +189,16 @@
     <value>Username cannot exceed 256 characters.</value>
     <comment/>
   </data>
+  <data name="UsernameAlreadyExist" xml:space="preserve">
+    <value>Username already exists.</value>
+    <comment/>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
+    <comment/>
+  </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>Email already exists.</value>
     <comment/>
   </data>
   <data name="EmailInvalid" xml:space="preserve">

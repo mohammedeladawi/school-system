@@ -6,40 +6,27 @@ namespace SchoolProject.Service.Implementations;
 
 public class DepartmentService : IDepartmentService
 {
+    #region Private Fields
     private IDepartmentRepository _departmentRepository;
+    #endregion
 
+    #region Constructors
     public DepartmentService(IDepartmentRepository departmentRepository)
     {
         _departmentRepository = departmentRepository;
     }
+    #endregion
 
-    public Task AddAsync(Department entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<List<Department>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
-
+    #region Public Methods
     public async Task<Department?> GetByIdAsync(int id)
     {
         return await _departmentRepository.GetDepartmentByIdAsync(id);
     }
 
-    public Task UpdateAsync(Department entity)
+    public async Task<bool> DoesExistByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _departmentRepository.DoesExistByIdAsync(id);
     }
+    #endregion
 
-    public async Task<bool> IsExistByIdAsync(int id)
-    {
-        return await _departmentRepository.IsExistByIdAsync(id);
-    }
 }

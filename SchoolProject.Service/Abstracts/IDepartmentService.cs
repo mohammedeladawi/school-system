@@ -1,6 +1,9 @@
 using SchoolProject.Data.Entities;
-using SchoolProject.Service.ServiceBases;
 
 namespace SchoolProject.Service.Abstracts;
 
-public interface IDepartmentService : IGenericService<Department>;
+public interface IDepartmentService
+{
+    public Task<Department?> GetByIdAsync(int id);
+    public Task<bool> DoesExistByIdAsync(int id);
+}

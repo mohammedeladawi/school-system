@@ -4,6 +4,8 @@ namespace SchoolProject.Core.Bases;
 
 public class Response<T>
 {
+    #region Properties
+
     public HttpStatusCode StatusCode { get; set; }
     public object Meta { get; set; }
 
@@ -13,6 +15,9 @@ public class Response<T>
     //public Dictionary<string, List<string>> ErrorsBag { get; set; }
     public T Data { get; set; }
 
+    #endregion
+
+    #region Constructors
     public Response()
     {
 
@@ -36,4 +41,6 @@ public class Response<T>
         Succeeded = succeeded;
         Message = message;
     }
+
+    #endregion
 }

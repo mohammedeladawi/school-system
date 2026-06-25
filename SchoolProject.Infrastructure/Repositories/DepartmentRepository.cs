@@ -10,16 +10,22 @@ public class DepartmentRepository :
     GenericRepositoryAsync<Department>,
     IDepartmentRepository
 {
+    #region Private Fields
     private readonly DbSet<Department> _departments;
+    #endregion
 
+    #region Constructors
     public DepartmentRepository(AppDbContext context) : base(context)
     {
         _departments = context.Set<Department>();
     }
+    #endregion
 
-    public async Task<Department?> GetDepartmentByIdAsync(int id)
+    #region Public Methods
+    public override async Task<Department?> GetByIdAsync(int id)
     {
-        return await _departments
+        var department =
+                await _departments
                         .AsNoTracking()
                         .Where(d => d.Id == id)
                         .Include(d => d.Instructors)
@@ -27,5 +33,7 @@ public class DepartmentRepository :
                         .Include(d => d.Subjects)
                         .AsSplitQuery()
                         .FirstOrDefaultAsync();
+        return department;
     }
+    #endregion
 }

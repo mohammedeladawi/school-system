@@ -12,12 +12,16 @@ public class StudentRepository :
     GenericRepositoryAsync<Student>,
     IStudentRepository
 {
+    #region Private Fields
     private readonly DbSet<Student> _students;
+    #endregion
 
+    #region Constructors
     public StudentRepository(AppDbContext context) : base(context)
     {
         _students = context.Set<Student>();
     }
+    #endregion
 
     #region Private Methods
     private async Task<bool> IsStudentNameExistAsync(
@@ -33,16 +37,15 @@ public class StudentRepository :
     }
     #endregion
 
-
     #region Public Methods
-    public async Task<List<Student>> GetAllStudentsAsync()
+    public async Task<List<Student>> GetAllAsync()
     {
         var studentsList = await _students.Include(s => s.Department)
                                           .ToListAsync();
         return studentsList;
     }
 
-    public async Task<List<Student>> GetPaginatedStudentsAsync(
+    public async Task<List<Student>> GetPaginatedListAsync(
         int pageNumber,
         int pageSize,
         string? searchTerm = null,
@@ -87,19 +90,18 @@ public class StudentRepository :
     }
 
 
-    public async Task<bool> IsStudentNameEnExistAsync(
+    public async Task<bool> DoesNameEnExistAsync(
         string studentNameEn,
         int? excludedId = null)
     {
         return await IsStudentNameExistAsync(s => s.NameEn == studentNameEn, excludedId);
     }
 
-    public async Task<bool> IsStudentNameArExistAsync(
+    public async Task<bool> DoesNameArExistAsync(
         string studentNameAr,
         int? excludedId = null)
     {
         return await IsStudentNameExistAsync(s => s.NameEn == studentNameAr, excludedId);
     }
     #endregion
-
 }

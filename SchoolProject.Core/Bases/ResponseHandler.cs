@@ -6,9 +6,13 @@ namespace SchoolProject.Core.Bases;
 
 public class ResponseHandler
 {
+    #region Protected Fields
     protected readonly IStringLocalizer<SharedResource> _localizer;
     protected readonly IMapper _mapper;
 
+    #endregion
+
+    #region Constructors
     public ResponseHandler(
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper)
@@ -16,7 +20,9 @@ public class ResponseHandler
         _localizer = localizer;
         _mapper = mapper;
     }
+    #endregion
 
+    #region Public Methods
     public Response<T> Deleted<T>(string? message = null)
     {
         return new Response<T>()
@@ -100,4 +106,6 @@ public class ResponseHandler
             Meta = Meta
         };
     }
+
+    #endregion
 }

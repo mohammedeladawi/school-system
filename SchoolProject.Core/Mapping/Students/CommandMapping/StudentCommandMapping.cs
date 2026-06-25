@@ -1,5 +1,5 @@
-using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Core.Features.Students.Queries.Responses;
+using SchoolProject.Core.Features.Student.Commands.Models;
+using SchoolProject.Core.Features.Student.Queries.Responses;
 using SchoolProject.Data.Entities;
 
 namespace SchoolProject.Core.Mapping.Students;

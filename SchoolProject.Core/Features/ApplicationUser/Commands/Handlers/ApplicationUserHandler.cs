@@ -11,13 +11,16 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
 {
     public class ApplicationUserCommandHandler :
         ResponseHandler,
-        IRequestHandler<AddApplicationUserCommand, Response<string>>,
-        IRequestHandler<EditApplicationUserCommand, Response<string>>,
-        IRequestHandler<DeleteApplicationUserByIdCommand, Response<string>>,
+        IRequestHandler<AddUserCommand, Response<string>>,
+        IRequestHandler<EditUserCommand, Response<string>>,
+        IRequestHandler<DeleteCommand, Response<string>>,
         IRequestHandler<ChangePasswordCommand, Response<string>>
     {
+        #region Private Fields
         private readonly IApplicationUserService _applicationUserService;
+        #endregion
 
+        #region Constructors
         public ApplicationUserCommandHandler(
             IStringLocalizer<SharedResource> localizer,
             IMapper mapper,
@@ -26,38 +29,40 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
         {
             _applicationUserService = applicationUserService;
         }
+        #endregion
 
-
-        public async Task<Response<string>> Handle(AddApplicationUserCommand request, CancellationToken cancellationToken)
+        #region Public Methods
+        public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var applicationUser = _mapper.Map<Data.Entities.Identities.ApplicationUser>(request);
-            await _applicationUserService.AddApplicationUserAsync(applicationUser, request.Password);
+            await _applicationUserService.AddAsync(applicationUser, request.Password);
             return Created<string>(_localizer[SharedResourceKeys.AddedSuccessfully]);
         }
 
-        public async Task<Response<string>> Handle(EditApplicationUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetApplicationUserByIdAsync(request.Id);
+            var user = await _applicationUserService.GetByIdAsync(request.Id);
             _mapper.Map(request, user);
-            await _applicationUserService.UpdateApplicationUserAsync(user);
+            await _applicationUserService.UpdateAsync(user);
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
 
-        public async Task<Response<string>> Handle(DeleteApplicationUserByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetApplicationUserByIdAsync(request.Id);
+            var user = await _applicationUserService.GetByIdAsync(request.Id);
             if (user == null)
                 return NotFound<string>();
 
-            await _applicationUserService.DeleteApplicationUserById(user);
+            await _applicationUserService.DeleteAsync(user);
 
             return Deleted<string>();
         }
 
         public async Task<Response<string>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            await _applicationUserService.ChangeApplicaitonUserPasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
+            await _applicationUserService.ChangePasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
+        #endregion
     }
 }

@@ -13,8 +13,11 @@ public class DepartmentQueryHandler :
     ResponseHandler,
     IRequestHandler<GetDepartmentByIdQuery, Response<GetDepartmentByIdQueryResponse>>
 {
+    #region Private Fields
     private readonly IDepartmentService _departmentService;
+    #endregion
 
+    #region Constructors
     public DepartmentQueryHandler(
         IStringLocalizer<SharedResource> localizer,
         IDepartmentService departmentService,
@@ -22,7 +25,9 @@ public class DepartmentQueryHandler :
     {
         _departmentService = departmentService;
     }
+    #endregion
 
+    #region Public Methods
     public async Task<Response<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
         var department = await _departmentService.GetByIdAsync(request.Id);
@@ -32,4 +37,5 @@ public class DepartmentQueryHandler :
         var departmentResponse = _mapper.Map<GetDepartmentByIdQueryResponse>(department);
         return Success(departmentResponse);
     }
+    #endregion
 }
