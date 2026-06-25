@@ -20,7 +20,7 @@ public class DepartmentService : IDepartmentService
     #region Public Methods
     public async Task<Department?> GetByIdAsync(int id)
     {
-        return await _departmentRepository.GetDepartmentByIdAsync(id);
+        return await _departmentRepository.GetByIdAsync(id);
     }
 
     public async Task<bool> DoesExistByIdAsync(int id)

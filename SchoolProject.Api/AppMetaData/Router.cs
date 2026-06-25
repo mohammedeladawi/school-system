@@ -1,4 +1,4 @@
-namespace SchoolProject.Data.AppMetaData;
+namespace SchoolProject.Api.AppMetaData;
 
 public static class Router
 {

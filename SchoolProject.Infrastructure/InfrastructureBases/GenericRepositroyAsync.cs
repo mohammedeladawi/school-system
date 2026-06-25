@@ -109,7 +109,7 @@ public class GenericRepositoryAsync<T> :
         return await _dbContext.Set<T>().CountAsync();
     }
 
-    public async Task<bool> IsExistByIdAsync(int id)
+    public async Task<bool> DoesExistByIdAsync(int id)
     {
         return
         await _dbContext.Set<T>()

@@ -20,9 +20,6 @@ public static class ModuleCoreDependencies
         // Register pipeline behavior for automatic validation
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
-        services.AddLocalization();
-
         return services;
     }
 }

@@ -30,13 +30,13 @@ public class StudentService : IStudentService
 
     public async Task<Student?> GetByIdAsync(int id)
     {
-        var student = await _studentRepository.GetStudentByIdAsync(id);
+        var student = await _studentRepository.GetByIdAsync(id);
         return student;
     }
 
     public async Task<List<Student>> GetAllAsync()
     {
-        return await _studentRepository.GetAllStudentsAsync();
+        return await _studentRepository.GetAllAsync();
     }
 
     public async Task AddAsync(Student student)
