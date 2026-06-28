@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
+using SchoolProject.Core.Features.Authentication.Commands.Responses;
 using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Resources;
 
@@ -10,7 +11,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 {
     public class AuthenticationCommandHandler :
         ResponseHandler,
-        IRequestHandler<LoginCommand, Response<string>>
+        IRequestHandler<LoginCommand, Response<AuthResponse>>
     {
         #region Private Fields
         private readonly IAuthenticationService _authenticationService;
@@ -31,14 +32,23 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
         #endregion
 
         #region Public Methods
-        public async Task<Response<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<Response<AuthResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _applicationUserService.GetByUserNameAndPasswordAsync(request.UserName, request.Password);
             if (user is null)
-                return BadRequest<string>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
+                return BadRequest<AuthResponse>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
 
             var accessToken = _authenticationService.GenerateJwtToken(user);
-            return Success(accessToken);
+            var (rawToken, refreshToken) = _authenticationService.GenerateRefreshToken(user.Id);
+            await _authenticationService.AddRefreshTokenAsync(refreshToken);
+
+            var authResponse = new AuthResponse
+            {
+                JwtToken = accessToken,
+                RefreshToken = rawToken
+            };
+
+            return Success<AuthResponse>(authResponse);
         }
         #endregion
     }
