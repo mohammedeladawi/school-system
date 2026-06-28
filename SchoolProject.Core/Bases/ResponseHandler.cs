@@ -40,19 +40,18 @@ public class ResponseHandler
             Data = entity,
             StatusCode = System.Net.HttpStatusCode.OK,
             Succeeded = true,
-            // Todo: Add a new Key for RetrievedSuccessfully in SharedResourceKeys and use it here instead of AddedSuccessfully
             Message = _localizer[SharedResourceKeys.SuccessfulOperation].Value,
             Meta = Meta
         };
     }
 
-    public Response<T> Unauthorized<T>()
+    public Response<T> Unauthorized<T>(string? message = null)
     {
         return new Response<T>()
         {
             StatusCode = System.Net.HttpStatusCode.Unauthorized,
             Succeeded = false,
-            Message = _localizer[SharedResourceKeys.Unauthorized].Value
+            Message = message ?? _localizer[SharedResourceKeys.Unauthorized].Value
         };
     }
 

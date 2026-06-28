@@ -6,6 +6,7 @@ namespace SchoolProject.Infrastructure.Abstracts;
 
 public interface IRefreshTokenRepository : IGenericRepositoryAsync<RefreshToken>
 {
-    // No additional methods beyond inherited generic methods.
+    public Task<RefreshToken?> GetByTokenHashAsync(string tokenHash);
+    public Task RevokeTokenFamilyAsync(Guid familyId);
 };
 

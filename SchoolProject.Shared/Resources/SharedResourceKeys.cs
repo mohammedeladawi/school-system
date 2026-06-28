@@ -41,6 +41,13 @@ public static class SharedResourceKeys
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
 
+    public static string RefreshTokenNotFound = "RefreshTokenNotFound";
+    public static string RefreshTokenExpired = "RefreshTokenExpired";
+    public static string RefreshTokenHasBeenRevoked = "RefreshTokenHasBeenRevoked";
+    public static string SecurityException = "SecurityException";
+    public static string LoggedOutSuccessfully = "LoggedOutSuccessfully";
+    public static string RetrievedSuccessfully = "RetrievedSuccessfully";
+
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
     public static string IdRequired = "IdRequired";
     public static string IdGreaterThanZero = "IdGreaterThanZero";

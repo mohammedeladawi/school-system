@@ -20,9 +20,23 @@ public class RefreshTokenRepository :
     {
         _refreshTokens = context.Set<RefreshToken>();
     }
+
     #endregion
 
     #region Public Methods
-    // No public methods beyond inherited generic methods.
+
+    public Task<RefreshToken?> GetByTokenHashAsync(string tokenHash)
+    {
+        return _refreshTokens.Include(rt => rt.User)
+                             .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash);
+    }
+
+    public Task RevokeTokenFamilyAsync(Guid familyId)
+    {
+        return _refreshTokens.Where(rt => rt.FamilyId == familyId && !rt.IsRevoked)
+                    .ExecuteUpdateAsync(rt => rt.SetProperty(r => r.IsRevoked, true));
+
+    }
+
     #endregion
 }

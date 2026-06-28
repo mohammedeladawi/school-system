@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
+using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Service.Implementations;
 
@@ -57,12 +58,10 @@ public class AuthenticationService : IAuthenticationService
         return handler.CreateToken(tokenDescriptor);
     }
 
-    public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId)
+    public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null)
     {
         string rawToken = Guid.NewGuid().ToString();
-        var tokenHash = Convert.ToBase64String(
-            SHA256.HashData(Encoding.UTF8.GetBytes(rawToken))
-        );
+        string  tokenHash = TokenHelper.HashToken(rawToken);
 
         var refreshToken = new RefreshToken
         {
@@ -74,7 +73,7 @@ public class AuthenticationService : IAuthenticationService
             ),
             CreatedAt = DateTime.UtcNow,
             IsRevoked = false,
-            FamilyId = Guid.NewGuid(),
+            FamilyId = familyId ?? Guid.NewGuid(),
         };
 
         return (rawToken, refreshToken);
@@ -84,6 +83,22 @@ public class AuthenticationService : IAuthenticationService
     public async Task AddRefreshTokenAsync(RefreshToken refreshToken)
     {
         await _refreshTokenRepository.AddAsync(refreshToken);
+    }
+
+    public Task<RefreshToken?> GetRefreshTokenByTokenHashAsync(string tokenHash)
+    {
+        return _refreshTokenRepository.GetByTokenHashAsync(tokenHash);
+    }
+
+    public Task RevokeRefreshTokenAsync(RefreshToken refreshToken)
+    {
+        refreshToken.IsRevoked = true;
+        return _refreshTokenRepository.UpdateAsync(refreshToken);
+    }
+
+    public Task RevokeRefreshTokenFamilyAsync(Guid familyId)
+    {
+        return _refreshTokenRepository.RevokeTokenFamilyAsync(familyId);
     }
 
     #endregion

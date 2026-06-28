@@ -297,4 +297,28 @@
     <value>اسم المستخدم أو كلمة المرور غير صحيحة.</value>
     <comment/>
   </data>
+  <data name="RefreshTokenNotFound" xml:space="preserve">
+    <value>لم يتم العثور على رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenExpired" xml:space="preserve">
+    <value>انتهت صلاحية رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenHasBeenRevoked" xml:space="preserve">
+    <value>تم إبطال رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="SecurityException" xml:space="preserve">
+    <value>حدث استثناء أمني.</value>
+    <comment/>
+  </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>تم تسجيل الخروج بنجاح.</value>
+    <comment/>
+  </data>
+  <data name="RetrievedSuccessfully" xml:space="preserve">
+    <value>تم الاسترجاع بنجاح.</value>
+    <comment/>
+  </data>
 </root>

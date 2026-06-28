@@ -13,4 +13,18 @@ public class AuthenticationController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpPost(Router.Authentication.RefreshToken)]
+    public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
+    [HttpPost(Router.Authentication.Logout)]
+    public async Task<IActionResult> Logout(LogoutCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
 }

@@ -297,4 +297,28 @@
     <value>Invalid username or password.</value>
     <comment/>
   </data>
+  <data name="RefreshTokenNotFound" xml:space="preserve">
+    <value>Refresh token not found.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenExpired" xml:space="preserve">
+    <value>Refresh token has expired.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenHasBeenRevoked" xml:space="preserve">
+    <value>Refresh token has been revoked.</value>
+    <comment/>
+  </data>
+  <data name="SecurityException" xml:space="preserve">
+    <value>Security exception occurred.</value>
+    <comment/>
+  </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>Logged out successfully.</value>
+    <comment/>
+  </data>
+  <data name="RetrievedSuccessfully" xml:space="preserve">
+    <value>Retrieved successfully.</value>
+    <comment/>
+  </data>
 </root>

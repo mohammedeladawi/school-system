@@ -1,3 +1,4 @@
+using System.Security;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -5,13 +6,16 @@ using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
 using SchoolProject.Core.Features.Authentication.Commands.Responses;
 using SchoolProject.Service.Abstracts;
+using SchoolProject.Shared.Helpers;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 {
     public class AuthenticationCommandHandler :
         ResponseHandler,
-        IRequestHandler<LoginCommand, Response<AuthResponse>>
+        IRequestHandler<LoginCommand, Response<AuthResponse>>,
+        IRequestHandler<RefreshTokenCommand, Response<AuthResponse>>,
+        IRequestHandler<LogoutCommand, Response<string>>
     {
         #region Private Fields
         private readonly IAuthenticationService _authenticationService;
@@ -48,7 +52,50 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
                 RefreshToken = rawToken
             };
 
-            return Success<AuthResponse>(authResponse);
+            return Success(authResponse);
+        }
+
+        public async Task<Response<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+        {
+            string tokenHash = TokenHelper.HashToken(request.RefreshToken);
+            var refreshToken = await _authenticationService.GetRefreshTokenByTokenHashAsync(tokenHash);
+            if (refreshToken is null)
+                return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
+
+            // Check if the refresh token is revoked or expired
+            if (refreshToken.IsRevoked)
+            {
+                await _authenticationService.RevokeRefreshTokenFamilyAsync(refreshToken.FamilyId);
+                return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenHasBeenRevoked]);
+            }
+
+            if (refreshToken.ExpiresAt < DateTime.UtcNow)
+                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenExpired]);
+
+            // Valid refresh token, so revoke it and generate a new one and new access token
+            await _authenticationService.RevokeRefreshTokenAsync(refreshToken);
+            var (rawToken, newRefreshToken) = _authenticationService.GenerateRefreshToken(refreshToken.UserId, refreshToken.FamilyId);
+            await _authenticationService.AddRefreshTokenAsync(newRefreshToken);
+            string newAccessToken = _authenticationService.GenerateJwtToken(refreshToken.User);
+
+            var authResponse = new AuthResponse
+            {
+                JwtToken = newAccessToken,
+                RefreshToken = rawToken
+            };
+
+            return Success(authResponse);
+        }
+
+        public async Task<Response<string>> Handle(LogoutCommand request, CancellationToken cancellationToken)
+        {
+            string tokenHash = TokenHelper.HashToken(request.RefreshToken);
+            var refreshToken = await _authenticationService.GetRefreshTokenByTokenHashAsync(tokenHash);
+            if (refreshToken is null)
+                return Unauthorized<string>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
+
+            await _authenticationService.RevokeRefreshTokenFamilyAsync(refreshToken.FamilyId);
+            return Success<string>(_localizer[SharedResourceKeys.LoggedOutSuccessfully]);
         }
         #endregion
     }
