@@ -25,20 +25,20 @@ public class PaginatedStudentsValidator : AbstractValidator<GetPaginatedStudents
     {
         RuleFor(x => x.PageNumber)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PageNumberRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PageNumberRequired])
 
             .GreaterThan(0).
-            WithMessage(_localizer[SharedResourceKeys.PageNumberGreaterThanZero]);
+            WithMessage(_ => _localizer[SharedResourceKeys.PageNumberGreaterThanZero]);
     }
 
     private void ValidatePageSize()
     {
         RuleFor(x => x.PageSize)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PageSizeRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PageSizeRequired])
 
             .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.PageSizeGreaterThanZero]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PageSizeGreaterThanZero]);
     }
     #endregion
 }

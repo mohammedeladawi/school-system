@@ -36,14 +36,14 @@ public class AddStudentValidator : AbstractValidator<AddUserCommand>
     {
         RuleFor(x => x.Email)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.EmailRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
 
             .Matches(CommonUserCommandValidator.EmailPattern)
-            .WithMessage(_localizer[SharedResourceKeys.EmailInvalid])
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
 
             .MustAsync(async (email, cancellationToken) =>
                 !await _applicationUserService.DoesEmailExist(email))
-            .WithMessage(_localizer[SharedResourceKeys.EmailAlreadyExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
 
     }
 
@@ -51,17 +51,17 @@ public class AddStudentValidator : AbstractValidator<AddUserCommand>
     {
         RuleFor(x => x.UserName)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.UserNameRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
 
             .MaximumLength(256)
-            .WithMessage(_localizer[SharedResourceKeys.UserNameTooLong])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
 
             .Matches(CommonUserCommandValidator.UserNamePattern)
-            .WithMessage(_localizer[SharedResourceKeys.UserNameInvalid])
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
 
             .MustAsync(async (userName, cancellationToken) =>
                 !await _applicationUserService.DoesUserNameExist(userName))
-            .WithMessage(_localizer[SharedResourceKeys.UserNameAlreadyExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
 
     }
 
@@ -69,29 +69,29 @@ public class AddStudentValidator : AbstractValidator<AddUserCommand>
     {
         RuleFor(x => x.Password)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequired])
 
             .MinimumLength(6)
-            .WithMessage(_localizer[SharedResourceKeys.PasswordMinimumLength])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordMinimumLength])
 
             .Matches("[A-Z]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireUppercase])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireUppercase])
 
             .Matches("[a-z]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireLowercase])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireLowercase])
 
             .Matches("\\d")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireDigit])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireDigit])
 
             .Matches("[^\\w\\s]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireNonAlphanumeric]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireNonAlphanumeric]);
 
         RuleFor(x => x.ConfirmPassword)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.ConfirmPasswordRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.ConfirmPasswordRequired])
 
             .Equal(x => x.Password)
-            .WithMessage(_localizer[SharedResourceKeys.PasswordsDoNotMatch]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordsDoNotMatch]);
     }
     #endregion
 

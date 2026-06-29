@@ -193,6 +193,10 @@
     <value>اسم المستخدم موجود بالفعل.</value>
     <comment/>
   </data>
+  <data name="UsernameAlreadyInUse" xml:space="preserve">
+    <value>اسم المستخدم مستخدم بالفعل.</value>
+    <comment/>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>البريد الإلكتروني مطلوب.</value>
     <comment/>
@@ -203,6 +207,10 @@
   </data>
   <data name="EmailInvalid" xml:space="preserve">
     <value>تنسيق البريد الإلكتروني غير صالح.</value>
+    <comment/>
+  </data>
+  <data name="EmailAlreadyInUse" xml:space="preserve">
+    <value>البريد الإلكتروني مستخدم بالفعل.</value>
     <comment/>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
@@ -283,6 +291,34 @@
   </data>
   <data name="PageSizeGreaterThanZero" xml:space="preserve">
     <value>يجب أن يكون حجم الصفحة أكبر من 0.</value>
+    <comment/>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>اسم المستخدم أو كلمة المرور غير صحيحة.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenNotFound" xml:space="preserve">
+    <value>لم يتم العثور على رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenExpired" xml:space="preserve">
+    <value>انتهت صلاحية رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="RefreshTokenHasBeenRevoked" xml:space="preserve">
+    <value>تم إبطال رمز التحديث.</value>
+    <comment/>
+  </data>
+  <data name="SecurityException" xml:space="preserve">
+    <value>حدث استثناء أمني.</value>
+    <comment/>
+  </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>تم تسجيل الخروج بنجاح.</value>
+    <comment/>
+  </data>
+  <data name="RetrievedSuccessfully" xml:space="preserve">
+    <value>تم الاسترجاع بنجاح.</value>
     <comment/>
   </data>
 </root>

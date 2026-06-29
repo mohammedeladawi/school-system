@@ -15,6 +15,7 @@ public static class ModuleInfrastructureDependencies
         services.AddScoped<IInstructorRepository, InstructorRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<ISubjectRepository, SubjectRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

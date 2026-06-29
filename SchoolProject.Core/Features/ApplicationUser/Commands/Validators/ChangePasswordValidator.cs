@@ -32,50 +32,50 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.IdRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.IdRequired])
 
             .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.IdGreaterThanZero])
+            .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, CancellationToken) =>
                 await _applicationUserService.DoesExistByIdAsync((id)))
-            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
     }
 
     private void ValidateCurrentPassword()
     {
         RuleFor(x => x.CurrentPassword)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequired]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequired]);
     }
 
     private void ValidateNewPassword()
     {
         RuleFor(x => x.NewPassword)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequired])
 
             .MinimumLength(6)
-            .WithMessage(_localizer[SharedResourceKeys.PasswordMinimumLength])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordMinimumLength])
 
             .Matches("[A-Z]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireUppercase])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireUppercase])
 
             .Matches("[a-z]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireLowercase])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireLowercase])
 
             .Matches("\\d")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireDigit])
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireDigit])
 
             .Matches("[^\\w\\s]")
-            .WithMessage(_localizer[SharedResourceKeys.PasswordRequireNonAlphanumeric]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireNonAlphanumeric]);
 
         RuleFor(x => x.ConfirmNewPassword)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.ConfirmPasswordRequired])
+            .WithMessage(_ => _localizer[SharedResourceKeys.ConfirmPasswordRequired])
 
             .Equal(x => x.NewPassword)
-            .WithMessage(_localizer[SharedResourceKeys.PasswordsDoNotMatch]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordsDoNotMatch]);
     }
     #endregion
 

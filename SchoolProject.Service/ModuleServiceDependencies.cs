@@ -10,8 +10,9 @@ public static class ModuleServiceDependencies
     {
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
-
         services.AddScoped<IApplicationUserService, ApplicationUserService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+
         return services;
     }
 

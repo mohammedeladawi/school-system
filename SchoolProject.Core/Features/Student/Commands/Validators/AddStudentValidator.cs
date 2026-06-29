@@ -32,8 +32,8 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
     private void ValidateNameAr()
     {
         RuleFor(x => x.NameAr)
-            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameArRequired])
-            .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+            .NotEmpty().WithMessage(_ => _localizer[SharedResourceKeys.NameArRequired])
+            .MaximumLength(100).WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
 
             .MustAsync(async (studentNameAr, cancellationToken) =>
             {
@@ -47,8 +47,8 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
     private void ValidateNameEn()
     {
         RuleFor(x => x.NameEn)
-            .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NameEnRequired])
-            .MaximumLength(100).WithMessage(_localizer[SharedResourceKeys.NameTooLong])
+            .NotEmpty().WithMessage(_ => _localizer[SharedResourceKeys.NameEnRequired])
+            .MaximumLength(100).WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
             .MustAsync(async (studentNameEn, cancellationToken) =>
             {
                 if (await _studentService.DoesNameEnExistAsync(studentNameEn))
@@ -62,11 +62,11 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
     {
         RuleFor(x => x.DepartmentId)
             .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
+            .WithMessage(_ => _localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
 
             .MustAsync(async (departmentId, cancellationToken) =>
                 await _departmentService.DoesExistByIdAsync(departmentId!.Value))
-            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
 
     }
 }
