@@ -15,6 +15,9 @@ public static class SharedResourceKeys
     public static string UnprocessableEntity = "UnprocessableEntity";
     public static string NameRequired = "NameRequired";
     public static string NameTooLong = "NameTooLong";
+    public static string RoleNameRequired = "RoleNameRequired";
+    public static string RoleNameIsTooLong = "RoleNameIsTooLong";
+    public static string RoleNameAlreadyExists = "RoleNameAlreadyExists";
     public static string NameArRequired = "NameArRequired";
     public static string NameEnRequired = "NameEnRequired";
     public static string UserNameRequired = "UsernameRequired";

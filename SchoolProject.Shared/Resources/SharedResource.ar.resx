@@ -169,6 +169,18 @@
     <value>لا يمكن أن يتجاوز الاسم 100 حرف.</value>
     <comment/>
   </data>
+  <data name="RoleNameRequired" xml:space="preserve">
+    <value>اسم الدور مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameIsTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز اسم الدور 50 حرفًا.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameAlreadyExists" xml:space="preserve">
+    <value>اسم الدور موجود بالفعل.</value>
+    <comment/>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>الاسم العربي مطلوب.</value>
     <comment/>

@@ -12,6 +12,7 @@ public static class ModuleServiceDependencies
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IApplicationUserService, ApplicationUserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
 
         return services;
     }

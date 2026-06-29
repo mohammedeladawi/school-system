@@ -45,6 +45,8 @@ public class ApplicationUserService : IApplicationUserService
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
+
+        var addToRoleResult = await _userManager.AddToRoleAsync(user, "User");
     }
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
@@ -74,7 +76,8 @@ public class ApplicationUserService : IApplicationUserService
     {
         var deleteResult = await _userManager.DeleteAsync(user);
         if (!deleteResult.Succeeded)
-            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));    }
+            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));
+    }
 
     public Task<bool> DoesExistByIdAsync(int id)
     {
@@ -99,7 +102,8 @@ public class ApplicationUserService : IApplicationUserService
     }
 
     public async Task ChangePasswordAsync(int id, string currentPassword, string newPassword)
-    {   var user = await _userManager.FindByIdAsync(id.ToString());
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
         var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
         if (!changePasswordResult.Succeeded)
@@ -115,6 +119,11 @@ public class ApplicationUserService : IApplicationUserService
 
         var isValid = await _userManager.CheckPasswordAsync(user, password);
         return isValid ? user : null;
+    }
+
+    public async Task<List<string>> GetUserRolesAsync(ApplicationUser user)
+    {
+        return (await _userManager.GetRolesAsync(user)).ToList();
     }
     #endregion
 }

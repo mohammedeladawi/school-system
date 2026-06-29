@@ -30,7 +30,9 @@ public class AuthenticationService : IAuthenticationService
     #endregion
 
     #region Public Methods
-    public string GenerateJwtToken(ApplicationUser user)
+    public string GenerateJwtToken(
+        ApplicationUser user,
+        List<string>? roles = null)
     {
         var claims = new Dictionary<string, object>
         {
@@ -38,6 +40,8 @@ public class AuthenticationService : IAuthenticationService
             [ClaimTypes.Name] = user.UserName,
             [ClaimTypes.Email] = user.Email
         };
+
+        roles?.ForEach(role => claims.Add(ClaimTypes.Role, role));
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)
@@ -61,7 +65,7 @@ public class AuthenticationService : IAuthenticationService
     public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null)
     {
         string rawToken = Guid.NewGuid().ToString();
-        string  tokenHash = TokenHelper.HashToken(rawToken);
+        string tokenHash = TokenHelper.HashToken(rawToken);
 
         var refreshToken = new RefreshToken
         {

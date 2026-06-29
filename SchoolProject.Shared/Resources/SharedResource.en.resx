@@ -169,6 +169,18 @@
     <value>Name cannot exceed 100 characters.</value>
     <comment/>
   </data>
+  <data name="RoleNameRequired" xml:space="preserve">
+    <value>Role name is required.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameIsTooLong" xml:space="preserve">
+    <value>Role name cannot exceed 50 characters.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameAlreadyExists" xml:space="preserve">
+    <value>Role name already exists.</value>
+    <comment/>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>Arabic name is required.</value>
     <comment/>

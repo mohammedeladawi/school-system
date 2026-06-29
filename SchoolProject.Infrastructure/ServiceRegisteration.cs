@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SchoolProject.Infrastructure;
 
@@ -17,7 +18,7 @@ public static class ServiceRegisteration
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("dbcontext")));
 
-        services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 

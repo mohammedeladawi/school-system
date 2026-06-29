@@ -4,7 +4,7 @@ namespace SchoolProject.Service.Abstracts;
 
 public interface IAuthenticationService
 {
-    string GenerateJwtToken(ApplicationUser user);
+    string GenerateJwtToken(ApplicationUser user, List<string>? userRoles = null);
     (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null);
     Task AddRefreshTokenAsync(RefreshToken refreshToken);
 

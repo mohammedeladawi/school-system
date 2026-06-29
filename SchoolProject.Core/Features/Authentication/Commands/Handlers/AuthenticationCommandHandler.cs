@@ -42,7 +42,8 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             if (user is null)
                 return BadRequest<AuthResponse>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
 
-            var accessToken = _authenticationService.GenerateJwtToken(user);
+            var userRoles = await _applicationUserService.GetUserRolesAsync(user);
+            var accessToken = _authenticationService.GenerateJwtToken(user, userRoles);
             var (rawToken, refreshToken) = _authenticationService.GenerateRefreshToken(user.Id);
             await _authenticationService.AddRefreshTokenAsync(refreshToken);
 
@@ -70,7 +71,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             }
 
             if (refreshToken.ExpiresAt < DateTime.UtcNow)
-                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenExpired]);
+                return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenExpired]);
 
             // Valid refresh token, so revoke it and generate a new one and new access token
             await _authenticationService.RevokeRefreshTokenAsync(refreshToken);
