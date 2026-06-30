@@ -7,4 +7,6 @@ public interface IApplicationRoleService
 {
     public Task CreateAsync(string roleName);
     public Task<bool> DoesExistByNameAsync(string roleName);
+    public Task EditAsync(ApplicationRole role);
+    public Task<ApplicationRole?> GetByIdAsync(int id);
 }

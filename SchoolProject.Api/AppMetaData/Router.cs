@@ -68,5 +68,6 @@ public static class Router
         private const string AuthBase = Base + "/" + "Authorization" + "/";
         private const string Role = AuthBase + "Role";
         public const string CreateRole = Role + "/" + "Create";
+        public const string EditRole = Role + "/" + "Edit";
     }
 }

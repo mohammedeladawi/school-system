@@ -15,4 +15,11 @@ public class AuthorizationController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpPut(Router.Authorization.EditRole)]
+    public async Task<IActionResult> Edit(EditRoleCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
 }

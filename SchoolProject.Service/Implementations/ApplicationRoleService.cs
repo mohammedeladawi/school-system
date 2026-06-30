@@ -43,5 +43,21 @@ public class ApplicationRoleService : IApplicationRoleService
         return _roleManager.RoleExistsAsync(roleName);
     }
 
+    public async Task EditAsync(ApplicationRole role)
+    {
+        var result = await _roleManager.UpdateAsync(role);
+
+        if (!result.Succeeded)
+        {
+            var errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
+            throw new Exception(errorMessage);
+        }
+    }
+
+    public Task<ApplicationRole?> GetByIdAsync(int id)
+    {
+        return _roleManager.FindByIdAsync(id.ToString());
+    }
+
     #endregion
 }
