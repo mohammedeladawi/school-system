@@ -65,7 +65,7 @@ public class AuthenticationService : IAuthenticationService
     public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null)
     {
         string rawToken = Guid.NewGuid().ToString();
-        string tokenHash = TokenHelper.HashToken(rawToken);
+        string tokenHash = Utils.Hash(rawToken);
 
         var refreshToken = new RefreshToken
         {

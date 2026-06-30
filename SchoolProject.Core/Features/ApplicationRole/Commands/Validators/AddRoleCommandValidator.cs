@@ -10,13 +10,13 @@ using SchoolProject.Shared.Resources;
 public class AddRoleCommandValidator : AbstractValidator<AddRoleCommand>
 {
     #region Private Fields
-    private readonly IStringLocalizer<AddRoleCommandValidator> _localizer;
+    private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly IApplicationRoleService _applicationRoleService;
     #endregion
 
     #region Constructor
     public AddRoleCommandValidator(
-        IStringLocalizer<AddRoleCommandValidator> localizer,
+        IStringLocalizer<SharedResource> localizer,
         IApplicationRoleService applicationRoleService
     )
     {
