@@ -12,7 +12,8 @@ namespace SchoolProject.Core.Features.ApplicationRole.Commands.Handlers
     public class ApplicationRoleCommandHandler :
         ResponseHandler,
         IRequestHandler<AddRoleCommand, Response<string>>,
-        IRequestHandler<EditRoleCommand, Response<string>>
+        IRequestHandler<EditRoleCommand, Response<string>>,
+        IRequestHandler<DeleteRoleCommand, Response<string>>
     {
         #region Private Fields
         private readonly IApplicationRoleService _applicationRoleService;
@@ -45,6 +46,16 @@ namespace SchoolProject.Core.Features.ApplicationRole.Commands.Handlers
             role.Name = request.NewName;
             await _applicationRoleService.EditAsync(role);
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
+        }
+
+        public async Task<Response<string>> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
+        {
+            var role = await _applicationRoleService.GetByIdAsync(request.Id);
+            if (role is null)
+                return NotFound<string>(_localizer[SharedResourceKeys.NotFound]);
+
+            await _applicationRoleService.DeleteAsync(role);
+            return Deleted<string>();
         }
         #endregion
     }

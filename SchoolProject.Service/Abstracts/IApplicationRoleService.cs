@@ -9,4 +9,5 @@ public interface IApplicationRoleService
     public Task<bool> DoesExistByNameAsync(string roleName);
     public Task EditAsync(ApplicationRole role);
     public Task<ApplicationRole?> GetByIdAsync(int id);
+    public Task DeleteAsync(ApplicationRole role);
 }

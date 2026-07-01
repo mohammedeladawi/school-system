@@ -67,6 +67,12 @@ public class ErrorHandlerMiddleware
                     response.StatusCode = (int)HttpStatusCode.Conflict;
                     break;
 
+                case DomainException:
+                    responseModel.Message = error.Message;
+                    responseModel.StatusCode = HttpStatusCode.UnprocessableEntity;
+                    response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+                    break;
+
                 case Exception:
                     // Generic exception handling
                     responseModel.Message = error.Message;

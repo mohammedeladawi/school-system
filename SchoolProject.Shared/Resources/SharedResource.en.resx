@@ -181,6 +181,10 @@
     <value>Role name already exists.</value>
     <comment/>
   </data>
+  <data name="RoleHasUsers" xml:space="preserve">
+    <value>Role has assigned users and cannot be deleted.</value>
+    <comment/>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>Arabic name is required.</value>
     <comment/>

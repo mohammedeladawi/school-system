@@ -18,6 +18,7 @@ public static class SharedResourceKeys
     public static string RoleNameRequired = "RoleNameRequired";
     public static string RoleNameIsTooLong = "RoleNameIsTooLong";
     public static string RoleNameAlreadyExists = "RoleNameAlreadyExists";
+    public static string RoleHasUsers = "RoleHasUsers";
     public static string NameArRequired = "NameArRequired";
     public static string NameEnRequired = "NameEnRequired";
     public static string UserNameRequired = "UsernameRequired";

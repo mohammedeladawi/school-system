@@ -22,4 +22,11 @@ public class AuthorizationController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpDelete(Router.Authorization.DeleteRole)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await Mediator.Send(new DeleteRoleCommand(id));
+        return NewResult(result);
+    }
 }

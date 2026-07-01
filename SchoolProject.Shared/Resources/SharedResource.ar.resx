@@ -181,6 +181,10 @@
     <value>اسم الدور موجود بالفعل.</value>
     <comment/>
   </data>
+  <data name="RoleHasUsers" xml:space="preserve">
+    <value>الدور يحتوي على مستخدمين ولا يمكن حذفه.</value>
+    <comment/>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>الاسم العربي مطلوب.</value>
     <comment/>
