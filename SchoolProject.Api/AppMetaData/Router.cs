@@ -72,4 +72,10 @@ public static class Router
         public const string GetAll = RoleBase + "GetAll";
         public const string GetById = RoleBase + "GetById" + "/{id}";
     }
+
+    public class Authorization
+    {
+        private const string AuthorizationBase = Base + "/Authorization/";
+        public const string GetUserRolesById = AuthorizationBase + "GetUserRolesById" + "/{userId}";
+    }
 }

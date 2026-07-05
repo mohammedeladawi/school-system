@@ -19,8 +19,7 @@ public class ApplicationUserService : IApplicationUserService
     #endregion
 
     #region Constructor
-    public ApplicationUserService(
-        UserManager<ApplicationUser> userManager)
+    public ApplicationUserService(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }
@@ -121,7 +120,7 @@ public class ApplicationUserService : IApplicationUserService
         return isValid ? user : null;
     }
 
-    public async Task<List<string>> GetUserRolesAsync(ApplicationUser user)
+    public async Task<List<string>> GetUserRolesByIdAsync(ApplicationUser user)
     {
         return (await _userManager.GetRolesAsync(user)).ToList();
     }
