@@ -63,12 +63,13 @@ public static class Router
         public const string Logout = AuthBase + "Logout";
     }
 
-    public class Authorization
+    public class Role
     {
-        private const string AuthBase = Base + "/" + "Authorization" + "/";
-        private const string Role = AuthBase + "Role";
-        public const string CreateRole = Role + "/" + "Create";
-        public const string EditRole = Role + "/" + "Edit";
-        public const string DeleteRole = Role + "/" + "Delete" + "/{id}";
+        private const string RoleBase = Base + "/Role/";
+        public const string Create = RoleBase + "Create";
+        public const string Edit = RoleBase + "Edit";
+        public const string Delete = RoleBase + "Delete" + "/{id}";
+        public const string GetAll = RoleBase + "GetAll";
+        public const string GetById = RoleBase + "GetById" + "/{id}";
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Queries.Models;
 using SchoolProject.Shared.Resources;
 
-namespace SchoolProject.Core.Features.SApplicationUsers.Query.Validators;
+namespace SchoolProject.Core.Features.ApplicationUsers.Query.Validators;
 
 public class PaginatedSApplicationUsersValidator : AbstractValidator<GetPaginatedUsersQuery>
 {

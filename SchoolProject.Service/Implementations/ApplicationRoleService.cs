@@ -79,5 +79,10 @@ public class ApplicationRoleService : IApplicationRoleService
         }
     }
 
+    public async Task<List<ApplicationRole>> GetAllAsync()
+    {
+        return _roleManager.Roles.ToList();
+    }
+
     #endregion
 }
