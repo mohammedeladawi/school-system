@@ -59,18 +59,18 @@ public class AuthorizationQueryHandlers :
         return rolesResponse;
     }
 
-    private List<PermissionClaims> GetUserPermissionClaimsResponse(List<Claim> claims)
+    private List<PermissionClaims> GetUserPermissionClaimsResponse(List<string> claimValues)
     {
-        // get all
         var permissionClaimsList = new List<PermissionClaims>();
-        // foreach => push or not
         foreach (var permissionName in Shared.ClaimStore.PermissionClaims.UserPermissionClaims)
         {
-            var claim = new PermissionClaims();
-            claim.Name = permissionName;
-            claim.Value = claims.Any(c => c.Value == permissionName);
+            var pClaim = new PermissionClaims
+            {
+                Name = permissionName,
+                Value = claimValues.Any(cv => cv == permissionName)
+            };
 
-            permissionClaimsList.Add(claim);
+            permissionClaimsList.Add(pClaim);
         }
 
         return permissionClaimsList;
@@ -93,13 +93,12 @@ public class AuthorizationQueryHandlers :
 
     public async Task<Response<GetUserPermissionClaimsByIdQueryResponse>> Handle(GetUserPermissionClaimsByIdQuery request, CancellationToken cancellationToken)
     {
-        var userClaims = await _applicationUserService.GetUserClaimsAsync(request.UserId);
-        var permissionClaims = userClaims.FindAll(c => c.Type == "Permission");
+        var userPermissionClaims = await _authorizationService.GetUserPermissionClaimsAsync(request.UserId);
 
         var response = new GetUserPermissionClaimsByIdQueryResponse
         {
             UserId = request.UserId,
-            UserPermissionClaims = GetUserPermissionClaimsResponse(permissionClaims)
+            UserPermissionClaims = GetUserPermissionClaimsResponse(userPermissionClaims.ToList())
         };
 
         return Success(response);

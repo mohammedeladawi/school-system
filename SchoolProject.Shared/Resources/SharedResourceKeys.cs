@@ -62,4 +62,5 @@ public static class SharedResourceKeys
     public static string PageNumberGreaterThanZero = "PageNumberGreaterThanZero";
     public static string PageSizeRequired = "PageSizeRequired";
     public static string PageSizeGreaterThanZero = "PageSizeGreaterThanZero";
+    public static string InvalidPermissionClaims = "InvalidPermissionClaims";
 }

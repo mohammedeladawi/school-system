@@ -77,6 +77,7 @@ public static class Router
         private const string AuthorizationBase = Base + "/Authorization/";
         public const string GetUserRolesById = AuthorizationBase + "GetUserRolesById" + "/{userId}";
         public const string UpdateUserRoles = AuthorizationBase + "UpdateUserRoles";
-        public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims";
+        public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
+        public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
     }
 }

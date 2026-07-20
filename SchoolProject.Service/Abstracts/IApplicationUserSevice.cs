@@ -18,6 +18,4 @@ public interface IApplicationUserService
     public Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
     public Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password);
     public Task<List<string>> GetUserRolesAsync(ApplicationUser user);
-    public Task<List<Claim>> GetUserClaimsAsync(int userId);
-
 }

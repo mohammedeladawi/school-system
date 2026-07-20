@@ -126,11 +126,6 @@ public class ApplicationUserService : IApplicationUserService
         return (await _userManager.GetRolesAsync(user)).ToList();
     }
 
-    public async Task<List<Claim>> GetUserClaimsAsync(int userId)
-    {
-        var user = await GetByIdAsync(userId);
-        var claims = await _userManager.GetClaimsAsync(user);
-        return claims.ToList();
-    }
+
     #endregion
 }

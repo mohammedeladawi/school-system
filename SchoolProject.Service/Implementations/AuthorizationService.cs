@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities.Identities;
@@ -37,6 +38,52 @@ public class AuthorizationService : IAuthorizationService
 
         var userRoles = await _applicationUserService.GetUserRolesAsync(user);
         return userRoles;
+    }
+
+    public async Task UpdateUserPermissionClaims(ApplicationUser user, IList<string> permissionClaims)
+    {
+        var existingClaims = (await _userManager.GetClaimsAsync(user))
+            .Where(c => c.Type == "Permission")
+            .Select(c => c.Value)
+            .ToList();
+
+        var claimsToRemove = existingClaims.Except(permissionClaims)
+            .Select(c => new Claim("Permission", c))
+            .ToList();
+
+        var claimsToAdd = permissionClaims.Except(existingClaims)
+            .Select(c => new Claim("Permission", c))
+            .ToList();
+
+        await using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        try
+        {
+            var removeResult = await _userManager.RemoveClaimsAsync(user, claimsToRemove);
+            if (!removeResult.Succeeded)
+                throw new Exception($"Failed to remove claims from user {user.UserName}: {string.Join(", ", removeResult.Errors.Select(e => e.Description))}");
+
+            var addResult = await _userManager.AddClaimsAsync(user, claimsToAdd);
+            if (!addResult.Succeeded)
+                throw new Exception($"Failed to add claims to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<IList<string>> GetUserPermissionClaimsAsync(int userId)
+    {
+        var user = await _applicationUserService.GetByIdAsync(userId);
+        var claims = await _userManager.GetClaimsAsync(user);
+        var permissions = claims.Where(c => c.Type == "Permission")
+            .Select(c => c.Value)
+            .ToList();
+
+        return permissions;
     }
 
     public async Task UpdateUserRoles(ApplicationUser user, IList<string> roleNames)

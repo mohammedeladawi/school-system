@@ -10,7 +10,8 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Handlers;
 
 public class AuthorizationCommandHandlers :
     ResponseHandler,
-    IRequestHandler<UpdateUserRolesCommand, Response<string>>
+    IRequestHandler<UpdateUserRolesCommand, Response<string>>,
+    IRequestHandler<UpdateUserPermissionClaimsCommand, Response<string>>
 {
     #region Fields
     private readonly IAuthorizationService _authorizationService;
@@ -39,6 +40,13 @@ public class AuthorizationCommandHandlers :
     {
         var user = await _applicationUserService.GetByIdAsync(request.UserId);
         await _authorizationService.UpdateUserRoles(user, request.RoleNames);
+        return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
+    }
+
+    public async Task<Response<string>> Handle(UpdateUserPermissionClaimsCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _applicationUserService.GetByIdAsync(request.UserId);
+        await _authorizationService.UpdateUserPermissionClaims(user, request.PermissionClaims);
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
     }
 

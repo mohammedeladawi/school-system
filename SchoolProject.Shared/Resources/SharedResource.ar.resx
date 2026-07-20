@@ -317,6 +317,10 @@
     <value>يجب أن يكون حجم الصفحة أكبر من 0.</value>
     <comment/>
   </data>
+  <data name="InvalidPermissionClaims" xml:space="preserve">
+    <value>مطالبات الأذونات غير صالحة.</value>
+    <comment/>
+  </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
     <value>اسم المستخدم أو كلمة المرور غير صحيحة.</value>
     <comment/>
