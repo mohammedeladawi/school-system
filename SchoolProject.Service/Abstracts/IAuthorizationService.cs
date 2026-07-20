@@ -1,6 +1,9 @@
+using SchoolProject.Data.Entities.Identities;
+
 namespace SchoolProject.Service.Abstracts;
 
 public interface IAuthorizationService
 {
-    public Task<IList<string>> GetUserRolesByIdAsync(int userId);
+    public Task<IList<string>> GetUserRolesAsync(int userId);
+    public Task UpdateUserRoles(ApplicationUser user, IList<string> roleNames);
 }

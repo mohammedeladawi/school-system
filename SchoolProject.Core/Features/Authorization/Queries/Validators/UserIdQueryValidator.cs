@@ -6,7 +6,7 @@ using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Query.Validators;
 
-public class GetUserRolesQueryValidator : AbstractValidator<GetUserRolesByIdQuery>
+public class UserIdQueryValidator : AbstractValidator<IUserIdQuery>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -14,14 +14,33 @@ public class GetUserRolesQueryValidator : AbstractValidator<GetUserRolesByIdQuer
     #endregion
 
     #region Constructors
-    public GetUserRolesQueryValidator(
+    public UserIdQueryValidator(
         IStringLocalizer<SharedResource> localizer,
         IApplicationUserService applicationUserService)
     {
         _localizer = localizer;
         _applicationUserService = applicationUserService;
 
-        Include(new UserIdQueryValidator(_localizer, _applicationUserService));
+        ValidateUserId();
+    }
+    #endregion
+
+    #region Private Methods
+    private void ValidateUserId()
+    {
+        RuleFor(x => x.UserId)
+            .NotEmpty()
+            .WithMessage(_localizer[SharedResourceKeys.IdRequired])
+
+            .GreaterThan(0)
+            .WithMessage(_localizer[SharedResourceKeys.IdGreaterThanZero])
+
+            .MustAsync(async (userId, cancellationToken) =>
+                await _applicationUserService.DoesExistByIdAsync(userId)
+            )
+            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+
+
     }
     #endregion
 }

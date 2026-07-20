@@ -53,6 +53,8 @@ public static class SharedResourceKeys
     public static string RetrievedSuccessfully = "RetrievedSuccessfully";
 
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
+    public static string RolesRequired = "RolesRequired";
+    public static string SomeRolesNotExist = "SomeRolesNotExist";
     public static string IdRequired = "IdRequired";
     public static string IdGreaterThanZero = "IdGreaterThanZero";
     public static string NotExist = "NotExist";

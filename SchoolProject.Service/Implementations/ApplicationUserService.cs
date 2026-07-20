@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -120,9 +121,16 @@ public class ApplicationUserService : IApplicationUserService
         return isValid ? user : null;
     }
 
-    public async Task<List<string>> GetUserRolesByIdAsync(ApplicationUser user)
+    public async Task<List<string>> GetUserRolesAsync(ApplicationUser user)
     {
         return (await _userManager.GetRolesAsync(user)).ToList();
+    }
+
+    public async Task<List<Claim>> GetUserClaimsAsync(int userId)
+    {
+        var user = await GetByIdAsync(userId);
+        var claims = await _userManager.GetClaimsAsync(user);
+        return claims.ToList();
     }
     #endregion
 }

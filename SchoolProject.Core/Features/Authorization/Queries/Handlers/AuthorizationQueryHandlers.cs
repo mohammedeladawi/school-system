@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -11,7 +12,8 @@ namespace SchoolProject.Core.Features.Authorization.Queries.Handlers;
 
 public class AuthorizationQueryHandlers :
     ResponseHandler,
-    IRequestHandler<GetUserRolesByIdQuery, Response<GetUserRolesByIdQueryResponse>>
+    IRequestHandler<GetUserRolesByIdQuery, Response<GetUserRolesByIdQueryResponse>>,
+    IRequestHandler<GetUserPermissionClaimsByIdQuery, Response<GetUserPermissionClaimsByIdQueryResponse>>
 {
     #region Fields
     private readonly IAuthorizationService _authorizationService;
@@ -56,16 +58,48 @@ public class AuthorizationQueryHandlers :
 
         return rolesResponse;
     }
+
+    private List<PermissionClaims> GetUserPermissionClaimsResponse(List<Claim> claims)
+    {
+        // get all
+        var permissionClaimsList = new List<PermissionClaims>();
+        // foreach => push or not
+        foreach (var permissionName in Shared.ClaimStore.PermissionClaims.UserPermissionClaims)
+        {
+            var claim = new PermissionClaims();
+            claim.Name = permissionName;
+            claim.Value = claims.Any(c => c.Value == permissionName);
+
+            permissionClaimsList.Add(claim);
+        }
+
+        return permissionClaimsList;
+    }
+
     #endregion
 
     #region Public Methods
     public async Task<Response<GetUserRolesByIdQueryResponse>> Handle(GetUserRolesByIdQuery request, CancellationToken cancellationToken)
     {
-        var userRoles = await _authorizationService.GetUserRolesByIdAsync(request.UserId);
+        var userRoles = await _authorizationService.GetUserRolesAsync(request.UserId);
         var response = new GetUserRolesByIdQueryResponse
         {
             UserId = request.UserId,
             Roles = await GetUserRolesResponseAsync(userRoles.ToList())
+        };
+
+        return Success(response);
+    }
+
+    public async Task<Response<GetUserPermissionClaimsByIdQueryResponse>> Handle(GetUserPermissionClaimsByIdQuery request, CancellationToken cancellationToken)
+    {
+        var userClaims = await _applicationUserService.GetUserClaimsAsync(request.UserId);
+        var permissionClaims = userClaims.FindAll(c => c.Type == "Permission");
+
+        var response = new GetUserPermissionClaimsByIdQueryResponse
+        {
+            UserId = request.UserId,
+            UserPermissionClaims = GetUserPermissionClaimsResponse(permissionClaims)
         };
 
         return Success(response);

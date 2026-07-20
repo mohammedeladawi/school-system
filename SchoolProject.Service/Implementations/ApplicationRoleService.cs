@@ -84,5 +84,12 @@ public class ApplicationRoleService : IApplicationRoleService
         return _roleManager.Roles.ToList();
     }
 
+    public async Task<bool> ValidateRolesExistAsync(List<string> roleNames)
+    {
+        var allRoles = await GetAllAsync();
+        var existingRoleNames = allRoles.Select(r => r.Name).ToList();
+        return roleNames.All(roleName => existingRoleNames.Contains(roleName));
+    }
+
     #endregion
 }

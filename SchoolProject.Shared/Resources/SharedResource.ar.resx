@@ -289,6 +289,14 @@
     <value>يجب أن يكون DepartmentId أكبر من 0.</value>
     <comment/>
   </data>
+  <data name="RolesRequired" xml:space="preserve">
+    <value>يتطلب وجود دور واحد على الأقل.</value>
+    <comment/>
+  </data>
+  <data name="SomeRolesNotExist" xml:space="preserve">
+    <value>دور أو أكثر غير موجود.</value>
+    <comment/>
+  </data>
   <data name="NotExist" xml:space="preserve">
     <value>المورد غير موجود.</value>
     <comment/>

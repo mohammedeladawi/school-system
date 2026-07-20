@@ -39,7 +39,6 @@ public static class Router
         public const string PaginatedList = DepartmentBase + "PaginatedList";
     }
 
-
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
@@ -77,5 +76,7 @@ public static class Router
     {
         private const string AuthorizationBase = Base + "/Authorization/";
         public const string GetUserRolesById = AuthorizationBase + "GetUserRolesById" + "/{userId}";
+        public const string UpdateUserRoles = AuthorizationBase + "UpdateUserRoles";
+        public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims";
     }
 }

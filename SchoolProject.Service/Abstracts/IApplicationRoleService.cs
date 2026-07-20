@@ -11,4 +11,5 @@ public interface IApplicationRoleService
     public Task<ApplicationRole?> GetByIdAsync(int id);
     public Task DeleteAsync(ApplicationRole role);
     public Task<List<ApplicationRole>> GetAllAsync();
+    public Task<bool> ValidateRolesExistAsync(List<string> roleNames);
 }

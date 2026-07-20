@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
 
@@ -16,5 +17,7 @@ public interface IApplicationUserService
     public Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize);
     public Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
     public Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password);
-    public Task<List<string>> GetUserRolesByIdAsync(ApplicationUser user);
+    public Task<List<string>> GetUserRolesAsync(ApplicationUser user);
+    public Task<List<Claim>> GetUserClaimsAsync(int userId);
+
 }

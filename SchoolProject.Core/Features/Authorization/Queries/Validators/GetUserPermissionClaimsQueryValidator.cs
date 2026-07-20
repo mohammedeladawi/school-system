@@ -6,7 +6,7 @@ using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Query.Validators;
 
-public class GetUserRolesQueryValidator : AbstractValidator<GetUserRolesByIdQuery>
+public class GetUserPermissionClaimsQueryValidator : AbstractValidator<GetUserPermissionClaimsByIdQuery>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -14,7 +14,7 @@ public class GetUserRolesQueryValidator : AbstractValidator<GetUserRolesByIdQuer
     #endregion
 
     #region Constructors
-    public GetUserRolesQueryValidator(
+    public GetUserPermissionClaimsQueryValidator(
         IStringLocalizer<SharedResource> localizer,
         IApplicationUserService applicationUserService)
     {
