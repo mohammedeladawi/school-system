@@ -43,7 +43,7 @@ public static class ServiceRegisteration
             options.User.RequireUniqueEmail = true;
         });
 
-        
+
         var jwtSettings = configuration.GetSection("Jwt");
 
 
@@ -56,26 +56,39 @@ public static class ServiceRegisteration
             })
             .AddJwtBearer(options =>
             {
-            options.RequireHttpsMetadata = true;
-            options.SaveToken = true;
+                options.RequireHttpsMetadata = true;
+                options.SaveToken = true;
 
-            options.TokenValidationParameters = new TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
+
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("User.GetPaginated", policy =>
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
+                policy.RequireClaim("Permission", "User.GetPaginated");
+            });
 
-                ValidIssuer = jwtSettings["Issuer"],
-                ValidAudience = jwtSettings["Audience"],
-
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
-
-                ClockSkew = TimeSpan.Zero
-            };
+            options.AddPolicy("User.ChangePassword", policy =>
+            {
+                policy.RequireClaim("Permission", "User.ChangePassword");
+            });
         });
-
 
         services.AddSwaggerGen(c =>
         {

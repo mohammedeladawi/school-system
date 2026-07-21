@@ -16,32 +16,45 @@ public class AuthenticationService : IAuthenticationService
     #region Private Fields
     private readonly IConfiguration _config;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly IAuthorizationService _authorizationService;
     #endregion
 
     #region Constructors
     public AuthenticationService(
         IConfiguration config,
-        IRefreshTokenRepository refreshTokenRepository)
+        IRefreshTokenRepository refreshTokenRepository,
+        IAuthorizationService authorizationService)
     {
         _config = config;
         _refreshTokenRepository = refreshTokenRepository;
+        _authorizationService = authorizationService;
     }
 
     #endregion
 
     #region Public Methods
-    public string GenerateJwtToken(
-        ApplicationUser user,
-        List<string>? roles = null)
+    public async Task<string> GenerateJwtTokenAsync(ApplicationUser user)
     {
-        var claims = new Dictionary<string, object>
-        {
-            [ClaimTypes.NameIdentifier] = user.Id.ToString(),
-            [ClaimTypes.Name] = user.UserName,
-            [ClaimTypes.Email] = user.Email
-        };
+        var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.UserName!),
+        new Claim(ClaimTypes.Email, user.Email!)
+    };
 
-        roles?.ForEach(role => claims.Add(ClaimTypes.Role, role));
+        var roles = await _authorizationService.GetUserRolesAsync(user.Id);
+
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
+        var permissions = await _authorizationService.GetUserPermissionsAsync(user.Id);
+
+        foreach (var permission in permissions)
+        {
+            claims.Add(new Claim("Permission", permission));
+        }
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)
@@ -51,14 +64,17 @@ public class AuthenticationService : IAuthenticationService
         {
             Issuer = _config["Jwt:Issuer"],
             Audience = _config["Jwt:Audience"],
-            Claims = claims,
+            Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddMinutes(
                 Convert.ToDouble(_config["Jwt:DurationInMinutes"])
             ),
-            SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            SigningCredentials = new SigningCredentials(
+                key,
+                SecurityAlgorithms.HmacSha256)
         };
 
         var handler = new JsonWebTokenHandler();
+
         return handler.CreateToken(tokenDescriptor);
     }
 

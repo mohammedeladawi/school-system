@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class ApplicationUserController : AppControllerBase
 {
     [HttpPost(Router.ApplicationUser.Register)]
@@ -16,6 +17,7 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
+    [Authorize(Policy = "User.GetPaginated")]
     [HttpGet(Router.ApplicationUser.PaginatedList)]
     public async Task<IActionResult> GetPaginatedList([FromQuery] GetPaginatedUsersQuery query)
     {
@@ -37,7 +39,6 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpDelete(Router.ApplicationUser.Delete)]
     public async Task<IActionResult> Delete(int id)
     {
@@ -45,6 +46,7 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
+    [Authorize(Policy = "User.ChangePassword")]
     [HttpPut(Router.ApplicationUser.ChangePassword)]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
     {

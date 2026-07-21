@@ -93,7 +93,7 @@ public class AuthorizationQueryHandlers :
 
     public async Task<Response<GetUserPermissionClaimsByIdQueryResponse>> Handle(GetUserPermissionClaimsByIdQuery request, CancellationToken cancellationToken)
     {
-        var userPermissionClaims = await _authorizationService.GetUserPermissionClaimsAsync(request.UserId);
+        var userPermissionClaims = await _authorizationService.GetUserPermissionsAsync(request.UserId);
 
         var response = new GetUserPermissionClaimsByIdQueryResponse
         {

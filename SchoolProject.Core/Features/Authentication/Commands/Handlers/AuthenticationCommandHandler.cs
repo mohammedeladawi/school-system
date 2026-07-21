@@ -42,8 +42,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             if (user is null)
                 return BadRequest<AuthResponse>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
 
-            var userRoles = await _applicationUserService.GetUserRolesAsync(user);
-            var accessToken = _authenticationService.GenerateJwtToken(user, userRoles);
+            var accessToken = await _authenticationService.GenerateJwtTokenAsync(user);
             var (rawToken, refreshToken) = _authenticationService.GenerateRefreshToken(user.Id);
             await _authenticationService.AddRefreshTokenAsync(refreshToken);
 
@@ -77,8 +76,8 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             await _authenticationService.RevokeRefreshTokenAsync(refreshToken);
             var (rawToken, newRefreshToken) = _authenticationService.GenerateRefreshToken(refreshToken.UserId, refreshToken.FamilyId);
             await _authenticationService.AddRefreshTokenAsync(newRefreshToken);
-            var userRoles = await _applicationUserService.GetUserRolesAsync(refreshToken.User);
-            string newAccessToken = _authenticationService.GenerateJwtToken(refreshToken.User, userRoles);
+
+            string newAccessToken = await _authenticationService.GenerateJwtTokenAsync(refreshToken.User);
 
             var authResponse = new AuthResponse
             {

@@ -75,7 +75,7 @@ public class AuthorizationService : IAuthorizationService
         }
     }
 
-    public async Task<IList<string>> GetUserPermissionClaimsAsync(int userId)
+    public async Task<IList<string>> GetUserPermissionsAsync(int userId)
     {
         var user = await _applicationUserService.GetByIdAsync(userId);
         var claims = await _userManager.GetClaimsAsync(user);
