@@ -349,4 +349,16 @@
     <value>تم الاسترجاع بنجاح.</value>
     <comment/>
   </data>
+  <data name="InvalidEmailAddress" xml:space="preserve">
+    <value>يجب أن يكون البريد الإلكتروني صالحاً</value>
+    <comment/>
+  </data>
+  <data name="EmailSentSuccessfully" xml:space="preserve">
+    <value>تم إرسال البريد الإلكتروني بنجاح</value>
+    <comment/>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>هذا الحقل مطلوب</value>
+    <comment/>
+  </data>
 </root>

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
+using SchoolProject.Shared.Helpers;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SchoolProject.Infrastructure;
@@ -15,6 +16,8 @@ public static class ServiceRegisteration
 {
     public static IServiceCollection AddServiceRegisteration(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("dbcontext")));
 

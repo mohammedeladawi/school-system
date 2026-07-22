@@ -80,4 +80,10 @@ public static class Router
         public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
         public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
     }
+
+    public static class Emails
+    {
+        private const string EmailsBase = Base + "/Emails/";
+        public const string Send = EmailsBase + "Send";
+    }
 }

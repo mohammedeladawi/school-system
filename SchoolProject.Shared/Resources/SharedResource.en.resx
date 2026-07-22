@@ -349,4 +349,16 @@
     <value>Retrieved successfully.</value>
     <comment/>
   </data>
+  <data name="InvalidEmailAddress" xml:space="preserve">
+    <value>Must be a valid email address</value>
+    <comment/>
+  </data>
+  <data name="EmailSentSuccessfully" xml:space="preserve">
+    <value>Email sent successfully</value>
+    <comment/>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>This field is required</value>
+    <comment/>
+  </data>
 </root>
