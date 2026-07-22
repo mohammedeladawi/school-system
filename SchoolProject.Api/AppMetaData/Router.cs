@@ -39,7 +39,6 @@ public static class Router
         public const string PaginatedList = DepartmentBase + "PaginatedList";
     }
 
-
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
@@ -61,5 +60,24 @@ public static class Router
         public const string Login = AuthBase + "Login";
         public const string RefreshToken = AuthBase + "Refresh-Token";
         public const string Logout = AuthBase + "Logout";
+    }
+
+    public class Role
+    {
+        private const string RoleBase = Base + "/Role/";
+        public const string Create = RoleBase + "Create";
+        public const string Edit = RoleBase + "Edit";
+        public const string Delete = RoleBase + "Delete" + "/{id}";
+        public const string GetAll = RoleBase + "GetAll";
+        public const string GetById = RoleBase + "GetById" + "/{id}";
+    }
+
+    public class Authorization
+    {
+        private const string AuthorizationBase = Base + "/Authorization/";
+        public const string GetUserRolesById = AuthorizationBase + "GetUserRolesById" + "/{userId}";
+        public const string UpdateUserRoles = AuthorizationBase + "UpdateUserRoles";
+        public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
+        public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
     }
 }

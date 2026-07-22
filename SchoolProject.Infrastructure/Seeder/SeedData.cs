@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Shared.Helpers;
 
-namespace SchoolProject.Infrastructure.Data.Configurations;
+namespace SchoolProject.Infrastructure.Seeder;
 
 public static class SeedData
 {
@@ -15,7 +18,7 @@ public static class SeedData
 
     public static readonly Student[] Students = new[]
     {
-           new Student { Id = 1, NameEn = "Ahmed Hassan", NameAr = "أحمد حسن", Address = "Cairo, Egypt", Phone = "01001234567", DepartmentId = 1 },
+            new Student { Id = 1, NameEn = "Ahmed Hassan", NameAr = "أحمد حسن", Address = "Cairo, Egypt", Phone = "01001234567", DepartmentId = 1 },
             new Student { Id = 2, NameEn = "Fatima Mohamed", NameAr = "فاطمة محمد", Address = "Giza, Egypt", Phone = "01101234567", DepartmentId = 1 },
             new Student { Id = 3, NameEn = "Omar Ali", NameAr = "عمر علي", Address = "Alexandria, Egypt", Phone = "01201234567", DepartmentId = 2 },
             new Student { Id = 4, NameEn = "Layla Ibrahim", NameAr = "ليلى إبراهيم", Address = "Cairo, Egypt", Phone = "01001234568", DepartmentId = 2 },
@@ -119,5 +122,115 @@ public static class SeedData
         new InstructorSubject { InstructorId = 7, SubjectId = 8 },
         new InstructorSubject { InstructorId = 8, SubjectId = 8 },
         new InstructorSubject { InstructorId = 9, SubjectId = 9 }
+    };
+
+    public static readonly ApplicationUser[] ApplicationUsers = new[]
+    {
+      new ApplicationUser
+      {
+            Id = 1,
+            UserName = "admin",
+            NameEn = "Admin User",
+            NameAr = "المستخدم المسؤول",
+            NormalizedUserName = "ADMIN",
+            Email = "admin@yahoo.com",
+            NormalizedEmail = "ADMIN@YAHOO.COM",
+            EmailConfirmed = true,
+            // Raw Password: 1122Mm@
+            PasswordHash = "AQAAAAIAAYagAAAAEPEeEauhgQ1f/Kj6xJnhtrTrcQL5kvtLLOnz+LZLW0EFn64MoT7kLPSVGvfofF1A0w==",
+            Phone = "01001234567",
+            PhoneNumberConfirmed = true,
+            SecurityStamp = "0c2f2bc3-6e4d-4e94-aecb-32bae418d7c2",
+            ConcurrencyStamp = "b1a89a8d-8b32-4946-bae5-334c2e11fdd2",
+            Country = "Egypt"
+      },
+      new ApplicationUser
+      {
+            Id = 2,
+            UserName = "teacher1",
+            NameEn = "Teacher One",
+            NameAr = "المعلم الأول",
+            NormalizedUserName = "TEACHER1",
+            Email = "teacher1@yahoo.com",
+            NormalizedEmail = "TEACHER1@YAHOO.COM",
+            EmailConfirmed = true,
+            // Raw Password: Password@123
+            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+            Phone = "01101234567",
+            PhoneNumberConfirmed = true,
+            SecurityStamp = "b719ecff-c01e-4641-a622-4150c4a3c274",
+            ConcurrencyStamp = "a7c17b1a-33a4-48e5-9fd7-765421a99234",
+            Country = "Egypt"
+      },
+      new ApplicationUser
+      {
+            Id = 3,
+            UserName = "teacher2",
+            NameEn = "Teacher Two",
+            NameAr = "المعلم الثاني",
+            NormalizedUserName = "TEACHER2",
+            Email = "teacher2@yahoo.com",
+            NormalizedEmail = "TEACHER2@YAHOO.COM",
+            EmailConfirmed = true,
+            // Raw Password: Password@123
+            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+            Phone = "01201234567",
+            PhoneNumberConfirmed = true,
+            SecurityStamp = "a053d27a-715b-4af4-a5bc-660278dfd9ff",
+            ConcurrencyStamp = "c9081a84-6af9-4469-ad9c-9ba72a9fca1d",
+            Country = "Egypt"
+      },
+      new ApplicationUser
+      {
+            Id = 4,
+            UserName = "student1",
+            NameEn = "Student One",
+            NameAr = "الطالب الأول",
+            NormalizedUserName = "STUDENT1",
+            Email = "student1@yahoo.com",
+            NormalizedEmail = "STUDENT1@YAHOO.COM",
+            EmailConfirmed = true,
+            // Raw Password: Password@123
+            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+            Phone = "01001234568",
+            PhoneNumberConfirmed = true,
+            SecurityStamp = "50729c87-1113-4c48-bbe4-80f88425eb01",
+            ConcurrencyStamp = "d910958e-d9b5-4ab8-bd90-6ba0645dcc13",
+            Country = "Egypt"
+      },
+      new ApplicationUser
+      {
+            Id = 5,
+            UserName = "student2",
+            NameEn = "Student Two",
+            NameAr = "الطالب الثاني",
+            NormalizedUserName = "STUDENT2",
+            Email = "student2@yahoo.com",
+            NormalizedEmail = "STUDENT2@YAHOO.COM",
+            EmailConfirmed = true,
+            // Raw Password: Password@123
+            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+            Phone = "01101234568",
+            PhoneNumberConfirmed = true,
+            SecurityStamp = "a3ae62a1-4c23-480c-8049-f90c2334fad8",
+            ConcurrencyStamp = "13c8aa62-fafb-4710-9341-7850c3f82868",
+            Country = "Egypt"
+      }
+    };
+
+    public static readonly IdentityUserRole<int>[] ApplicationUserRoles = new[]
+    {
+        new IdentityUserRole<int> { UserId = 1, RoleId = 1 }, // Admin
+        new IdentityUserRole<int> { UserId = 2, RoleId = 2 }, // Teacher
+        new IdentityUserRole<int> { UserId = 3, RoleId = 2 }, // Teacher
+        new IdentityUserRole<int> { UserId = 4, RoleId = 3 }, // Student
+        new IdentityUserRole<int> { UserId = 5, RoleId = 3 }  // Student
+    };
+
+    public static readonly IdentityRole<int>[] ApplicationRoles = new[]
+    {
+        new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = "a97a4913-dfc9-41b6-beba-aa2ba780c52d" },
+        new IdentityRole<int> { Id = 2, Name = "Teacher", NormalizedName = "TEACHER", ConcurrencyStamp = "0731cd45-e921-4851-842d-7eaaa0ba7b40" },
+        new IdentityRole<int> { Id = 3, Name = "Student", NormalizedName = "STUDENT", ConcurrencyStamp = "2fd85377-76f7-489d-a723-e7656161415f" }
     };
 }

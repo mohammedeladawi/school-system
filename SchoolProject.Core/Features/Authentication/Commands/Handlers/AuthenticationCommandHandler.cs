@@ -42,7 +42,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             if (user is null)
                 return BadRequest<AuthResponse>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
 
-            var accessToken = _authenticationService.GenerateJwtToken(user);
+            var accessToken = await _authenticationService.GenerateJwtTokenAsync(user);
             var (rawToken, refreshToken) = _authenticationService.GenerateRefreshToken(user.Id);
             await _authenticationService.AddRefreshTokenAsync(refreshToken);
 
@@ -57,7 +57,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = TokenHelper.HashToken(request.RefreshToken);
+            string tokenHash = Utils.Hash(request.RefreshToken);
             var refreshToken = await _authenticationService.GetRefreshTokenByTokenHashAsync(tokenHash);
             if (refreshToken is null)
                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
@@ -70,13 +70,14 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             }
 
             if (refreshToken.ExpiresAt < DateTime.UtcNow)
-                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenExpired]);
+                return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenExpired]);
 
             // Valid refresh token, so revoke it and generate a new one and new access token
             await _authenticationService.RevokeRefreshTokenAsync(refreshToken);
             var (rawToken, newRefreshToken) = _authenticationService.GenerateRefreshToken(refreshToken.UserId, refreshToken.FamilyId);
             await _authenticationService.AddRefreshTokenAsync(newRefreshToken);
-            string newAccessToken = _authenticationService.GenerateJwtToken(refreshToken.User);
+
+            string newAccessToken = await _authenticationService.GenerateJwtTokenAsync(refreshToken.User);
 
             var authResponse = new AuthResponse
             {
@@ -89,7 +90,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<string>> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = TokenHelper.HashToken(request.RefreshToken);
+            string tokenHash = Utils.Hash(request.RefreshToken);
             var refreshToken = await _authenticationService.GetRefreshTokenByTokenHashAsync(tokenHash);
             if (refreshToken is null)
                 return Unauthorized<string>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);

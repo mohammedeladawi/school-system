@@ -22,36 +22,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -134,6 +104,33 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            RoleId = 3
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -279,6 +276,59 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SchoolProject.Data.Entities.Identities.ApplicationRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "a97a4913-dfc9-41b6-beba-aa2ba780c52d",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "0731cd45-e921-4851-842d-7eaaa0ba7b40",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "2fd85377-76f7-489d-a723-e7656161415f",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
+                });
+
             modelBuilder.Entity("SchoolProject.Data.Entities.Identities.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
@@ -359,6 +409,108 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1a89a8d-8b32-4946-bae5-334c2e11fdd2",
+                            Country = "Egypt",
+                            Email = "admin@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "المستخدم المسؤول",
+                            NameEn = "Admin User",
+                            NormalizedEmail = "ADMIN@YAHOO.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPEeEauhgQ1f/Kj6xJnhtrTrcQL5kvtLLOnz+LZLW0EFn64MoT7kLPSVGvfofF1A0w==",
+                            Phone = "01001234567",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "0c2f2bc3-6e4d-4e94-aecb-32bae418d7c2",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a7c17b1a-33a4-48e5-9fd7-765421a99234",
+                            Country = "Egypt",
+                            Email = "teacher1@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "المعلم الأول",
+                            NameEn = "Teacher One",
+                            NormalizedEmail = "TEACHER1@YAHOO.COM",
+                            NormalizedUserName = "TEACHER1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            Phone = "01101234567",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "b719ecff-c01e-4641-a622-4150c4a3c274",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c9081a84-6af9-4469-ad9c-9ba72a9fca1d",
+                            Country = "Egypt",
+                            Email = "teacher2@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "المعلم الثاني",
+                            NameEn = "Teacher Two",
+                            NormalizedEmail = "TEACHER2@YAHOO.COM",
+                            NormalizedUserName = "TEACHER2",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            Phone = "01201234567",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a053d27a-715b-4af4-a5bc-660278dfd9ff",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher2"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d910958e-d9b5-4ab8-bd90-6ba0645dcc13",
+                            Country = "Egypt",
+                            Email = "student1@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "الطالب الأول",
+                            NameEn = "Student One",
+                            NormalizedEmail = "STUDENT1@YAHOO.COM",
+                            NormalizedUserName = "STUDENT1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            Phone = "01001234568",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "50729c87-1113-4c48-bbe4-80f88425eb01",
+                            TwoFactorEnabled = false,
+                            UserName = "student1"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "13c8aa62-fafb-4710-9341-7850c3f82868",
+                            Country = "Egypt",
+                            Email = "student2@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "الطالب الثاني",
+                            NameEn = "Student Two",
+                            NormalizedEmail = "STUDENT2@YAHOO.COM",
+                            NormalizedUserName = "STUDENT2",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            Phone = "01101234568",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a3ae62a1-4c23-480c-8049-f90c2334fad8",
+                            TwoFactorEnabled = false,
+                            UserName = "student2"
+                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.Identities.RefreshToken", b =>
@@ -939,7 +1091,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -966,7 +1118,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

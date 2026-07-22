@@ -169,6 +169,22 @@
     <value>Name cannot exceed 100 characters.</value>
     <comment/>
   </data>
+  <data name="RoleNameRequired" xml:space="preserve">
+    <value>Role name is required.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameIsTooLong" xml:space="preserve">
+    <value>Role name cannot exceed 50 characters.</value>
+    <comment/>
+  </data>
+  <data name="RoleNameAlreadyExists" xml:space="preserve">
+    <value>Role name already exists.</value>
+    <comment/>
+  </data>
+  <data name="RoleHasUsers" xml:space="preserve">
+    <value>Role has assigned users and cannot be deleted.</value>
+    <comment/>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>Arabic name is required.</value>
     <comment/>
@@ -273,6 +289,14 @@
     <value>DepartmentId must be greater than 0.</value>
     <comment/>
   </data>
+  <data name="RolesRequired" xml:space="preserve">
+    <value>At least one role is required.</value>
+    <comment/>
+  </data>
+  <data name="SomeRolesNotExist" xml:space="preserve">
+    <value>One or more roles do not exist.</value>
+    <comment/>
+  </data>
   <data name="NotExist" xml:space="preserve">
     <value>Resource does not exist.</value>
     <comment/>
@@ -291,6 +315,10 @@
   </data>
   <data name="PageSizeGreaterThanZero" xml:space="preserve">
     <value>PageSize must be greater than 0.</value>
+    <comment/>
+  </data>
+  <data name="InvalidPermissionClaims" xml:space="preserve">
+    <value>Invalid permission claims.</value>
     <comment/>
   </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
