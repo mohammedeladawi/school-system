@@ -50,6 +50,8 @@ public static class Router
         public const string Delete = ApplicationUserBase + "{id}";
         public const string ChangePassword = ApplicationUserBase + "Change-Password";
 
+        public const string ConfirmEmail = ApplicationUserBase + "ConfirmEmail";
+
 
     }
 

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
 
-[Authorize(Roles = "Admin")]
 public class ApplicationUserController : AppControllerBase
 {
     [HttpPost(Router.ApplicationUser.Register)]
@@ -51,6 +50,13 @@ public class ApplicationUserController : AppControllerBase
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
     {
         var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
+    [HttpGet(Router.ApplicationUser.ConfirmEmail)]
+    public async Task<IActionResult> ConfirmEmail(int userId, string token)
+    {
+        var result = await Mediator.Send(new ConfirmEmailCommand(userId, token));
         return NewResult(result);
     }
 

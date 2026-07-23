@@ -6,7 +6,10 @@ namespace SchoolProject.Service.Abstracts;
 
 public interface IApplicationUserService
 {
-    public Task AddAsync(ApplicationUser user, string password);
+    protected Task AddAsync(ApplicationUser user, string password);
+    protected Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+    public Task<string> RegisterUserAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate);
+    public Task ConfirmEmailAsync(ApplicationUser user, string token);
     public Task<ApplicationUser?> GetByIdAsync(int id);
     public Task UpdateAsync(ApplicationUser user);
     public Task DeleteAsync(ApplicationUser user);
