@@ -325,6 +325,10 @@
     <value>اسم المستخدم أو كلمة المرور غير صحيحة.</value>
     <comment/>
   </data>
+  <data name="EmailDoesNotConfirmed" xml:space="preserve">
+    <value>لم يتم تأكيد البريد الإلكتروني بعد.</value>
+    <comment/>
+  </data>
   <data name="RefreshTokenNotFound" xml:space="preserve">
     <value>لم يتم العثور على رمز التحديث.</value>
     <comment/>
@@ -347,6 +351,20 @@
   </data>
   <data name="RetrievedSuccessfully" xml:space="preserve">
     <value>تم الاسترجاع بنجاح.</value>
+    <comment/>
+  </data>
+  <data name="InvalidEmailAddress" xml:space="preserve">
+    <value>يجب أن يكون البريد الإلكتروني صالحاً</value>
+    <comment/>
+  </data>
+  <data name="EmailSentSuccessfully" xml:space="preserve">
+    <value>تم إرسال البريد الإلكتروني بنجاح</value>
+    <comment/>
+  </data>  <data name="EmailConfirmedSuccessfully" xml:space="preserve">
+    <value>تم تأكيد البريد الإلكتروني بنجاح.</value>
+    <comment/>
+  </data>  <data name="Required" xml:space="preserve">
+    <value>هذا الحقل مطلوب</value>
     <comment/>
   </data>
 </root>

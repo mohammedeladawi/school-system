@@ -50,6 +50,8 @@ public static class Router
         public const string Delete = ApplicationUserBase + "{id}";
         public const string ChangePassword = ApplicationUserBase + "Change-Password";
 
+        public const string ConfirmEmail = ApplicationUserBase + "ConfirmEmail";
+
 
     }
 
@@ -79,5 +81,11 @@ public static class Router
         public const string UpdateUserRoles = AuthorizationBase + "UpdateUserRoles";
         public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
         public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
+    }
+  
+    public static class Emails
+    {
+        private const string EmailsBase = Base + "/Emails/";
+        public const string Send = EmailsBase + "Send";
     }
 }

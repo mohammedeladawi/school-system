@@ -44,10 +44,12 @@ public static class SharedResourceKeys
     public static string AddressTooLong = "AddressTooLong";
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
+    public static string EmailDoesNotConfirmed = "EmailDoesNotConfirmed";
 
     public static string RefreshTokenNotFound = "RefreshTokenNotFound";
     public static string RefreshTokenExpired = "RefreshTokenExpired";
     public static string RefreshTokenHasBeenRevoked = "RefreshTokenHasBeenRevoked";
+    public static string EmailConfirmedSuccessfully = "EmailConfirmedSuccessfully";
     public static string SecurityException = "SecurityException";
     public static string LoggedOutSuccessfully = "LoggedOutSuccessfully";
     public static string RetrievedSuccessfully = "RetrievedSuccessfully";
@@ -63,4 +65,7 @@ public static class SharedResourceKeys
     public static string PageSizeRequired = "PageSizeRequired";
     public static string PageSizeGreaterThanZero = "PageSizeGreaterThanZero";
     public static string InvalidPermissionClaims = "InvalidPermissionClaims";
+    public static string InvalidEmailAddress = "InvalidEmailAddress";
+    public static string EmailSentSuccessfully = "EmailSentSuccessfully";
+    public static string Required = "Required";
 }

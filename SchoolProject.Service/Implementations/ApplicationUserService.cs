@@ -1,15 +1,13 @@
 using System.Linq.Expressions;
+using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
-using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Infrastructure.Abstracts;
+using SchoolProject.Infrastructure.Data;
 using SchoolProject.Service.Abstracts;
-using SchoolProject.Shared.CustomExceptions;
-using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Service.Implementations;
 
@@ -17,12 +15,20 @@ public class ApplicationUserService : IApplicationUserService
 {
     #region Private Fields
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly AppDbContext _dbContext;
+    private readonly IEmailService _emailService;
     #endregion
 
     #region Constructor
+    public ApplicationUserService(
+        UserManager<ApplicationUser> userManager,
+        IEmailService emailService,
+        AppDbContext dbContext)
     public ApplicationUserService(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
+        _emailService = emailService;
+        _dbContext = dbContext;
     }
     #endregion
 
@@ -46,7 +52,7 @@ public class ApplicationUserService : IApplicationUserService
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
 
-        var addToRoleResult = await _userManager.AddToRoleAsync(user, "User");
+        var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
     }
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
@@ -127,5 +133,60 @@ public class ApplicationUserService : IApplicationUserService
     }
 
 
+    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+        return encodedToken;
+    }
+
+    public async Task<string> RegisterUserAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+        try
+        {
+            await AddAsync(user, password);
+            var token = await GenerateEmailConfirmationTokenAsync(user);
+
+            var confirmationUrl = string.Format(confirmationUrlTemplate, user.Id, token);
+            var emailSubject = "Confirm your email";
+            var emailBody = $"""
+                <h1>Welcome {user.UserName}</h1>
+
+                <p>Thank you for registering.</p>
+
+                <p>Please confirm your email address by clicking the link below:</p>
+
+                <a href="{confirmationUrl}">
+                    Confirm Email
+                </a>
+
+                <p>If you did not create this account, ignore this email.</p>
+                """;
+
+            await _emailService.SendEmailAsync(
+                user.Email,
+                emailBody,
+                emailSubject);
+
+            transaction.Commit();
+            return token;
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+
+    public async Task ConfirmEmailAsync(ApplicationUser user, string encodedToken)
+    {
+        var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(encodedToken));
+        var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
+        if (!confirmationResult.Succeeded)
+            throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
+    }
+    
     #endregion
 }

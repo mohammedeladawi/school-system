@@ -54,4 +54,11 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
+    [HttpGet(Router.ApplicationUser.ConfirmEmail)]
+    public async Task<IActionResult> ConfirmEmail(int userId, string token)
+    {
+        var result = await Mediator.Send(new ConfirmEmailCommand(userId, token));
+        return NewResult(result);
+    }
+
 }
