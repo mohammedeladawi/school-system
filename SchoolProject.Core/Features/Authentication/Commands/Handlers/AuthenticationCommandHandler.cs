@@ -44,7 +44,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
             if (!user.EmailConfirmed)
                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.EmailDoesNotConfirmed]);
-
+                
             var accessToken = await _authenticationService.GenerateJwtTokenAsync(user);
             var (rawToken, refreshToken) = _authenticationService.GenerateRefreshToken(user.Id);
             await _authenticationService.AddRefreshTokenAsync(refreshToken);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class ApplicationUserController : AppControllerBase
 {
     [HttpPost(Router.ApplicationUser.Register)]

@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Shared.Helpers;
+
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SchoolProject.Infrastructure;

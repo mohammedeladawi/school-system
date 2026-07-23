@@ -1,5 +1,7 @@
 using System.Linq.Expressions;
 using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,7 @@ public class ApplicationUserService : IApplicationUserService
         UserManager<ApplicationUser> userManager,
         IEmailService emailService,
         AppDbContext dbContext)
+    public ApplicationUserService(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
         _emailService = emailService;
@@ -129,6 +132,7 @@ public class ApplicationUserService : IApplicationUserService
         return (await _userManager.GetRolesAsync(user)).ToList();
     }
 
+
     public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
     {
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -183,5 +187,6 @@ public class ApplicationUserService : IApplicationUserService
         if (!confirmationResult.Succeeded)
             throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
     }
+    
     #endregion
 }
