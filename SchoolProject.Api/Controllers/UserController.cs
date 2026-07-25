@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Base;
-using SchoolProject.Api.AppMetaData;
+using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
 using SchoolProject.Core.Features.ApplicationUser.Queries.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
 
-[Authorize(Roles = "Admin")]
 public class ApplicationUserController : AppControllerBase
 {
     [HttpPost(Router.ApplicationUser.Register)]
@@ -58,6 +57,13 @@ public class ApplicationUserController : AppControllerBase
     public async Task<IActionResult> ConfirmEmail(int userId, string token)
     {
         var result = await Mediator.Send(new ConfirmEmailCommand(userId, token));
+        return NewResult(result);
+    }
+
+    [HttpPost(Router.ApplicationUser.SendPasswordResetCode)]
+    public async Task<IActionResult> SendPasswordResetCode(SendPasswordResetCodeCommand command)
+    {
+        var result = await Mediator.Send(command);
         return NewResult(result);
     }
 

@@ -1,4 +1,4 @@
-namespace SchoolProject.Api.AppMetaData;
+namespace SchoolProject.Shared.AppMetaData;
 
 public static class Router
 {
@@ -52,6 +52,8 @@ public static class Router
 
         public const string ConfirmEmail = ApplicationUserBase + "ConfirmEmail";
 
+        public const string SendPasswordResetCode = ApplicationUserBase + "SendPasswordResetCode";
+
 
     }
 
@@ -82,7 +84,7 @@ public static class Router
         public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
         public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
     }
-  
+
     public static class Emails
     {
         private const string EmailsBase = Base + "/Emails/";

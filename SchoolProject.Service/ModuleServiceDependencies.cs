@@ -15,6 +15,7 @@ public static class ModuleServiceDependencies
         services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
         services.AddScoped<IAuthorizationService, AuthorizationService>();
         services.AddTransient<IEmailService, EmailService>();
+        services.AddTransient<IPasswordResetCodeService, PasswordResetCodeService>();
 
 
         return services;

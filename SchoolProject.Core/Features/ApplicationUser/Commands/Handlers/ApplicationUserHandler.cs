@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
+using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Service.Abstracts;
+using SchoolProject.Shared.Helpers;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
@@ -16,11 +18,13 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
         IRequestHandler<EditUserCommand, Response<string>>,
         IRequestHandler<DeleteCommand, Response<string>>,
         IRequestHandler<ChangePasswordCommand, Response<string>>,
-        IRequestHandler<ConfirmEmailCommand, Response<string>>
+        IRequestHandler<ConfirmEmailCommand, Response<string>>,
+        IRequestHandler<SendPasswordResetCodeCommand, Response<string>>
     {
         #region Private Fields
         private readonly IApplicationUserService _applicationUserService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPasswordResetCodeService _passwordResetCodeService;
         #endregion
 
         #region Constructors
@@ -28,11 +32,13 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
             IStringLocalizer<SharedResource> localizer,
             IMapper mapper,
             IApplicationUserService applicationUserService,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IPasswordResetCodeService passwordResetCodeService)
             : base(localizer, mapper)
         {
             _applicationUserService = applicationUserService;
             _httpContextAccessor = httpContextAccessor;
+            _passwordResetCodeService = passwordResetCodeService;
         }
         #endregion
 
@@ -40,8 +46,8 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var applicationUser = _mapper.Map<Data.Entities.Identities.ApplicationUser>(request);
-            var confirmationUrlTemplate = $"{_httpContextAccessor.HttpContext?.Request.Scheme}://{_httpContextAccessor.HttpContext?.Request.Host}/api/v1/User/ConfirmEmail?userId={{0}}&token={{1}}";
-            await _applicationUserService.RegisterUserAndSendConfirmationEmailAsync(applicationUser, request.Password, confirmationUrlTemplate);
+            var confirmationUrlTemplate = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}/api/v1/User/ConfirmEmail?userId={{0}}&token={{1}}";
+            await _applicationUserService.RegisterAndSendConfirmationEmailAsync(applicationUser, request.Password, confirmationUrlTemplate);
             return Created<string>(_localizer[SharedResourceKeys.AddedSuccessfully]);
         }
 
@@ -78,6 +84,19 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
             await _applicationUserService.ConfirmEmailAsync(user, request.Token);
 
             return Success<string>(_localizer[SharedResourceKeys.EmailConfirmedSuccessfully]);
+        }
+
+        public async Task<Response<string>> Handle(SendPasswordResetCodeCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _applicationUserService.GetByEmailAsync(request.Email);
+
+            if (user == null) return NotFound<string>();
+            if (!user.EmailConfirmed) return BadRequest<string>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
+
+            await _passwordResetCodeService.GenerateAndSendPasswordResetCodeAsync(user);
+
+            return Success<string>(_localizer[SharedResourceKeys.PasswordResetCodeSentSuccessfully]);
+
         }
         #endregion
     }

@@ -45,6 +45,8 @@ public static class SharedResourceKeys
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
     public static string EmailDoesNotConfirmed = "EmailDoesNotConfirmed";
+    public static string EmailNotConfirmed = "EmailNotConfirmed";
+    public static string PasswordResetCodeSentSuccessfully = "PasswordResetCodeSentSuccessfully";
 
     public static string RefreshTokenNotFound = "RefreshTokenNotFound";
     public static string RefreshTokenExpired = "RefreshTokenExpired";

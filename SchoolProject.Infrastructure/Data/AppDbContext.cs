@@ -17,6 +17,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
     public DbSet<Department> Departments { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

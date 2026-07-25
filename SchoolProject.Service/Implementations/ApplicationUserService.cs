@@ -24,7 +24,6 @@ public class ApplicationUserService : IApplicationUserService
         UserManager<ApplicationUser> userManager,
         IEmailService emailService,
         AppDbContext dbContext)
-    public ApplicationUserService(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
         _emailService = emailService;
@@ -43,6 +42,31 @@ public class ApplicationUserService : IApplicationUserService
 
         return await query.AnyAsync();
     }
+
+    private async Task SendConfirmationEmailAsync(ApplicationUser user, string token, string confirmationUrlTemplate)
+    {
+        var confirmationUrl = string.Format(confirmationUrlTemplate, user.Id, token);
+        var emailSubject = "Confirm your email";
+        var emailBody = $"""
+                <h1>Welcome {user.UserName}</h1>
+
+                <p>Thank you for registering.</p>
+
+                <p>Please confirm your email address by clicking the link below:</p>
+
+                <a href="{confirmationUrl}">
+                    Confirm Email
+                </a>
+
+                <p>If you did not create this account, ignore this email.</p>
+                """;
+
+        await _emailService.SendEmailAsync(
+            user.Email,
+            emailBody,
+            emailSubject);
+    }
+
     #endregion
 
     #region Public Methods
@@ -140,7 +164,7 @@ public class ApplicationUserService : IApplicationUserService
         return encodedToken;
     }
 
-    public async Task<string> RegisterUserAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate)
+    public async Task<string> RegisterAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate)
     {
         using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -149,26 +173,7 @@ public class ApplicationUserService : IApplicationUserService
             await AddAsync(user, password);
             var token = await GenerateEmailConfirmationTokenAsync(user);
 
-            var confirmationUrl = string.Format(confirmationUrlTemplate, user.Id, token);
-            var emailSubject = "Confirm your email";
-            var emailBody = $"""
-                <h1>Welcome {user.UserName}</h1>
-
-                <p>Thank you for registering.</p>
-
-                <p>Please confirm your email address by clicking the link below:</p>
-
-                <a href="{confirmationUrl}">
-                    Confirm Email
-                </a>
-
-                <p>If you did not create this account, ignore this email.</p>
-                """;
-
-            await _emailService.SendEmailAsync(
-                user.Email,
-                emailBody,
-                emailSubject);
+            await SendConfirmationEmailAsync(user, token, confirmationUrlTemplate);
 
             transaction.Commit();
             return token;
@@ -187,6 +192,11 @@ public class ApplicationUserService : IApplicationUserService
         if (!confirmationResult.Succeeded)
             throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
     }
-    
+
+    public async Task<ApplicationUser?> GetByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
     #endregion
 }
