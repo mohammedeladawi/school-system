@@ -10,15 +10,15 @@ namespace SchoolProject.Api.Controllers;
 [Authorize(Roles = "Admin")]
 public class RoleController : AppControllerBase
 {
-    [HttpPost(Router.Role.Create)]
+    [HttpPost(Router.Role.Add)]
     public async Task<IActionResult> Create(AddRoleCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
 
-    [HttpPut(Router.Role.Edit)]
-    public async Task<IActionResult> Edit(EditRoleCommand command)
+    [HttpPut(Router.Role.Update)]
+    public async Task<IActionResult> Update(EditRoleCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);

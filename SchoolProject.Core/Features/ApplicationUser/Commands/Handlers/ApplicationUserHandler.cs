@@ -14,42 +14,26 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
 {
     public class ApplicationUserCommandHandler :
         ResponseHandler,
-        IRequestHandler<AddUserCommand, Response<string>>,
         IRequestHandler<EditUserCommand, Response<string>>,
         IRequestHandler<DeleteCommand, Response<string>>,
-        IRequestHandler<ChangePasswordCommand, Response<string>>,
-        IRequestHandler<ConfirmEmailCommand, Response<string>>,
-        IRequestHandler<SendPasswordResetCodeCommand, Response<string>>
+        IRequestHandler<ChangePasswordCommand, Response<string>>
     {
         #region Private Fields
         private readonly IApplicationUserService _applicationUserService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IPasswordResetCodeService _passwordResetCodeService;
         #endregion
 
         #region Constructors
         public ApplicationUserCommandHandler(
             IStringLocalizer<SharedResource> localizer,
             IMapper mapper,
-            IApplicationUserService applicationUserService,
-            IHttpContextAccessor httpContextAccessor,
-            IPasswordResetCodeService passwordResetCodeService)
+            IApplicationUserService applicationUserService)
             : base(localizer, mapper)
         {
             _applicationUserService = applicationUserService;
-            _httpContextAccessor = httpContextAccessor;
-            _passwordResetCodeService = passwordResetCodeService;
         }
         #endregion
 
         #region Public Methods
-        public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
-        {
-            var applicationUser = _mapper.Map<Data.Entities.Identities.ApplicationUser>(request);
-            var confirmationUrlTemplate = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}/api/v1/User/ConfirmEmail?userId={{0}}&token={{1}}";
-            await _applicationUserService.RegisterAndSendConfirmationEmailAsync(applicationUser, request.Password, confirmationUrlTemplate);
-            return Created<string>(_localizer[SharedResourceKeys.AddedSuccessfully]);
-        }
 
         public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
@@ -76,28 +60,7 @@ namespace SchoolProject.Core.Features.ApplicationUser.Commands.Handlers
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
 
-        public async Task<Response<string>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _applicationUserService.GetByIdAsync(request.UserId);
-            if (user == null)
-                return NotFound<string>();
-            await _applicationUserService.ConfirmEmailAsync(user, request.Token);
 
-            return Success<string>(_localizer[SharedResourceKeys.EmailConfirmedSuccessfully]);
-        }
-
-        public async Task<Response<string>> Handle(SendPasswordResetCodeCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _applicationUserService.GetByEmailAsync(request.Email);
-
-            if (user == null) return NotFound<string>();
-            if (!user.EmailConfirmed) return BadRequest<string>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
-
-            await _passwordResetCodeService.GenerateAndSendPasswordResetCodeAsync(user);
-
-            return Success<string>(_localizer[SharedResourceKeys.PasswordResetCodeSentSuccessfully]);
-
-        }
         #endregion
     }
 }

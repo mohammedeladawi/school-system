@@ -9,12 +9,6 @@ namespace SchoolProject.Api.Controllers;
 
 public class ApplicationUserController : AppControllerBase
 {
-    [HttpPost(Router.ApplicationUser.Register)]
-    public async Task<IActionResult> Add(AddUserCommand command)
-    {
-        var result = await Mediator.Send(command);
-        return NewResult(result);
-    }
 
     [Authorize(Policy = "User.GetPaginated")]
     [HttpGet(Router.ApplicationUser.PaginatedList)]
@@ -48,20 +42,6 @@ public class ApplicationUserController : AppControllerBase
     [Authorize(Policy = "User.ChangePassword")]
     [HttpPut(Router.ApplicationUser.ChangePassword)]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
-    {
-        var result = await Mediator.Send(command);
-        return NewResult(result);
-    }
-
-    [HttpGet(Router.ApplicationUser.ConfirmEmail)]
-    public async Task<IActionResult> ConfirmEmail(int userId, string token)
-    {
-        var result = await Mediator.Send(new ConfirmEmailCommand(userId, token));
-        return NewResult(result);
-    }
-
-    [HttpPost(Router.ApplicationUser.SendPasswordResetCode)]
-    public async Task<IActionResult> SendPasswordResetCode(SendPasswordResetCodeCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);

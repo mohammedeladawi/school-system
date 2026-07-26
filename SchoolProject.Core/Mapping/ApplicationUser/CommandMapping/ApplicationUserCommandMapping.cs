@@ -1,5 +1,6 @@
 using AutoMapper;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
+using SchoolProject.Core.Features.Authentication.Commands.Models;
 
 namespace SchoolProject.Core.Mapping.ApplicationUser;
 
@@ -7,7 +8,7 @@ public partial class ApplicationUser
 {
     public void MapAddApplicationUserCommandToApplicationUser()
     {
-        CreateMap<AddUserCommand, Data.Entities.Identities.ApplicationUser>();
+        CreateMap<RegisterCommand, Data.Entities.Identities.ApplicationUser>();
     }
     public void MapEditpplicationUserCommandToApplicationUser()
     {

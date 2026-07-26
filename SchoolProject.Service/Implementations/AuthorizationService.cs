@@ -36,7 +36,7 @@ public class AuthorizationService : IAuthorizationService
             throw new Exception($"User with ID {userId} not found.");
         }
 
-        var userRoles = await _applicationUserService.GetUserRolesAsync(user);
+        var userRoles = await _userManager.GetRolesAsync(user);
         return userRoles;
     }
 
@@ -107,7 +107,6 @@ public class AuthorizationService : IAuthorizationService
         {
             await transaction.RollbackAsync();
             throw;
-
         }
     }
     #endregion

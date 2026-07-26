@@ -30,12 +30,6 @@ public class PasswordResetCodeService : IPasswordResetCodeService
 
 
     #region Private Methods
-    private async Task SendPasswordResetCodeEmailAsync(string userEmail, string rawCode)
-    {
-        var subject = "Password Reset Code";
-        var body = $"Your password reset code is: {rawCode}. It will expire in 15 minutes.";
-        await _emailService.SendEmailAsync(userEmail, body, subject);
-    }
 
     #endregion
 
@@ -46,33 +40,6 @@ public class PasswordResetCodeService : IPasswordResetCodeService
 
     }
 
-    public async Task GenerateAndSendPasswordResetCodeAsync(ApplicationUser user)
-    {
-        var transaction = await _dbContext.Database.BeginTransactionAsync();
-        try
-        {
-            await RevokeOldPasswordResetCodesAsync(user.Id);
-            var rawCode = GeneratePasswordResetCode();
-
-            var passwordResetCode = new PasswordResetCode
-            {
-                UserId = user.Id,
-                HashedCode = Utils.Hash(rawCode),
-                ExpirationDate = DateTime.UtcNow.AddMinutes(15)
-            };
-
-            await AddAsync(passwordResetCode);
-            await SendPasswordResetCodeEmailAsync(user.Email, rawCode);
-
-            await transaction.CommitAsync();
-        }
-        catch
-        {
-            await transaction.RollbackAsync();
-            throw;
-        }
-
-    }
 
     public string GeneratePasswordResetCode()
     {
