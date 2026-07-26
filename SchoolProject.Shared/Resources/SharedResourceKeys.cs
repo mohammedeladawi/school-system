@@ -70,4 +70,5 @@ public static class SharedResourceKeys
     public static string InvalidEmailAddress = "InvalidEmailAddress";
     public static string EmailSentSuccessfully = "EmailSentSuccessfully";
     public static string Required = "Required";
+    public static string InvalidOTP = "InvalidOTP";
 }

@@ -19,6 +19,13 @@ public class PasswordResetCodeRepository :
     {
         _passwordResetCodes = context.Set<PasswordResetCode>();
     }
+
+    public async Task<PasswordResetCode?> GetByUserIdAndHashedCode(int userId, string hashedCode)
+    {
+        return await _passwordResetCodes
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.UserId == userId && c.HashedCode == hashedCode);
+    }
     #endregion
 
     #region Public Methods

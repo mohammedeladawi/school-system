@@ -48,4 +48,11 @@ public class AuthenticationController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpPost(Router.Authentication.VerifyResetCode)]
+    public async Task<IActionResult> VerifyResetCode(VerifyResetCodeCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
 }

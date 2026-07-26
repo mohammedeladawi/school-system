@@ -10,4 +10,6 @@ public interface IPasswordResetCodeService
     public Task RevokeOldPasswordResetCodesAsync(int userId);
 
     public Task AddAsync(PasswordResetCode passwordResetCode);
+
+    public Task<PasswordResetCode?> GetByUserIdAndCodeAsync(int userId, string code);
 }

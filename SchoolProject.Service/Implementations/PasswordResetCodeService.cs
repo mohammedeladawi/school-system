@@ -47,6 +47,13 @@ public class PasswordResetCodeService : IPasswordResetCodeService
         return code;
     }
 
+    public async Task<PasswordResetCode?> GetByUserIdAndCodeAsync(int userId, string code)
+    {
+        string hashedCode = Utils.Hash(code);
+        var passwordResetCode = await _passwordResetCodeRepository.GetByUserIdAndHashedCode(userId, hashedCode);
+        return passwordResetCode;
+    }
+
     public async Task RevokeOldPasswordResetCodesAsync(int userId)
     {
         await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(userId);

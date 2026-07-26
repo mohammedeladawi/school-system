@@ -12,7 +12,7 @@ public class PasswordResetCodeConfiguration : IEntityTypeConfiguration<PasswordR
         builder.HasKey(prc => prc.Id);
 
         builder.HasIndex(prc => new { prc.UserId, prc.IsRevoked });
-        builder.HasIndex(prc => prc.HashedCode);
+        builder.HasIndex(prc => new { prc.UserId, prc.HashedCode });
 
         builder.Property(prc => prc.HashedCode)
             .IsRequired()

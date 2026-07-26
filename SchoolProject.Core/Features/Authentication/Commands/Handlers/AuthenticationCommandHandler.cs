@@ -20,7 +20,9 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
         IRequestHandler<LogoutCommand, Response<string>>,
         IRequestHandler<ConfirmEmailCommand, Response<string>>,
         IRequestHandler<ForgotPasswordCommand, Response<string>>,
-        IRequestHandler<RegisterCommand, Response<string>>
+        IRequestHandler<RegisterCommand, Response<string>>,
+        IRequestHandler<VerifyResetCodeCommand, Response<ResetPasswordUrlResponse>>
+
     {
         #region Private Fields
         private readonly IAuthenticationService _authenticationService;
@@ -144,6 +146,27 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
             return Success<string>(_localizer[SharedResourceKeys.PasswordResetCodeSentSuccessfully]);
 
+        }
+
+        public async Task<Response<ResetPasswordUrlResponse>> Handle(VerifyResetCodeCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _applicationUserService.GetByEmailAsync(request.Email);
+            if (user is null)
+                return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidEmailAddress]);
+
+            var passwordResetCode = await _passwordResetCodeService.GetByUserIdAndCodeAsync(user.Id, request.Code);
+            if (passwordResetCode is null)
+                return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidOTP]);
+
+            if (passwordResetCode.IsRevoked || passwordResetCode.ExpirationDate < DateTime.UtcNow)
+                return BadRequest<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidOTP]);
+
+            string encodedUserId = Utils.Encode(user.Id.ToString());
+            string encodedCode = Utils.Encode(request.Code);
+
+            var resetPasswordUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host + "/" + Router.Authentication.ResetPassword + "?userId=" + encodedUserId + "&code=" + encodedCode;
+
+            return Success(new ResetPasswordUrlResponse(resetPasswordUrl));
         }
         #endregion
     }

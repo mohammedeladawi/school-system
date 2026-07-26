@@ -377,4 +377,8 @@
     <value>This field is required</value>
     <comment/>
   </data>
+  <data name="InvalidOTP" xml:space="preserve">
+    <value>Invalid verification code</value>
+    <comment/>
+  </data>
 </root>

@@ -81,7 +81,7 @@ public class AuthenticationService : IAuthenticationService
     private async Task<string> GenerateEncodedEmailConfirmationTokenAsync(ApplicationUser user)
     {
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+        var encodedToken = Utils.Encode(token);
         return encodedToken;
     }
 
@@ -205,7 +205,7 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task ConfirmEmailAsync(ApplicationUser user, string encodedToken)
     {
-        string decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(encodedToken));
+        string decodedToken = Utils.Decode(encodedToken);
         var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
 
         if (!confirmationResult.Succeeded)
