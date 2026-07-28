@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
+using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Helpers;
 
 using static System.Net.Mime.MediaTypeNames;
@@ -47,10 +50,6 @@ public static class ServiceRegisteration
             options.User.RequireUniqueEmail = true;
         });
 
-
-        var jwtSettings = configuration.GetSection("Jwt");
-
-
         services
             .AddAuthentication(options =>
             {
@@ -63,12 +62,15 @@ public static class ServiceRegisteration
                 options.RequireHttpsMetadata = true;
                 options.SaveToken = true;
 
+
+                var jwtSettings = configuration.GetSection("Jwt");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+
 
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
@@ -77,6 +79,27 @@ public static class ServiceRegisteration
                         Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
 
                     ClockSkew = TimeSpan.Zero
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = async context =>
+                    {
+                        var userId = context.Principal!.FindFirstValue(ClaimTypes.NameIdentifier);
+                        var tokenStamp = context.Principal!.FindFirstValue("security_stamp");
+
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IApplicationUserService>();
+                        var user = await userService.GetByIdAsync(int.Parse(userId!));
+
+                        if (user is null || user.SecurityStamp != tokenStamp)
+                        {
+                            context.Fail("Token is no longer valid - roles or credentials changed.");
+
+                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                            context.Response.ContentType = "application/json";
+                            await context.Response.WriteAsync("{\"error\":\"Token invalid due to role or credential change\"}");
+                        }
+                    }
                 };
             });
 
