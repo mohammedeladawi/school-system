@@ -97,11 +97,12 @@ public class AuthenticationService : IAuthenticationService
     public async Task<string> GenerateJwtTokenAsync(ApplicationUser user)
     {
         var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.UserName!),
-        new Claim(ClaimTypes.Email, user.Email!)
-    };
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName!),
+            new Claim(ClaimTypes.Email, user.Email!),
+            new Claim("security_stamp", user.SecurityStamp ?? string.Empty)
+        };
 
         var roles = await _authorizationService.GetUserRolesAsync(user.Id);
 
