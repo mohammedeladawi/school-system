@@ -1,9 +1,10 @@
 using MediatR;
 using SchoolProject.Core.Bases;
+using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
 
-namespace SchoolProject.Core.Features.ApplicationUser.Commands.Models
+namespace SchoolProject.Core.Features.Authentication.Commands.Models
 {
-    public record AddUserCommand :
+    public record RegisterCommand :
         CommonUserDto,
         IRequest<Response<string>>
     {

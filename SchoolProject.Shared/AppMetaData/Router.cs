@@ -1,4 +1,4 @@
-namespace SchoolProject.Api.AppMetaData;
+namespace SchoolProject.Shared.AppMetaData;
 
 public static class Router
 {
@@ -19,7 +19,7 @@ public static class Router
 
         public const string Delete = StudentBase + "{id}";
 
-        public const string PaginatedList = StudentBase + "PaginatedList";
+        public const string PaginatedList = StudentBase + "Paginated-List";
 
     }
 
@@ -27,7 +27,7 @@ public static class Router
     {
         private const string DepartmentBase = Base + "/" + "Department" + "/";
 
-        public const string List = DepartmentBase + "List";
+        public const string List = DepartmentBase + "Get-All";
         public const string GetById = DepartmentBase + "{id}";
 
         public const string Add = DepartmentBase + "Add";
@@ -36,56 +36,60 @@ public static class Router
 
         public const string Delete = DepartmentBase + "{id}";
 
-        public const string PaginatedList = DepartmentBase + "PaginatedList";
+        public const string PaginatedList = DepartmentBase + "Paginated-List";
     }
 
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
 
-        public const string Register = ApplicationUserBase + "Register";
-        public const string PaginatedList = ApplicationUserBase + "PaginatedList";
+        public const string PaginatedList = ApplicationUserBase + "Paginated-List";
         public const string GetById = ApplicationUserBase + "{id}";
         public const string Update = ApplicationUserBase + "Update";
         public const string Delete = ApplicationUserBase + "{id}";
         public const string ChangePassword = ApplicationUserBase + "Change-Password";
-
-        public const string ConfirmEmail = ApplicationUserBase + "ConfirmEmail";
-
-
     }
 
     public static class Authentication
     {
         private const string AuthBase = Base + "/" + "Authentication" + "/";
+        public const string Register = AuthBase + "Register";
 
         public const string Login = AuthBase + "Login";
         public const string RefreshToken = AuthBase + "Refresh-Token";
         public const string Logout = AuthBase + "Logout";
+
+        public const string ConfirmEmail = AuthBase + "Confirm-Email";
+
+        public const string ForgotPassword = AuthBase + "Forgot-Password";
+        public const string VerifyResetCode = AuthBase + "Verify-Reset-Code";
+        public const string ResetPassword = AuthBase + "Reset-Password";
+
+
     }
 
     public class Role
     {
-        private const string RoleBase = Base + "/Role/";
-        public const string Create = RoleBase + "Create";
-        public const string Edit = RoleBase + "Edit";
-        public const string Delete = RoleBase + "Delete" + "/{id}";
-        public const string GetAll = RoleBase + "GetAll";
-        public const string GetById = RoleBase + "GetById" + "/{id}";
+        private const string RoleBase = Base + "/" + "Role" + "/";
+        public const string Add = RoleBase + "Add";
+        public const string Update = RoleBase + "Update";
+        public const string Delete = RoleBase + "{id}";
+        public const string GetAll = RoleBase + "Get-All";
+        public const string GetById = RoleBase + "{id}";
     }
 
     public class Authorization
     {
         private const string AuthorizationBase = Base + "/Authorization/";
-        public const string GetUserRolesById = AuthorizationBase + "GetUserRolesById" + "/{userId}";
-        public const string UpdateUserRoles = AuthorizationBase + "UpdateUserRoles";
-        public const string GetUserPermissionClaims = AuthorizationBase + "UserPermissionClaims" + "/{userId}";
-        public const string UpdateUserPermissionClaims = AuthorizationBase + "UpdateUserPermissionClaims";
+        public const string GetUserRolesById = AuthorizationBase + "Get-User-Roles" + "/{userId}";
+        public const string UpdateUserRoles = AuthorizationBase + "Update-User-Roles";
+        public const string GetUserPermissionClaims = AuthorizationBase + "User-Permission-Claims" + "/{userId}";
+        public const string UpdateUserPermissionClaims = AuthorizationBase + "Update-User-Permission-Claims";
     }
-  
+
     public static class Emails
     {
-        private const string EmailsBase = Base + "/Emails/";
+        private const string EmailsBase = Base + "/" + "Emails" + "/";
         public const string Send = EmailsBase + "Send";
     }
 }

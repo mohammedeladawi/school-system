@@ -1,11 +1,15 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Abstracts;
+using SchoolProject.Infrastructure.Data;
 using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Helpers;
 
@@ -17,19 +21,76 @@ public class AuthenticationService : IAuthenticationService
     private readonly IConfiguration _config;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IAuthorizationService _authorizationService;
+    private readonly IEmailService _emailService;
+    private readonly IApplicationUserService _applicationUserService;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly AppDbContext _dbContext;
+    private readonly IPasswordResetCodeService _passwordResetCodeService;
+
     #endregion
 
     #region Constructors
     public AuthenticationService(
         IConfiguration config,
         IRefreshTokenRepository refreshTokenRepository,
-        IAuthorizationService authorizationService)
+        IAuthorizationService authorizationService,
+        IEmailService emailService,
+        IApplicationUserService applicationUserService,
+        UserManager<ApplicationUser> userManager,
+        AppDbContext dbContext,
+        IPasswordResetCodeService passwordResetCodeService)
     {
         _config = config;
         _refreshTokenRepository = refreshTokenRepository;
         _authorizationService = authorizationService;
+        _emailService = emailService;
+        _applicationUserService = applicationUserService;
+        _userManager = userManager;
+        _dbContext = dbContext;
+        _passwordResetCodeService = passwordResetCodeService;
     }
 
+    #endregion
+
+
+    #region Private Methods
+    private async Task SendConfirmationEmailAsync(ApplicationUser user, string token, string confirmationUrlTemplate)
+    {
+        var confirmationUrl = string.Format(confirmationUrlTemplate, user.Id, token);
+        var emailSubject = "Confirm your email";
+        var emailBody = $"""
+                <h1>Welcome {user.UserName}</h1>
+
+                <p>Thank you for registering.</p>
+
+                <p>Please confirm your email address by clicking the link below:</p>
+
+                <a href="{confirmationUrl}">
+                    Confirm Email
+                </a>
+
+                <p>If you did not create this account, ignore this email.</p>
+                """;
+
+        await _emailService.SendEmailAsync(
+            user.Email,
+            emailBody,
+            emailSubject);
+    }
+
+    private async Task<string> GenerateEncodedEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        var encodedToken = Utils.Encode(token);
+        return encodedToken;
+    }
+
+    private async Task SendPasswordResetCodeEmailAsync(string userEmail, string rawCode)
+    {
+        var subject = "Password Reset Code";
+        var body = $"Your password reset code is: {rawCode}. It will expire in 15 minutes.";
+        await _emailService.SendEmailAsync(userEmail, body, subject);
+    }
     #endregion
 
     #region Public Methods
@@ -120,6 +181,94 @@ public class AuthenticationService : IAuthenticationService
     {
         return _refreshTokenRepository.RevokeTokenFamilyAsync(familyId);
     }
+
+    public async Task<string> RegisterAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+        try
+        {
+            await _applicationUserService.AddAsync(user, password);
+            var token = await GenerateEncodedEmailConfirmationTokenAsync(user);
+
+            await SendConfirmationEmailAsync(user, token, confirmationUrlTemplate);
+
+            transaction.Commit();
+            return token;
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+
+    public async Task ConfirmEmailAsync(ApplicationUser user, string encodedToken)
+    {
+        string decodedToken = Utils.Decode(encodedToken);
+        var confirmationResult = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+        if (!confirmationResult.Succeeded)
+            throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
+    }
+
+    public async Task GenerateAndSendPasswordResetCodeAsync(ApplicationUser user)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        try
+        {
+            await _passwordResetCodeService.RevokeOldPasswordResetCodesAsync(user.Id);
+            var rawCode = _passwordResetCodeService.GeneratePasswordResetCode();
+
+            var passwordResetCode = new PasswordResetCode
+            {
+                UserId = user.Id,
+                HashedCode = Utils.Hash(rawCode),
+                ExpirationDate = DateTime.UtcNow.AddMinutes(15)
+            };
+
+            await _passwordResetCodeService.AddAsync(passwordResetCode);
+            await SendPasswordResetCodeEmailAsync(user.Email, rawCode);
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+
+    }
+
+    public async Task ResetPasswordAsync(ApplicationUser user, string code, string newPassword)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+        try
+        {
+            var passwordResetCode = await _passwordResetCodeService.GetByUserIdAndCodeAsync(user.Id, code);
+            if (passwordResetCode is null)
+                throw new Exception("Invalid password reset code.");
+
+            if (passwordResetCode.IsRevoked || passwordResetCode.ExpirationDate < DateTime.UtcNow)
+                throw new Exception("Password reset code is invalid or expired.");
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+            if (!result.Succeeded)
+                throw new Exception(string.Join(" ", result.Errors.Select(e => e.Description)));
+
+            await _passwordResetCodeService.RevokeOldPasswordResetCodesAsync(user.Id);
+
+            transaction.Commit();
+        }
+        catch
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+
 
     #endregion
 }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SchoolProject.Api.AppMetaData;
+using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
 using SchoolProject.Core.Features.ApplicationRole.Commands.Models;
 using SchoolProject.Core.Features.ApplicationRole.Queries.Models;
@@ -10,15 +10,15 @@ namespace SchoolProject.Api.Controllers;
 [Authorize(Roles = "Admin")]
 public class RoleController : AppControllerBase
 {
-    [HttpPost(Router.Role.Create)]
+    [HttpPost(Router.Role.Add)]
     public async Task<IActionResult> Create(AddRoleCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
 
-    [HttpPut(Router.Role.Edit)]
-    public async Task<IActionResult> Edit(EditRoleCommand command)
+    [HttpPut(Router.Role.Update)]
+    public async Task<IActionResult> Update(EditRoleCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);

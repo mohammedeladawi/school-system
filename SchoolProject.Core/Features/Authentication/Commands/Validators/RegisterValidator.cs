@@ -1,14 +1,13 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
+using SchoolProject.Core.Features.Authentication.Commands.Models;
 using SchoolProject.Service.Abstracts;
-using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
 
-namespace SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
+namespace SchoolProject.Core.Features.Authentication.Commands.Validators;
 
-public class AddStudentValidator : AbstractValidator<AddUserCommand>
+public class AddStudentValidator : AbstractValidator<RegisterCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;

@@ -6,10 +6,7 @@ namespace SchoolProject.Service.Abstracts;
 
 public interface IApplicationUserService
 {
-    protected Task AddAsync(ApplicationUser user, string password);
-    protected Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
-    public Task<string> RegisterUserAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate);
-    public Task ConfirmEmailAsync(ApplicationUser user, string token);
+    public Task AddAsync(ApplicationUser user, string password);
     public Task<ApplicationUser?> GetByIdAsync(int id);
     public Task UpdateAsync(ApplicationUser user);
     public Task DeleteAsync(ApplicationUser user);
@@ -20,5 +17,6 @@ public interface IApplicationUserService
     public Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize);
     public Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
     public Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password);
-    public Task<List<string>> GetUserRolesAsync(ApplicationUser user);
+    public Task<ApplicationUser?> GetByEmailAsync(string email);
+
 }

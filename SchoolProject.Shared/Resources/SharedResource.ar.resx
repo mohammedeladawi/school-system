@@ -329,6 +329,14 @@
     <value>لم يتم تأكيد البريد الإلكتروني بعد.</value>
     <comment/>
   </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>البريد الإلكتروني غير مؤكد.</value>
+    <comment/>
+  </data>
+  <data name="PasswordResetCodeSentSuccessfully" xml:space="preserve">
+    <value>تم إرسال رمز إعادة تعيين كلمة المرور بنجاح.</value>
+    <comment/>
+  </data>
   <data name="RefreshTokenNotFound" xml:space="preserve">
     <value>لم يتم العثور على رمز التحديث.</value>
     <comment/>
@@ -365,6 +373,10 @@
     <comment/>
   </data>  <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب</value>
+    <comment/>
+  </data>
+  <data name="InvalidOTP" xml:space="preserve">
+    <value>رمز التحقق غير صحيح</value>
     <comment/>
   </data>
 </root>

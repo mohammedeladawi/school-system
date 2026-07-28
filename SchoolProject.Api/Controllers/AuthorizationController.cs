@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SchoolProject.Api.AppMetaData;
+using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
 using SchoolProject.Core.Features.Authorization.Queries.Models;
