@@ -13,5 +13,6 @@ public interface IAuthenticationService
     public Task<string> RegisterAndSendConfirmationEmailAsync(ApplicationUser user, string password, string confirmationUrlTemplate);
     public Task ConfirmEmailAsync(ApplicationUser user, string token);
     public Task GenerateAndSendPasswordResetCodeAsync(ApplicationUser user);
+    public Task ResetPasswordAsync(ApplicationUser user, string code, string newPassword);
 
 }

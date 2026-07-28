@@ -21,7 +21,8 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
         IRequestHandler<ConfirmEmailCommand, Response<string>>,
         IRequestHandler<ForgotPasswordCommand, Response<string>>,
         IRequestHandler<RegisterCommand, Response<string>>,
-        IRequestHandler<VerifyResetCodeCommand, Response<ResetPasswordUrlResponse>>
+        IRequestHandler<VerifyResetCodeCommand, Response<ResetPasswordUrlResponse>>,
+        IRequestHandler<ResetPasswordCommand, Response<string>>
 
     {
         #region Private Fields
@@ -164,9 +165,31 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             string encodedUserId = Utils.Encode(user.Id.ToString());
             string encodedCode = Utils.Encode(request.Code);
 
-            var resetPasswordUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host + "/" + Router.Authentication.ResetPassword + "?userId=" + encodedUserId + "&code=" + encodedCode;
+            var resetPasswordUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host + "/" + Router.Authentication.ResetPassword + "?encodedUserId=" + encodedUserId + "&encodedCode=" + encodedCode;
 
             return Success(new ResetPasswordUrlResponse(resetPasswordUrl));
+        }
+
+        public async Task<Response<string>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var decodedUserId = Utils.Decode(request.EncodedUserId);
+            var userId = int.Parse(decodedUserId);
+            var user = await _applicationUserService.GetByIdAsync(userId);
+
+            if (user is null)
+                return NotFound<string>();
+
+            try
+            {
+                var decodedCode = Utils.Decode(request.EncodedCode);
+                await _authenticationService.ResetPasswordAsync(user, decodedCode, request.NewPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest<string>(ex.Message);
+            }
+
+            return Success<string>(_localizer[SharedResourceKeys.ResetPasswordSuccessfully]);
         }
         #endregion
     }

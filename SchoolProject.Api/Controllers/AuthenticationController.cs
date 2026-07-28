@@ -55,4 +55,19 @@ public class AuthenticationController : AppControllerBase
         var result = await Mediator.Send(command);
         return NewResult(result);
     }
+
+    [HttpPost(Router.Authentication.ResetPassword)]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromQuery] string encodedUserId, [FromQuery] string encodedCode)
+    {
+        var command = new ResetPasswordCommand
+        {
+            NewPassword = request.NewPassword,
+            ConfirmNewPassword = request.ConfirmNewPassword,
+            EncodedUserId = encodedUserId,
+            EncodedCode = encodedCode
+        };
+
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
 }

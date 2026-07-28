@@ -214,7 +214,7 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task GenerateAndSendPasswordResetCodeAsync(ApplicationUser user)
     {
-        var transaction = await _dbContext.Database.BeginTransactionAsync();
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
         try
         {
             await _passwordResetCodeService.RevokeOldPasswordResetCodesAsync(user.Id);
@@ -238,6 +238,35 @@ public class AuthenticationService : IAuthenticationService
             throw;
         }
 
+    }
+
+    public async Task ResetPasswordAsync(ApplicationUser user, string code, string newPassword)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+        try
+        {
+            var passwordResetCode = await _passwordResetCodeService.GetByUserIdAndCodeAsync(user.Id, code);
+            if (passwordResetCode is null)
+                throw new Exception("Invalid password reset code.");
+
+            if (passwordResetCode.IsRevoked || passwordResetCode.ExpirationDate < DateTime.UtcNow)
+                throw new Exception("Password reset code is invalid or expired.");
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+            if (!result.Succeeded)
+                throw new Exception(string.Join(" ", result.Errors.Select(e => e.Description)));
+
+            await _passwordResetCodeService.RevokeOldPasswordResetCodesAsync(user.Id);
+
+            transaction.Commit();
+        }
+        catch
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
 

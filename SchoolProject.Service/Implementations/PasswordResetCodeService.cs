@@ -40,7 +40,6 @@ public class PasswordResetCodeService : IPasswordResetCodeService
 
     }
 
-
     public string GeneratePasswordResetCode()
     {
         string code = Random.Shared.Next(100000, 999999).ToString();
