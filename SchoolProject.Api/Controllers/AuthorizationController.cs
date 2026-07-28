@@ -15,6 +15,13 @@ public class AuthorizationController : AppControllerBase
         return NewResult(result);
     }
 
+    [HttpPut(Router.Authorization.UpdateUserRoles)]
+    public async Task<IActionResult> UpdateUserRoles(UpdateUserRolesCommand request)
+    {
+        var result = await Mediator.Send(request);
+        return NewResult(result);
+    }
+
     [HttpGet(Router.Authorization.GetUserPermissionClaims)]
     public async Task<IActionResult> GetUserPermissionClaims(int userId)
     {

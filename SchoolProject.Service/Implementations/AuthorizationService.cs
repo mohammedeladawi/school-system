@@ -66,6 +66,8 @@ public class AuthorizationService : IAuthorizationService
             if (!addResult.Succeeded)
                 throw new Exception($"Failed to add claims to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
 
+            await _userManager.UpdateSecurityStampAsync(user);
+
             await transaction.CommitAsync();
         }
         catch
@@ -100,6 +102,8 @@ public class AuthorizationService : IAuthorizationService
             var addResult = await _userManager.AddToRolesAsync(user, roleNames);
             if (!addResult.Succeeded)
                 throw new Exception($"Failed to add roles to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
+
+            await _userManager.UpdateSecurityStampAsync(user);
 
             await transaction.CommitAsync();
         }
