@@ -29,6 +29,7 @@ public static class Router
 
         public const string List = DepartmentBase + "Get-All";
         public const string GetById = DepartmentBase + "{id}";
+        public const string StudentsCount = DepartmentBase + "Students-Count";
 
         public const string Add = DepartmentBase + "Add";
 

@@ -1,4 +1,5 @@
 using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.Views;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
 
@@ -26,6 +27,11 @@ public class DepartmentService : IDepartmentService
     public async Task<bool> DoesExistByIdAsync(int id)
     {
         return await _departmentRepository.DoesExistByIdAsync(id);
+    }
+
+    public async Task<List<DepartmentStudentsCountView>> GetStudentsCountViewAsync()
+    {
+        return await _departmentRepository.GetStudentsCountViewAsync();
     }
     #endregion
 

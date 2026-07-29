@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using SchoolProject.Data.Helpers;
+using SchoolProject.Shared.Helpers;
 namespace SchoolProject.Data.Entities.Identities;
 
 public class ApplicationUser : IdentityUser<int>

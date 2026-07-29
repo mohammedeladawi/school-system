@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.Views;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.InfrastructureBases;
@@ -34,6 +35,14 @@ public class DepartmentRepository :
                         .AsSplitQuery()
                         .FirstOrDefaultAsync();
         return department;
+    }
+
+    public async Task<List<DepartmentStudentsCountView>> GetStudentsCountViewAsync()
+    {
+        return await _dbContext.Set<DepartmentStudentsCountView>()
+            .AsNoTracking()
+            .OrderBy(x => x.DepartmentId)
+            .ToListAsync();
     }
     #endregion
 }

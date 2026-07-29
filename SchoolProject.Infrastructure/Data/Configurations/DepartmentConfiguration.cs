@@ -25,3 +25,4 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
         builder.HasData(SeedData.Departments);
     }
 };
+

@@ -31,3 +31,10 @@ public record StudentInDepartmentDto
     public int Id { get; init; }
     public string Name { get; init; } = null!;
 }
+
+public record GetDepartmentStudentsCountQueryResponse
+{
+    public int DepartmentId { get; init; }
+    public string DepartmentName { get; init; } = null!;
+    public int StudentsCount { get; init; }
+}

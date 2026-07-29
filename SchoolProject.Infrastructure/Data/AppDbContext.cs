@@ -1,10 +1,10 @@
 namespace SchoolProject.Infrastructure.Data;
 
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Data.Entities.Views;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {
@@ -18,9 +18,16 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
+    public DbSet<DepartmentStudentsCountView> DepartmentStudentsCountViews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<DepartmentStudentsCountView>(entity =>
+        {
+            entity.HasNoKey();
+            entity.ToView("vw_DepartmentStudentsCount");
+        });
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }

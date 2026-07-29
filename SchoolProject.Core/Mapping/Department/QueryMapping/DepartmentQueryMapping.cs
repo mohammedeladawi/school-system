@@ -14,5 +14,6 @@ public partial class DepartmentProfile
         CreateMap<Data.Entities.Instructor, InstructorInDepartmentDto>();
         CreateMap<Data.Entities.Subject, SubjectInDepartmentDto>();
         CreateMap<Data.Entities.Student, StudentInDepartmentDto>();
+        CreateMap<Data.Entities.Views.DepartmentStudentsCountView, GetDepartmentStudentsCountQueryResponse>();
     }
 }
