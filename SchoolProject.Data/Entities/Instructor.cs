@@ -12,6 +12,7 @@ public class Instructor
     public Department? Department { get; set; } = null;
     public int? SupervisorId { get; set; }
     public Instructor? Supervisor { get; set; }
+    public string? ImagePath { get; set; }
 
     public List<Instructor> Subordinates { get; set; } = new();
     public List<Subject> Subjects { get; set; } = new();

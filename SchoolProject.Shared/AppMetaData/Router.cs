@@ -40,6 +40,11 @@ public static class Router
         public const string PaginatedList = DepartmentBase + "Paginated-List";
     }
 
+    public static class Instructor
+    {
+        private const string InstructorBase = Base + "/" + "Instructor" + "/";
+        public const string Add = InstructorBase + "Add";
+    }
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
