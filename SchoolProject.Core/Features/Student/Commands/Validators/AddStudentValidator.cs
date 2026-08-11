@@ -1,7 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Student.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Repositories;
+using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
 
@@ -10,17 +11,17 @@ namespace SchoolProject.Core.Features.Student.Commands.Validators;
 public class AddStudentValidator : AbstractValidator<AddStudentCommand>
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IStudentService _studentService;
-    private readonly IDepartmentService _departmentService;
+    private readonly IStudentRepository _studentRepository;
+    private readonly IDepartmentRepository _departmentRepository;
 
     public AddStudentValidator(
         IStringLocalizer<SharedResource> localizer,
-        IStudentService studentService,
-        IDepartmentService departmentService)
+        IStudentRepository studentService,
+        IDepartmentRepository departmentRepository)
     {
         _localizer = localizer;
-        _studentService = studentService;
-        _departmentService = departmentService;
+        _studentRepository = studentService;
+        _departmentRepository = departmentRepository;
 
         ValidateNameEn();
         ValidateNameAr();
@@ -37,7 +38,7 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
 
             .MustAsync(async (studentNameAr, cancellationToken) =>
             {
-                if (await _studentService.DoesNameArExistAsync(studentNameAr))
+                if (await _studentRepository.DoesNameArExistAsync(studentNameAr))
                     throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
 
                 return true;
@@ -51,7 +52,7 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
             .MaximumLength(100).WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
             .MustAsync(async (studentNameEn, cancellationToken) =>
             {
-                if (await _studentService.DoesNameEnExistAsync(studentNameEn))
+                if (await _studentRepository.DoesNameEnExistAsync(studentNameEn))
                     throw new ConflictException(_localizer[SharedResourceKeys.Conflict]);
 
                 return true;
@@ -65,7 +66,7 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
 
             .MustAsync(async (departmentId, cancellationToken) =>
-                await _departmentService.DoesExistByIdAsync(departmentId!.Value))
+                await _departmentRepository.DoesExistByIdAsync(departmentId!.Value))
             .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
 
     }

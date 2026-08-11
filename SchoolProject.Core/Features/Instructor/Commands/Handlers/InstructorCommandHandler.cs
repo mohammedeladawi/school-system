@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Instructor.Commands.Models;
-using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Resources;
+using SchoolProject.Core.Interfaces.Repositories;
+using SchoolProject.Core.Interfaces.Services;
 
 namespace SchoolProject.Core.Features.Instructor.Commands.Handlers;
 
@@ -15,7 +16,7 @@ public class InstructorCommandHandler :
 
 {
     #region Private Fields
-    private readonly IInstructorService _instructorService;
+    private readonly IInstructorRepository _instructorService;
     private readonly IFileService _fileService;
     private readonly IWebHostEnvironment _webHostEnvironment;
     #endregion
@@ -23,7 +24,7 @@ public class InstructorCommandHandler :
     #region Constructors
     public InstructorCommandHandler(
         IMapper mapper,
-        IInstructorService instructorService,
+        IInstructorRepository instructorService,
         IFileService fileService,
         IWebHostEnvironment webHostEnvironment,
         IStringLocalizer<SharedResource> localizer)

@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
-using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.InfrastructureBases;
+using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.Repositories;
 
@@ -20,8 +21,17 @@ public class PasswordResetCodeRepository :
         _passwordResetCodes = context.Set<PasswordResetCode>();
     }
 
+    public string GeneratePasswordResetCode()
+    {
+        string code = Random.Shared.Next(100000, 999999).ToString();
+        return code;
+    }
+
     public async Task<PasswordResetCode?> GetByUserIdAndHashedCode(int userId, string hashedCode)
     {
+        // ======= Todo: move hashing to application layer ========
+        hashedCode = Utils.Hash(hashedCode);
+
         return await _passwordResetCodes
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.UserId == userId && c.HashedCode == hashedCode);

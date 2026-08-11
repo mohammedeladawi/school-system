@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Api.Middlewares;
 using SchoolProject.Core;
-using SchoolProject.Infrastructure;
-using SchoolProject.Service;
 using Serilog;
+using SchoolProject.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +20,9 @@ builder.Services.AddControllers();
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
 
-
-
-builder.Services.AddInfrastructureDependencies()
-    .AddServiceRegisteration(builder.Configuration)
+builder.Services
     .AddCoreDependencies()
-    .AddServiceDependencies();
+    .AddInfrastructureDependencies(builder.Configuration);
 
 #region Localization Configurations
 builder.Services.AddLocalization();

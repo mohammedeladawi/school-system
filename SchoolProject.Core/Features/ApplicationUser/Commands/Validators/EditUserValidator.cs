@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
 
@@ -13,16 +13,16 @@ public class EditApplicationUserValidator :
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public EditApplicationUserValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserService applicationUserService)
+        IApplicationUserRepository ApplicationUserRepositories)
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         Include(new CommonUserCommandValidator(localizer));
 
@@ -43,7 +43,7 @@ public class EditApplicationUserValidator :
             .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, CancellationToken) =>
-                await _applicationUserService.DoesExistByIdAsync((id)))
+                await _ApplicationUserRepositories.DoesExistByIdAsync((id)))
             .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
     }
 
@@ -57,7 +57,7 @@ public class EditApplicationUserValidator :
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
 
             .MustAsync(async (user, email, cancellationToken) =>
-                !await _applicationUserService.DoesEmailExist(email, user.Id))
+                !await _ApplicationUserRepositories.DoesEmailExist(email, user.Id))
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
 
     }
@@ -73,9 +73,9 @@ public class EditApplicationUserValidator :
 
             .Matches(CommonUserCommandValidator.UserNamePattern)
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
-  
+
             .MustAsync(async (user, userName, cancellationToken) =>
-                !await _applicationUserService.DoesUserNameExist(userName, user.Id))
+                !await _ApplicationUserRepositories.DoesUserNameExist(userName, user.Id))
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
 
     }

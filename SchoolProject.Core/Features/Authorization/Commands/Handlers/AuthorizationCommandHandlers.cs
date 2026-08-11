@@ -3,7 +3,8 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Handlers;
@@ -15,8 +16,8 @@ public class AuthorizationCommandHandlers :
 {
     #region Fields
     private readonly IAuthorizationService _authorizationService;
-    private readonly IApplicationUserService _applicationUserService;
-    private readonly IApplicationRoleService _applicationRoleService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IApplicationRoleRepository _applicationRoleService;
     #endregion
 
     #region Constructors
@@ -24,12 +25,12 @@ public class AuthorizationCommandHandlers :
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
         IAuthorizationService authorizationService,
-        IApplicationUserService applicationUserService,
-        IApplicationRoleService applicationRoleService
+        IApplicationUserRepository ApplicationUserRepositories,
+        IApplicationRoleRepository applicationRoleService
         ) : base(localizer, mapper)
     {
         _authorizationService = authorizationService;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
         _applicationRoleService = applicationRoleService;
     }
 
@@ -38,14 +39,14 @@ public class AuthorizationCommandHandlers :
     #region Public Methods
     public async Task<Response<string>> Handle(UpdateUserRolesCommand request, CancellationToken cancellationToken)
     {
-        var user = await _applicationUserService.GetByIdAsync(request.UserId);
+        var user = await _ApplicationUserRepositories.GetByIdAsync(request.UserId);
         await _authorizationService.UpdateUserRoles(user, request.RoleNames);
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
     }
 
     public async Task<Response<string>> Handle(UpdateUserPermissionClaimsCommand request, CancellationToken cancellationToken)
     {
-        var user = await _applicationUserService.GetByIdAsync(request.UserId);
+        var user = await _ApplicationUserRepositories.GetByIdAsync(request.UserId);
         await _authorizationService.UpdateUserPermissionClaims(user, request.PermissionClaims);
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
     }

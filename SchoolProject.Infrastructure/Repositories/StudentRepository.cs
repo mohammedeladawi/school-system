@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
-using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.InfrastructureBases;
 using StudentProject.Data.Enums;
@@ -38,7 +38,7 @@ public class StudentRepository :
     #endregion
 
     #region Public Methods
-    public async Task<List<Student>> GetAllAsync()
+    public async Task<List<Student>> GetAllWithDepartmentAsync()
     {
         var studentsList = await _students.Include(s => s.Department)
                                           .ToListAsync();

@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Emails.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Emails.Commands.Handlers;

@@ -5,7 +5,8 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authorization.Queries.Models;
 using SchoolProject.Core.Features.Authorization.Queries.Responses;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Queries.Handlers;
@@ -17,8 +18,8 @@ public class AuthorizationQueryHandlers :
 {
     #region Fields
     private readonly IAuthorizationService _authorizationService;
-    private readonly IApplicationUserService _applicationUserService;
-    private readonly IApplicationRoleService _applicationRoleService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IApplicationRoleRepository _applicationRoleService;
     #endregion
 
     #region Constructors
@@ -26,12 +27,12 @@ public class AuthorizationQueryHandlers :
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
         IAuthorizationService authorizationService,
-        IApplicationUserService applicationUserService,
-        IApplicationRoleService applicationRoleService
+        IApplicationUserRepository ApplicationUserRepositories,
+        IApplicationRoleRepository applicationRoleService
         ) : base(localizer, mapper)
     {
         _authorizationService = authorizationService;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
         _applicationRoleService = applicationRoleService;
     }
     #endregion

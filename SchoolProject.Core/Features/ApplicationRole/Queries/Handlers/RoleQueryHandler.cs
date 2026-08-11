@@ -5,8 +5,8 @@ using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.ApplicationRole.Commands.Models;
 using SchoolProject.Core.Features.ApplicationRole.Queries.Models;
 using SchoolProject.Core.Features.ApplicationRole.Queries.Responses;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.ApplicationRole.Commands.Handlers
@@ -17,14 +17,14 @@ namespace SchoolProject.Core.Features.ApplicationRole.Commands.Handlers
         IRequestHandler<GetRoleByIdQuery, Response<GetRoleByIdQueryResponse>>
     {
         #region Private Fields
-        private readonly IApplicationRoleService _applicationRoleService;
+        private readonly IApplicationRoleRepository _applicationRoleService;
         #endregion
 
         #region Constructors
         public ApplicationRoleQueryHandler(
             IStringLocalizer<SharedResource> localizer,
             IMapper mapper,
-            IApplicationRoleService ApplicationRoleService)
+            IApplicationRoleRepository ApplicationRoleService)
             : base(localizer, mapper)
         {
             _applicationRoleService = ApplicationRoleService;

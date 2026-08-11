@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Authorization.Queries.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Query.Validators;
@@ -10,16 +10,16 @@ public class UserIdQueryValidator : AbstractValidator<IUserIdQuery>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public UserIdQueryValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserService applicationUserService)
+        IApplicationUserRepository ApplicationUserRepositories)
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         ValidateUserId();
     }
@@ -36,7 +36,7 @@ public class UserIdQueryValidator : AbstractValidator<IUserIdQuery>
             .WithMessage(_localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (userId, cancellationToken) =>
-                await _applicationUserService.DoesExistByIdAsync(userId)
+                await _ApplicationUserRepositories.DoesExistByIdAsync(userId)
             )
             .WithMessage(_localizer[SharedResourceKeys.NotExist]);
 

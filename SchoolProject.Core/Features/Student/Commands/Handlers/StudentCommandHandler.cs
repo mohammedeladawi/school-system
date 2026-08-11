@@ -3,8 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Student.Commands.Models;
-using SchoolProject.Data.Entities;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Student.Commands.Handlers
@@ -17,17 +16,17 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
 
     {
         #region Private Fields
-        private readonly IStudentService _studentService;
+        private readonly IStudentRepository _studentRepository;
         #endregion
 
         #region Constructors
         public StudentCommandHandler(
             IMapper mapper,
-            IStudentService studentService,
+            IStudentRepository studentService,
             IStringLocalizer<SharedResource> localizer)
             : base(localizer, mapper)
         {
-            _studentService = studentService;
+            _studentRepository = studentService;
         }
         #endregion
 
@@ -35,23 +34,23 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
         public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
         {
             var student = _mapper.Map<Data.Entities.Student>(request);
-            await _studentService.AddAsync(student);
+            await _studentRepository.AddAsync(student);
             return Created<string>();
         }
 
         public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
         {
             var student = _mapper.Map<Data.Entities.Student>(request);
-            await _studentService.UpdateAsync(student);
+            await _studentRepository.UpdateAsync(student);
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
 
         public async Task<Response<string>> Handle(DeleteStudentByIdCommand request, CancellationToken cancellationToken)
         {
-            var student = await _studentService.GetByIdAsync(request.Id);
+            var student = await _studentRepository.GetByIdAsync(request.Id);
             if (student is null)
                 return NotFound<string>(_localizer[SharedResourceKeys.NotFound]);
-            await _studentService.DeleteAsync(student);
+            await _studentRepository.DeleteAsync(student);
             return Deleted<string>();
         }
         #endregion

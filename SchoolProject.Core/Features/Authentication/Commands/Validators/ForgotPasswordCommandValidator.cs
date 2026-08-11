@@ -2,7 +2,6 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
-using SchoolProject.Service.Abstracts;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authentication.Commands.Validators;

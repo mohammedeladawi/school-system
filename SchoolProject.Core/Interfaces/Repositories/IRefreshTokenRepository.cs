@@ -1,0 +1,12 @@
+using SchoolProject.Core.Interfaces.Bases;
+using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.Identities;
+
+namespace SchoolProject.Core.Interfaces.Repositories;
+
+public interface IRefreshTokenRepository : IGenericRepositoryAsync<RefreshToken>
+{
+    public Task<RefreshToken?> GetByTokenHashAsync(string tokenHash);
+    public Task RevokeTokenFamilyAsync(Guid familyId);
+};
+

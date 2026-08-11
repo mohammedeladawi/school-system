@@ -6,7 +6,9 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
 using SchoolProject.Core.Features.Authentication.Commands.Responses;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.Repositories;
+using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Shared.Helpers;
 using SchoolProject.Shared.Resources;
@@ -27,25 +29,25 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
     {
         #region Private Fields
         private readonly IAuthenticationService _authenticationService;
-        private readonly IApplicationUserService _applicationUserService;
-        private readonly IPasswordResetCodeService _passwordResetCodeService;
+        private readonly IApplicationUserRepository _ApplicationUserRepositories;
+        private readonly IPasswordResetCodeRepository _passwordResetCodeRepIPasswordResetCodeRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         #endregion
 
         #region Constructors
         public AuthenticationCommandHandler(
-            IApplicationUserService applicationUserService,
+            IApplicationUserRepository ApplicationUserRepositories,
             IAuthenticationService authenticationService,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
             IHttpContextAccessor httpContextAccessor,
-            IPasswordResetCodeService passwordResetCodeService)
+            IPasswordResetCodeRepository passwordResetCodeRepIPasswordResetCodeRepository)
             : base(localizer, mapper)
         {
-            _applicationUserService = applicationUserService;
+            _ApplicationUserRepositories = ApplicationUserRepositories;
             _authenticationService = authenticationService;
             _httpContextAccessor = httpContextAccessor;
-            _passwordResetCodeService = passwordResetCodeService;
+            _passwordResetCodeRepIPasswordResetCodeRepository = passwordResetCodeRepIPasswordResetCodeRepository;
 
         }
         #endregion
@@ -63,7 +65,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<AuthResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetByUserNameAndPasswordAsync(request.UserName, request.Password);
+            var user = await _ApplicationUserRepositories.GetByUserNameAndPasswordAsync(request.UserName, request.Password);
             if (user is null)
                 return BadRequest<AuthResponse>(_localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
 
@@ -129,7 +131,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<string>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetByIdAsync(request.UserId);
+            var user = await _ApplicationUserRepositories.GetByIdAsync(request.UserId);
             if (user == null)
                 return NotFound<string>();
             await _authenticationService.ConfirmEmailAsync(user, request.Token);
@@ -139,7 +141,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<string>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetByEmailAsync(request.Email);
+            var user = await _ApplicationUserRepositories.GetByEmailAsync(request.Email);
 
             if (user == null) return NotFound<string>();
             if (!user.EmailConfirmed) return BadRequest<string>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
@@ -152,11 +154,11 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
         public async Task<Response<ResetPasswordUrlResponse>> Handle(VerifyResetCodeCommand request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserService.GetByEmailAsync(request.Email);
+            var user = await _ApplicationUserRepositories.GetByEmailAsync(request.Email);
             if (user is null)
                 return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidEmailAddress]);
 
-            var passwordResetCode = await _passwordResetCodeService.GetByUserIdAndCodeAsync(user.Id, request.Code);
+            var passwordResetCode = await _passwordResetCodeRepIPasswordResetCodeRepository.GetByUserIdAndHashedCode(user.Id, request.Code);
             if (passwordResetCode is null)
                 return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidOTP]);
 
@@ -175,7 +177,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
         {
             var decodedUserId = Utils.Decode(request.EncodedUserId);
             var userId = int.Parse(decodedUserId);
-            var user = await _applicationUserService.GetByIdAsync(userId);
+            var user = await _ApplicationUserRepositories.GetByIdAsync(userId);
 
             if (user is null)
                 return NotFound<string>();

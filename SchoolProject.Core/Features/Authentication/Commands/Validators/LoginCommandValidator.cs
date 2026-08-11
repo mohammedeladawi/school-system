@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authentication.Commands.Validators;
@@ -11,16 +11,16 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public LoginCommandValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserService applicationUserService)
+        IApplicationUserRepository ApplicationUserRepositories)
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         ValidateUserName();
         ValidatePassword();
@@ -35,7 +35,7 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
 
             .MustAsync(async (userName, cancellationToken) =>
-                await _applicationUserService.DoesUserNameExist(userName))
+                await _ApplicationUserRepositories.DoesUserNameExist(userName))
             .WithMessage(_ => _localizer[SharedResourceKeys.InvalidUserNameOrPassword]);
     }
 

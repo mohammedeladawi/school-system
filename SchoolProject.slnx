@@ -3,6 +3,5 @@
   <Project Path="SchoolProject.Core/SchoolProject.Core.csproj" />
   <Project Path="SchoolProject.Data/SchoolProject.Data.csproj" />
   <Project Path="SchoolProject.Infrastructure/SchoolProject.Infrastructure.csproj" />
-  <Project Path="SchoolProject.Service/SchoolProject.Service.csproj" />
   <Project Path="SchoolProject.Shared/SchoolProject.Shared.csproj" />
 </Solution>

@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
@@ -10,16 +10,16 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public ChangePasswordValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserService applicationUserService)
+        IApplicationUserRepository ApplicationUserRepositories)
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         ValidateId();
         ValidateCurrentPassword();
@@ -38,7 +38,7 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, CancellationToken) =>
-                await _applicationUserService.DoesExistByIdAsync((id)))
+                await _ApplicationUserRepositories.DoesExistByIdAsync((id)))
             .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
     }
 

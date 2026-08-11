@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Validators;
@@ -12,18 +12,18 @@ public class UpdateUserPermissionClaimsCommandValidator
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
-    private readonly IApplicationRoleService _applicationRoleService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IApplicationRoleRepository _applicationRoleService;
     #endregion
 
     #region Constructors
     public UpdateUserPermissionClaimsCommandValidator(
-        IApplicationUserService applicationUserService,
+        IApplicationUserRepository ApplicationUserRepositories,
         IStringLocalizer<SharedResource> localizer
     )
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         ValidateUserId();
         ValidateUserPermissionClaims();
@@ -38,7 +38,7 @@ public class UpdateUserPermissionClaimsCommandValidator
             .WithMessage(_localizer[SharedResourceKeys.IdRequired])
 
             .MustAsync(async (userId, cancellationToken) =>
-                    await _applicationUserService.DoesExistByIdAsync(userId))
+                    await _ApplicationUserRepositories.DoesExistByIdAsync(userId))
             .WithMessage(_localizer[SharedResourceKeys.NotExist]);
     }
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.InfrastructureBases;
 

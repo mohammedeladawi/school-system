@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
-using SchoolProject.Service.Abstracts;
+using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authentication.Commands.Validators;
@@ -11,16 +11,16 @@ public class AddStudentValidator : AbstractValidator<RegisterCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IApplicationUserRepository _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public AddStudentValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserService applicationUserService)
+        IApplicationUserRepository ApplicationUserRepositories)
     {
         _localizer = localizer;
-        _applicationUserService = applicationUserService;
+        _ApplicationUserRepositories = ApplicationUserRepositories;
 
         Include(new CommonUserCommandValidator(localizer));
 
@@ -41,7 +41,7 @@ public class AddStudentValidator : AbstractValidator<RegisterCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
 
             .MustAsync(async (email, cancellationToken) =>
-                !await _applicationUserService.DoesEmailExist(email))
+                !await _ApplicationUserRepositories.DoesEmailExist(email))
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
 
     }
@@ -59,7 +59,7 @@ public class AddStudentValidator : AbstractValidator<RegisterCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
 
             .MustAsync(async (userName, cancellationToken) =>
-                !await _applicationUserService.DoesUserNameExist(userName))
+                !await _ApplicationUserRepositories.DoesUserNameExist(userName))
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
 
     }

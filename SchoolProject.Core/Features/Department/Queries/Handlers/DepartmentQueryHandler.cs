@@ -4,8 +4,8 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Department.Queries.Models;
 using SchoolProject.Core.Features.Department.Queries.Responses;
+using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Shared.Resources;
-using SchoolProject.Service.Abstracts;
 
 namespace SchoolProject.Core.Features.Department.Queries.Handlers;
 
@@ -15,23 +15,23 @@ public class DepartmentQueryHandler :
     IRequestHandler<GetDepartmentStudentsCountQuery, Response<List<GetDepartmentStudentsCountQueryResponse>>>
 {
     #region Private Fields
-    private readonly IDepartmentService _departmentService;
+    private readonly IDepartmentRepository _departmentReposIDepartmentRepository;
     #endregion
 
     #region Constructors
     public DepartmentQueryHandler(
         IStringLocalizer<SharedResource> localizer,
-        IDepartmentService departmentService,
+        IDepartmentRepository departmentReposIDepartmentRepository,
         IMapper mapper) : base(localizer, mapper)
     {
-        _departmentService = departmentService;
+        _departmentReposIDepartmentRepository = departmentReposIDepartmentRepository;
     }
     #endregion
 
     #region Public Methods
     public async Task<Response<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
-        var department = await _departmentService.GetByIdAsync(request.Id);
+        var department = await _departmentReposIDepartmentRepository.GetByIdAsync(request.Id);
         if (department is null)
             return NotFound<GetDepartmentByIdQueryResponse>();
 
@@ -41,7 +41,7 @@ public class DepartmentQueryHandler :
 
     public async Task<Response<List<GetDepartmentStudentsCountQueryResponse>>> Handle(GetDepartmentStudentsCountQuery request, CancellationToken cancellationToken)
     {
-        var result = await _departmentService.GetStudentsCountViewAsync();
+        var result = await _departmentReposIDepartmentRepository.GetStudentsCountViewAsync();
         var response = _mapper.Map<List<GetDepartmentStudentsCountQueryResponse>>(result);
         return Success(response);
     }
