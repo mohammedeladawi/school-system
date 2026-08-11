@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Data.Entities;
@@ -26,6 +27,7 @@ public class AuthenticationService : IAuthenticationService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly AppDbContext _dbContext;
     private readonly IPasswordResetCodeService _passwordResetCodeService;
+    private readonly ILogger<AuthenticationService> _logger;
 
     #endregion
 
@@ -38,7 +40,8 @@ public class AuthenticationService : IAuthenticationService
         IApplicationUserService applicationUserService,
         UserManager<ApplicationUser> userManager,
         AppDbContext dbContext,
-        IPasswordResetCodeService passwordResetCodeService)
+        IPasswordResetCodeService passwordResetCodeService,
+        ILogger<AuthenticationService> logger)
     {
         _config = config;
         _refreshTokenRepository = refreshTokenRepository;
@@ -48,6 +51,7 @@ public class AuthenticationService : IAuthenticationService
         _userManager = userManager;
         _dbContext = dbContext;
         _passwordResetCodeService = passwordResetCodeService;
+        _logger = logger;
     }
 
     #endregion
@@ -236,6 +240,7 @@ public class AuthenticationService : IAuthenticationService
         catch
         {
             await transaction.RollbackAsync();
+            _logger.LogError("Failed to generate and send password reset code for user {UserId}", user.Id);
             throw;
         }
 

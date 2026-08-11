@@ -60,6 +60,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
 
             return Created<string>(_localizer[SharedResourceKeys.AddedSuccessfully]);
         }
+
         public async Task<Response<AuthResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _applicationUserService.GetByUserNameAndPasswordAsync(request.UserName, request.Password);

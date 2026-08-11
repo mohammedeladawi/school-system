@@ -5,14 +5,22 @@ using SchoolProject.Api.Middlewares;
 using SchoolProject.Core;
 using SchoolProject.Infrastructure;
 using SchoolProject.Service;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container
 builder.Services.AddControllers();
 
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
+
 
 
 builder.Services.AddInfrastructureDependencies()
@@ -42,6 +50,8 @@ var localizationOptions = new RequestLocalizationOptions
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 // Enable localization middleware
 app.UseRequestLocalization(localizationOptions);
 
@@ -58,6 +68,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
+
 app.UseStaticFiles();
 
 app.UseAuthentication();
