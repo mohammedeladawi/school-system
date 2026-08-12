@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Authentication.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authentication.Commands.Validators;
@@ -9,11 +9,11 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Validators;
 public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IUserManager _ApplicationUserRepositories;
 
     public ResetPasswordCommandValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserRepository ApplicationUserRepositories)
+        IUserManager ApplicationUserRepositories)
     {
         _localizer = localizer;
         _ApplicationUserRepositories = ApplicationUserRepositories;

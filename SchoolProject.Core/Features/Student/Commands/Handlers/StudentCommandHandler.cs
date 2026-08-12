@@ -18,7 +18,7 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
     {
         #region Private Fields
         private readonly IStudentRepository _studentRepository;
-        private readonly IUnitOfWorkAsync _unitOfWorkAsync;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructors
@@ -26,11 +26,11 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
             IMapper mapper,
             IStudentRepository studentService,
             IStringLocalizer<SharedResource> localizer,
-            IUnitOfWorkAsync unitOfWorkAsync)
+            IUnitOfWork unitOfWork)
             : base(localizer, mapper)
         {
             _studentRepository = studentService;
-            _unitOfWorkAsync = unitOfWorkAsync;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
@@ -40,7 +40,7 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
             var student = _mapper.Map<Data.Entities.Student>(request);
 
             await _studentRepository.AddAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return Created<string>();
         }
@@ -53,7 +53,7 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
             var student = _mapper.Map<Data.Entities.Student>(request);
 
             await _studentRepository.UpdateAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
@@ -65,7 +65,7 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
                 return NotFound<string>(_localizer[SharedResourceKeys.NotFound]);
 
             await _studentRepository.DeleteAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return Deleted<string>();
         }

@@ -4,11 +4,11 @@ using SchoolProject.Infrastructure.Data;
 
 namespace SchoolProject.Infrastructure.Bases;
 
-public class UnitOfWorkAsync : IUnitOfWorkAsync
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _dbContext;
 
-    public UnitOfWorkAsync(AppDbContext dbContext)
+    public UnitOfWork(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -32,5 +32,10 @@ public class UnitOfWorkAsync : IUnitOfWorkAsync
     public async Task RollbackAsync()
     {
         await _dbContext.Database.RollbackTransactionAsync();
+    }
+
+    public void Dispose()
+    {
+        _dbContext.Dispose();
     }
 }

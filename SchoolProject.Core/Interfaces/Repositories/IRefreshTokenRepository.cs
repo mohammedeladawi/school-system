@@ -8,5 +8,9 @@ public interface IRefreshTokenRepository : IGenericRepositoryAsync<RefreshToken>
 {
     public Task<RefreshToken?> GetByTokenHashAsync(string tokenHash);
     public Task RevokeTokenFamilyAsync(Guid familyId);
+
+    public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null);
+    public Task RevokeAsync(RefreshToken refreshToken);
+    public Task RevokeFamilyAsync(Guid familyId);
 };
 

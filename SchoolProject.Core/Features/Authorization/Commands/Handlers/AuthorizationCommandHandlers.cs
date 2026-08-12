@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Shared.Resources;
 
@@ -16,8 +16,8 @@ public class AuthorizationCommandHandlers :
 {
     #region Fields
     private readonly IAuthorizationService _authorizationService;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
-    private readonly IApplicationRoleRepository _applicationRoleService;
+    private readonly IUserManager _ApplicationUserRepositories;
+    private readonly IRoleManager _applicationRoleService;
     #endregion
 
     #region Constructors
@@ -25,8 +25,8 @@ public class AuthorizationCommandHandlers :
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
         IAuthorizationService authorizationService,
-        IApplicationUserRepository ApplicationUserRepositories,
-        IApplicationRoleRepository applicationRoleService
+        IUserManager ApplicationUserRepositories,
+        IRoleManager applicationRoleService
         ) : base(localizer, mapper)
     {
         _authorizationService = authorizationService;

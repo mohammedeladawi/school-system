@@ -4,7 +4,7 @@ using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Views;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.InfrastructureBases;
+using SchoolProject.Infrastructure.Bases;
 
 namespace SchoolProject.Infrastructure.Repositories;
 

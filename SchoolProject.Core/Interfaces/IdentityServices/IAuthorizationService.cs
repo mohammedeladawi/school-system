@@ -1,6 +1,6 @@
 using SchoolProject.Data.Entities.Identities;
 
-namespace SchoolProject.Core.Interfaces.Services;
+namespace SchoolProject.Core.Interfaces.IdentityServices;
 
 public interface IAuthorizationService
 {

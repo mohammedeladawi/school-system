@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Validators;
@@ -12,13 +12,13 @@ public class UpdateUserPermissionClaimsCommandValidator
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
-    private readonly IApplicationRoleRepository _applicationRoleService;
+    private readonly IUserManager _ApplicationUserRepositories;
+    private readonly IRoleManager _applicationRoleService;
     #endregion
 
     #region Constructors
     public UpdateUserPermissionClaimsCommandValidator(
-        IApplicationUserRepository ApplicationUserRepositories,
+        IUserManager ApplicationUserRepositories,
         IStringLocalizer<SharedResource> localizer
     )
     {

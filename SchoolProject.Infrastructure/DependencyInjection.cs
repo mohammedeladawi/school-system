@@ -8,13 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Core.Interfaces.Bases;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Bases;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.Identities;
+using SchoolProject.Infrastructure.IdentityServices;
 using SchoolProject.Infrastructure.Repositories;
 using SchoolProject.Infrastructure.Services;
 using SchoolProject.Shared.Helpers;
@@ -35,7 +35,7 @@ public static class DependencyInjection
         #endregion
 
         #region Bases
-        services.AddScoped<IUnitOfWorkAsync, UnitOfWorkAsync>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         #endregion
 
         #region DbContext
@@ -60,8 +60,8 @@ public static class DependencyInjection
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-        services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-        services.AddScoped<IApplicationRoleRepository, ApplicationRoleRepository>();
+        services.AddScoped<IUserManager, UserManager>();
+        services.AddScoped<IRoleManager, RoleManager>();
 
         #endregion
 
@@ -132,7 +132,7 @@ public static class DependencyInjection
                         var userId = context.Principal!.FindFirstValue(ClaimTypes.NameIdentifier);
                         var tokenStamp = context.Principal!.FindFirstValue("security_stamp");
 
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IApplicationUserRepository>();
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserManager>();
                         var user = await userService.GetByIdAsync(int.Parse(userId!));
 
                         if (user is null || user.SecurityStamp != tokenStamp)

@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
 
@@ -13,13 +13,13 @@ public class EditApplicationUserValidator :
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IUserManager _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public EditApplicationUserValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserRepository ApplicationUserRepositories)
+        IUserManager ApplicationUserRepositories)
     {
         _localizer = localizer;
         _ApplicationUserRepositories = ApplicationUserRepositories;

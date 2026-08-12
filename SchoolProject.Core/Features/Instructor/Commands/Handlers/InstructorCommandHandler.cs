@@ -20,7 +20,7 @@ public class InstructorCommandHandler :
     private readonly IInstructorRepository _instructorService;
     private readonly IFileService _fileService;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    private readonly IUnitOfWorkAsync _unitOfWorkAsync;
+    private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
@@ -30,13 +30,13 @@ public class InstructorCommandHandler :
         IFileService fileService,
         IWebHostEnvironment webHostEnvironment,
         IStringLocalizer<SharedResource> localizer,
-        IUnitOfWorkAsync unitOfWorkAsync)
+        IUnitOfWork unitOfWork)
         : base(localizer, mapper)
     {
         _instructorService = instructorService;
         _fileService = fileService;
         _webHostEnvironment = webHostEnvironment;
-        _unitOfWorkAsync = unitOfWorkAsync;
+        _unitOfWork = unitOfWork;
     }
     #endregion
 
@@ -52,7 +52,7 @@ public class InstructorCommandHandler :
         }
 
         await _instructorService.AddAsync(instructor);
-        await _unitOfWorkAsync.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
         return Created<string>();
     }
     #endregion

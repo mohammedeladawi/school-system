@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.ApplicationUser.Queries.Models;
 using SchoolProject.Core.Features.ApplicationUser.Queries.Responses;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Core.Responses;
 using SchoolProject.Shared.Resources;
 
@@ -16,16 +16,16 @@ public class ApplicationUserQueryHandler :
     IRequestHandler<GetUserByIdQuery, Response<GetUserByIdQueryResponse>>
 {
     #region Private Fields
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IUserManager _userManager;
     #endregion
 
     #region Constructors
     public ApplicationUserQueryHandler(
-        IApplicationUserRepository ApplicationUserRepositories,
+        IUserManager ApplicationUserRepositories,
         IMapper mapper,
         IStringLocalizer<SharedResource> localizer) : base(localizer, mapper)
     {
-        _ApplicationUserRepositories = ApplicationUserRepositories;
+        _userManager = ApplicationUserRepositories;
     }
     #endregion
 
@@ -38,10 +38,10 @@ public class ApplicationUserQueryHandler :
         int pageSize = request.PageSize <= 0 ? 10 : request.PageSize;
 
         int totalRecords =
-            await _ApplicationUserRepositories.GetTotalCountAsync();
+            await _userManager.GetTotalCountAsync();
 
         var applicationUsers =
-            await _ApplicationUserRepositories.GetPaginatedListAsync(pageNumber, pageSize);
+            await _userManager.GetPaginatedListAsync(pageNumber, pageSize);
 
         var applicationUsersDto =
             _mapper.Map<List<GetPaginatedUsersQueryResponse>>(applicationUsers);
@@ -57,7 +57,7 @@ public class ApplicationUserQueryHandler :
 
     public async Task<Response<GetUserByIdQueryResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var appUser = await _ApplicationUserRepositories.GetByIdAsync(request.Id);
+        var appUser = await _userManager.GetByIdAsync(request.Id);
 
         if (appUser is null)
             return NotFound<GetUserByIdQueryResponse>(_localizer[SharedResourceKeys.NotFound]);

@@ -4,20 +4,20 @@ namespace SchoolProject.Core.Features.ApplicationRole.Commands.Validators;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationRole.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.Resources;
 
 public class EditRoleCommandValidator : AbstractValidator<EditRoleCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationRoleRepository _applicationRoleService;
+    private readonly IRoleManager _applicationRoleService;
     #endregion
 
     #region Constructor
     public EditRoleCommandValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationRoleRepository applicationRoleService
+        IRoleManager applicationRoleService
     )
     {
         _localizer = localizer;

@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Authorization.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Validators;
@@ -11,14 +11,14 @@ public class UpdateUserRolesCommandValidator : AbstractValidator<UpdateUserRoles
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
-    private readonly IApplicationRoleRepository _applicationRoleService;
+    private readonly IUserManager _ApplicationUserRepositories;
+    private readonly IRoleManager _applicationRoleService;
     #endregion
 
     #region Constructors
     public UpdateUserRolesCommandValidator(
-        IApplicationUserRepository ApplicationUserRepositories,
-        IApplicationRoleRepository applicationRoleService,
+        IUserManager ApplicationUserRepositories,
+        IRoleManager applicationRoleService,
         IStringLocalizer<SharedResource> localizer
     )
     {
@@ -47,11 +47,12 @@ public class UpdateUserRolesCommandValidator : AbstractValidator<UpdateUserRoles
     {
         RuleFor(x => x.RoleNames)
             .NotEmpty()
-            .WithMessage(_localizer[SharedResourceKeys.RolesRequired])
+            .WithMessage(_localizer[SharedResourceKeys.RolesRequired]);
 
-            .MustAsync(async (roleNames, cancellationToken) =>
-                await _applicationRoleService.ValidateRolesExistAsync(roleNames))
-            .WithMessage(_localizer[SharedResourceKeys.SomeRolesNotExist]);
+        // Todo: Add this logic into the handler
+        // .MustAsync(async (roleNames, cancellationToken) =>
+        //     await _applicationRoleService.ValidateRolesExistAsync(roleNames))
+        // .WithMessage(_localizer[SharedResourceKeys.SomeRolesNotExist]);
     }
     #endregion
 

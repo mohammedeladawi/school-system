@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.InfrastructureBases;
+using SchoolProject.Infrastructure.Bases;
 using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.Repositories;

@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Shared.Resources;
 
 namespace SchoolProject.Core.Features.ApplicationUser.Commands.Validators;
@@ -10,13 +10,13 @@ public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
+    private readonly IUserManager _ApplicationUserRepositories;
     #endregion
 
     #region Constructors
     public ChangePasswordValidator(
         IStringLocalizer<SharedResource> localizer,
-        IApplicationUserRepository ApplicationUserRepositories)
+        IUserManager ApplicationUserRepositories)
     {
         _localizer = localizer;
         _ApplicationUserRepositories = ApplicationUserRepositories;

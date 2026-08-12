@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using SchoolProject.Core.Interfaces.Bases;
 using SchoolProject.Infrastructure.Data;
 
-namespace SchoolProject.Infrastructure.InfrastructureBases;
+namespace SchoolProject.Infrastructure.Bases;
 
 public class GenericRepositoryAsync<T> :
     IGenericRepositoryAsync<T> where T : class

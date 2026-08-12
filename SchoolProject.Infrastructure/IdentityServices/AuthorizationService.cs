@@ -1,29 +1,27 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using SchoolProject.Core.Interfaces.Identities;
-using SchoolProject.Core.Interfaces.Services;
+using SchoolProject.Core.Interfaces.IdentityServices;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 
-namespace SchoolProject.Infrastructure.Services;
+namespace SchoolProject.Infrastructure.IdentityServices;
 
 public class AuthorizationService : IAuthorizationService
 {
     #region Fields
-    private readonly IApplicationUserRepository _ApplicationUserRepositories;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IUserManager _ApplicationUserRepositories;
+    private readonly UserManager<ApplicationUser> _UserManager;
     private readonly AppDbContext _dbContext;
     #endregion
 
     #region Constructors
     public AuthorizationService(
-        IApplicationUserRepository ApplicationUserRepositories,
-        UserManager<ApplicationUser> userManager,
+        IUserManager ApplicationUserRepositories,
+        UserManager<ApplicationUser> UserManager,
         AppDbContext dbContext)
     {
         _ApplicationUserRepositories = ApplicationUserRepositories;
-        _userManager = userManager;
+        _UserManager = UserManager;
         _dbContext = dbContext;
     }
     #endregion
@@ -37,13 +35,13 @@ public class AuthorizationService : IAuthorizationService
             throw new Exception($"User with ID {userId} not found.");
         }
 
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await _UserManager.GetRolesAsync(user);
         return userRoles;
     }
 
     public async Task UpdateUserPermissionClaims(ApplicationUser user, IList<string> permissionClaims)
     {
-        var existingClaims = (await _userManager.GetClaimsAsync(user))
+        var existingClaims = (await _UserManager.GetClaimsAsync(user))
             .Where(c => c.Type == "Permission")
             .Select(c => c.Value)
             .ToList();
@@ -59,15 +57,15 @@ public class AuthorizationService : IAuthorizationService
         await using var transaction = await _dbContext.Database.BeginTransactionAsync();
         try
         {
-            var removeResult = await _userManager.RemoveClaimsAsync(user, claimsToRemove);
+            var removeResult = await _UserManager.RemoveClaimsAsync(user, claimsToRemove);
             if (!removeResult.Succeeded)
                 throw new Exception($"Failed to remove claims from user {user.UserName}: {string.Join(", ", removeResult.Errors.Select(e => e.Description))}");
 
-            var addResult = await _userManager.AddClaimsAsync(user, claimsToAdd);
+            var addResult = await _UserManager.AddClaimsAsync(user, claimsToAdd);
             if (!addResult.Succeeded)
                 throw new Exception($"Failed to add claims to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
 
-            await _userManager.UpdateSecurityStampAsync(user);
+            await _UserManager.UpdateSecurityStampAsync(user);
 
             await transaction.CommitAsync();
         }
@@ -81,7 +79,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<IList<string>> GetUserPermissionsAsync(int userId)
     {
         var user = await _ApplicationUserRepositories.GetByIdAsync(userId);
-        var claims = await _userManager.GetClaimsAsync(user);
+        var claims = await _UserManager.GetClaimsAsync(user);
         var permissions = claims.Where(c => c.Type == "Permission")
             .Select(c => c.Value)
             .ToList();
@@ -91,20 +89,20 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task UpdateUserRoles(ApplicationUser user, IList<string> roleNames)
     {
-        var existingRoles = await _userManager.GetRolesAsync(user);
+        var existingRoles = await _UserManager.GetRolesAsync(user);
 
         await using var transaction = await _dbContext.Database.BeginTransactionAsync();
         try
         {
-            var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
+            var removeResult = await _UserManager.RemoveFromRolesAsync(user, existingRoles);
             if (!removeResult.Succeeded)
                 throw new Exception($"Failed to remove roles from user {user.UserName}: {string.Join(", ", removeResult.Errors.Select(e => e.Description))}");
 
-            var addResult = await _userManager.AddToRolesAsync(user, roleNames);
+            var addResult = await _UserManager.AddToRolesAsync(user, roleNames);
             if (!addResult.Succeeded)
                 throw new Exception($"Failed to add roles to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
 
-            await _userManager.UpdateSecurityStampAsync(user);
+            await _UserManager.UpdateSecurityStampAsync(user);
 
             await transaction.CommitAsync();
         }

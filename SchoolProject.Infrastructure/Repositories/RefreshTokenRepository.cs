@@ -3,7 +3,9 @@ using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.InfrastructureBases;
+using SchoolProject.Infrastructure.Bases;
+using SchoolProject.Shared.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace SchoolProject.Infrastructure.Repositories;
 
@@ -13,12 +15,14 @@ public class RefreshTokenRepository :
 {
     #region Private Fields
     private readonly DbSet<RefreshToken> _refreshTokens;
+    private readonly IConfiguration _config;
     #endregion
 
     #region Constructors
-    public RefreshTokenRepository(AppDbContext context) : base(context)
+    public RefreshTokenRepository(AppDbContext context, IConfiguration config) : base(context)
     {
         _refreshTokens = context.RefreshTokens;
+        _config = config;
     }
 
     #endregion
@@ -35,6 +39,28 @@ public class RefreshTokenRepository :
     {
         return _refreshTokens.Where(rt => rt.FamilyId == familyId && !rt.IsRevoked)
                     .ExecuteUpdateAsync(rt => rt.SetProperty(r => r.IsRevoked, true));
+
+    }
+
+    public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null)
+    {
+        string rawToken = Guid.NewGuid().ToString();
+        string tokenHash = Utils.Hash(rawToken);
+
+        var refreshToken = new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            TokenHash = tokenHash,
+            ExpiresAt = DateTime.UtcNow.AddMinutes(
+                Convert.ToDouble(_config["Jwt:RefreshTokenInMinutes"])
+            ),
+            CreatedAt = DateTime.UtcNow,
+            IsRevoked = false,
+            FamilyId = familyId ?? Guid.NewGuid(),
+        };
+
+        return (rawToken, refreshToken);
 
     }
 

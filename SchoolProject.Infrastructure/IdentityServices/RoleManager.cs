@@ -4,31 +4,28 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
-using SchoolProject.Core.Interfaces.Identities;
+using SchoolProject.Core.Interfaces.IdentityServices;
 
-namespace SchoolProject.Infrastructure.Identities;
+namespace SchoolProject.Infrastructure.IdentityServices;
 
-public class ApplicationRoleRepository : IApplicationRoleRepository
+public class RoleManager : IRoleManager
 {
     #region Private Fields
     private readonly RoleManager<ApplicationRole> _roleManager;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<ApplicationUser> _UserManager;
     private readonly IStringLocalizer<SharedResource> _localizer;
     #endregion
 
     #region Constructor
-    public ApplicationRoleRepository(
+    public RoleManager(
         RoleManager<ApplicationRole> roleManager,
-        UserManager<ApplicationUser> userManager,
+        UserManager<ApplicationUser> UserManager,
         IStringLocalizer<SharedResource> localizer)
     {
         _roleManager = roleManager;
-        _userManager = userManager;
+        _UserManager = UserManager;
         _localizer = localizer;
     }
-    #endregion
-
-    #region Private Methods
     #endregion
 
     #region Public Methods
@@ -66,7 +63,7 @@ public class ApplicationRoleRepository : IApplicationRoleRepository
 
     public async Task DeleteAsync(ApplicationRole role)
     {
-        var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+        var usersInRole = await _UserManager.GetUsersInRoleAsync(role.Name);
         if (usersInRole.Any())
             throw new DomainException(_localizer[SharedResourceKeys.RoleHasUsers]);
 
@@ -84,7 +81,7 @@ public class ApplicationRoleRepository : IApplicationRoleRepository
         return _roleManager.Roles.ToList();
     }
 
-    public async Task<bool> ValidateRolesExistAsync(List<string> roleNames)
+    public async Task<bool> ValidateRolesExistAsync(string[] roleNames)
     {
         var allRoles = await GetAllAsync();
         var existingRoleNames = allRoles.Select(r => r.Name).ToList();

@@ -1,39 +1,30 @@
 using System.Linq.Expressions;
-using System.Text;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Core.Interfaces.Identities;
-using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Infrastructure.Data;
+using SchoolProject.Core.Interfaces.IdentityServices;
+using Microsoft.Extensions.Logging;
 
-namespace SchoolProject.Infrastructure.Identities;
+namespace SchoolProject.Infrastructure.IdentityServices;
 
-public class ApplicationUserRepository : IApplicationUserRepository
+public class UserManager : IUserManager
 {
     #region Private Fields
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly AppDbContext _dbContext;
-    private readonly IEmailService _emailService;
+    private readonly ILogger<UserManager> _logger;
     #endregion
 
     #region Constructor
-    public ApplicationUserRepository(
-        UserManager<ApplicationUser> userManager,
-        IEmailService emailService,
-        AppDbContext dbContext)
+    public UserManager(UserManager<ApplicationUser> UserManager, ILogger<UserManager> logger)
     {
-        _userManager = userManager;
-        _emailService = emailService;
-        _dbContext = dbContext;
+        _userManager = UserManager;
+        _logger = logger;
     }
+
     #endregion
 
     #region Private Methods
-    private async Task<bool> IsExistAsync(
+    private async Task<bool> DoesExistAsync(
         Expression<Func<ApplicationUser, bool>> predicate,
         int? excludeUserId = null)
     {
@@ -53,22 +44,40 @@ public class ApplicationUserRepository : IApplicationUserRepository
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
 
+        // Todo: Change the default role 
         var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
     }
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
     {
-        return await IsExistAsync(u => u.Email == email, excludeUserId);
+        return await DoesExistAsync(u => u.Email == email, excludeUserId);
     }
 
     public async Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null)
     {
-        return await IsExistAsync(u => u.UserName == userName, excludeUserId);
+        return await DoesExistAsync(u => u.UserName == userName, excludeUserId);
     }
 
     public async Task<ApplicationUser?> GetByIdAsync(int id)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
+        return user;
+    }
+
+    public async Task<ApplicationUser?> GetByEmailAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        return user;
+    }
+
+    public async Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+        if (user is null) return null;
+
+        var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+        if (!isPasswordValid) return null;
+
         return user;
     }
 
@@ -88,7 +97,7 @@ public class ApplicationUserRepository : IApplicationUserRepository
 
     public Task<bool> DoesExistByIdAsync(int id)
     {
-        var isExist = IsExistAsync(u => u.Id == id);
+        var isExist = DoesExistAsync(u => u.Id == id);
         return isExist;
     }
 
@@ -111,26 +120,16 @@ public class ApplicationUserRepository : IApplicationUserRepository
     public async Task ChangePasswordAsync(int id, string currentPassword, string newPassword)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user is null)
+        {
+            _logger.LogError("User is not found");
+            return;
+        }
+
         var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
         if (!changePasswordResult.Succeeded)
             throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
-    }
-
-    public async Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password)
-    {
-        var user = await _userManager.FindByNameAsync(userName);
-
-        if (user is null)
-            return null;
-
-        var isValid = await _userManager.CheckPasswordAsync(user, password);
-        return isValid ? user : null;
-    }
-
-    public async Task<ApplicationUser?> GetByEmailAsync(string email)
-    {
-        return await _userManager.FindByEmailAsync(email);
     }
 
     #endregion
