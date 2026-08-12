@@ -7,7 +7,6 @@ using SchoolProject.Core.Features.ApplicationRole.Queries.Models;
 
 namespace SchoolProject.Api.Controllers;
 
-[Authorize(Roles = "Admin")]
 public class RoleController : AppControllerBase
 {
     [HttpPost(Router.Role.Add)]

@@ -52,7 +52,7 @@ public class InstructorCommandHandler :
         }
 
         await _instructorService.AddAsync(instructor);
-        await _unitOfWorkAsync.SaveChangesAsync(cancellationToken);
+        await _unitOfWorkAsync.SaveChangesAsync();
         return Created<string>();
     }
     #endregion

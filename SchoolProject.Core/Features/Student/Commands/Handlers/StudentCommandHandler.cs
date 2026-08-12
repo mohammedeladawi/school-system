@@ -40,17 +40,20 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
             var student = _mapper.Map<Data.Entities.Student>(request);
 
             await _studentRepository.AddAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync(cancellationToken);
+            await _unitOfWorkAsync.SaveChangesAsync();
 
             return Created<string>();
         }
 
         public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
         {
+            // Todo: Check if the student exists before updating
+            // Todo: Check if the department exists before updating
+            // Todo: Check if the student name already exists before updating
             var student = _mapper.Map<Data.Entities.Student>(request);
 
             await _studentRepository.UpdateAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync(cancellationToken);
+            await _unitOfWorkAsync.SaveChangesAsync();
 
             return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
         }
@@ -62,7 +65,7 @@ namespace SchoolProject.Core.Features.Student.Commands.Handlers
                 return NotFound<string>(_localizer[SharedResourceKeys.NotFound]);
 
             await _studentRepository.DeleteAsync(student);
-            await _unitOfWorkAsync.SaveChangesAsync(cancellationToken);
+            await _unitOfWorkAsync.SaveChangesAsync();
 
             return Deleted<string>();
         }

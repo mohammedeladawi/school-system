@@ -9,10 +9,8 @@ using SchoolProject.Core.Features.Student.Queries.Models;
 
 namespace SchoolProject.Api.Controllers;
 
-[Authorize(Roles = "Admin,Teacher")]
 public class StudentController : AppControllerBase
 {
-    [Authorize]
     [HttpGet(Router.Student.List)]
     public async Task<IActionResult> GetAll()
     {

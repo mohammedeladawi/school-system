@@ -4,7 +4,7 @@ namespace SchoolProject.Core.Interfaces.Bases;
 
 public interface IUnitOfWorkAsync
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync();
     Task<IDbContextTransaction> BeginTransactionAsync();
     Task CommitAsync();
     Task RollbackAsync();
