@@ -18,7 +18,7 @@ public class RefreshTokenRepository :
     #region Constructors
     public RefreshTokenRepository(AppDbContext context) : base(context)
     {
-        _refreshTokens = context.Set<RefreshToken>();
+        _refreshTokens = context.RefreshTokens;
     }
 
     #endregion

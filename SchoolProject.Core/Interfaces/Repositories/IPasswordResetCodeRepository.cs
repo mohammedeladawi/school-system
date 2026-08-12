@@ -9,5 +9,5 @@ public interface IPasswordResetCodeRepository : IGenericRepositoryAsync<Password
 
     public Task RevokeOldPasswordResetCodesAsync(int userId);
 
-    public Task<PasswordResetCode?> GetByUserIdAndHashedCode(int userId, string hashedCode);
+    public Task<PasswordResetCode?> GetByUserIdAndCode(int userId, string hashedCode);
 }

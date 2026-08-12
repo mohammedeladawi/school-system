@@ -253,7 +253,7 @@ public class AuthenticationService : IAuthenticationService
 
         try
         {
-            var passwordResetCode = await _passwordResetCodeRepository.GetByUserIdAndHashedCode(user.Id, code);
+            var passwordResetCode = await _passwordResetCodeRepository.GetByUserIdAndCode(user.Id, code);
             if (passwordResetCode is null)
                 throw new Exception("Invalid password reset code.");
 

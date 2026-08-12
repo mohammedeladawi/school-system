@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -31,7 +32,14 @@ public class DepartmentQueryHandler :
     #region Public Methods
     public async Task<Response<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
-        var department = await _departmentReposIDepartmentRepository.GetByIdAsync(request.Id);
+        var includes = new Expression<Func<Data.Entities.Department, object>>[]
+        {
+            d => d.Instructors,
+            d => d.Students,
+            d => d.Subjects
+        };
+
+        var department = await _departmentReposIDepartmentRepository.GetByIdAsync(request.Id, includes);
         if (department is null)
             return NotFound<GetDepartmentByIdQueryResponse>();
 

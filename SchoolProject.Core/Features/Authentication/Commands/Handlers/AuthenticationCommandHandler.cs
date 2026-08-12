@@ -158,7 +158,7 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             if (user is null)
                 return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidEmailAddress]);
 
-            var passwordResetCode = await _passwordResetCodeRepIPasswordResetCodeRepository.GetByUserIdAndHashedCode(user.Id, request.Code);
+            var passwordResetCode = await _passwordResetCodeRepIPasswordResetCodeRepository.GetByUserIdAndCode(user.Id, request.Code);
             if (passwordResetCode is null)
                 return NotFound<ResetPasswordUrlResponse>(_localizer[SharedResourceKeys.InvalidOTP]);
 

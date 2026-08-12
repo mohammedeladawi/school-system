@@ -17,7 +17,7 @@ public class SubjectRepository :
     #region Constructors
     public SubjectRepository(AppDbContext context) : base(context)
     {
-        _subjects = context.Set<Subject>();
+        _subjects = context.Subjects;
     }
     #endregion
 

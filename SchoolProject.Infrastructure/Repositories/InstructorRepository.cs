@@ -17,7 +17,7 @@ public class InstructorRepository :
     #region Constructors
     public InstructorRepository(AppDbContext context) : base(context)
     {
-        _instructors = context.Set<Instructor>();
+        _instructors = context.Instructors;
     }
     #endregion
 

@@ -18,19 +18,20 @@ public class PasswordResetCodeRepository :
     #region Constructors
     public PasswordResetCodeRepository(AppDbContext context) : base(context)
     {
-        _passwordResetCodes = context.Set<PasswordResetCode>();
+        _passwordResetCodes = context.PasswordResetCodes;
     }
 
+
+    #region Public Methods
     public string GeneratePasswordResetCode()
     {
         string code = Random.Shared.Next(100000, 999999).ToString();
         return code;
     }
 
-    public async Task<PasswordResetCode?> GetByUserIdAndHashedCode(int userId, string hashedCode)
+    public async Task<PasswordResetCode?> GetByUserIdAndCode(int userId, string code)
     {
-        // ======= Todo: move hashing to application layer ========
-        hashedCode = Utils.Hash(hashedCode);
+        var hashedCode = Utils.Hash(code);
 
         return await _passwordResetCodes
             .AsNoTracking()
@@ -38,11 +39,11 @@ public class PasswordResetCodeRepository :
     }
     #endregion
 
-    #region Public Methods
     public async Task RevokeOldPasswordResetCodesAsync(int userId)
     {
         await _passwordResetCodes.Where(c => c.UserId == userId && !c.IsRevoked)
                                  .ExecuteUpdateAsync(c => c.SetProperty(x => x.IsRevoked, true));
     }
+
     #endregion
 }
