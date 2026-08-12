@@ -7,6 +7,7 @@ using SchoolProject.Core.Features.Instructor.Commands.Models;
 using SchoolProject.Shared.Resources;
 using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Core.Interfaces.Services;
+using SchoolProject.Core.Interfaces.Bases;
 
 namespace SchoolProject.Core.Features.Instructor.Commands.Handlers;
 
@@ -19,6 +20,7 @@ public class InstructorCommandHandler :
     private readonly IInstructorRepository _instructorService;
     private readonly IFileService _fileService;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IUnitOfWorkAsync _unitOfWorkAsync;
     #endregion
 
     #region Constructors
@@ -27,12 +29,14 @@ public class InstructorCommandHandler :
         IInstructorRepository instructorService,
         IFileService fileService,
         IWebHostEnvironment webHostEnvironment,
-        IStringLocalizer<SharedResource> localizer)
+        IStringLocalizer<SharedResource> localizer,
+        IUnitOfWorkAsync unitOfWorkAsync)
         : base(localizer, mapper)
     {
         _instructorService = instructorService;
         _fileService = fileService;
         _webHostEnvironment = webHostEnvironment;
+        _unitOfWorkAsync = unitOfWorkAsync;
     }
     #endregion
 
@@ -48,6 +52,7 @@ public class InstructorCommandHandler :
         }
 
         await _instructorService.AddAsync(instructor);
+        await _unitOfWorkAsync.SaveChangesAsync(cancellationToken);
         return Created<string>();
     }
     #endregion

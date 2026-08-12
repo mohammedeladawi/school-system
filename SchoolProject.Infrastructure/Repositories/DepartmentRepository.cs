@@ -23,7 +23,8 @@ public class DepartmentRepository :
     #endregion
 
     #region Public Methods
-    public override async Task<Department?> GetByIdAsync(int id)
+
+    public async Task<Department?> GetByIdAsync(int id)
     {
         var department =
                 await _departments
@@ -45,5 +46,6 @@ public class DepartmentRepository :
             .OrderBy(x => x.DepartmentId)
             .ToListAsync();
     }
+
     #endregion
 }

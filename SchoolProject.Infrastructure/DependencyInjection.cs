@@ -7,10 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SchoolProject.Core.Interfaces.Bases;
 using SchoolProject.Core.Interfaces.Identities;
 using SchoolProject.Core.Interfaces.Repositories;
 using SchoolProject.Core.Interfaces.Services;
 using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Infrastructure.Bases;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Identities;
 using SchoolProject.Infrastructure.Repositories;
@@ -30,6 +32,10 @@ public static class DependencyInjection
         services.AddScoped<ISubjectRepository, SubjectRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
+        #endregion
+
+        #region Bases
+        services.AddScoped<IUnitOfWorkAsync, UnitOfWorkAsync>();
         #endregion
 
         #region DbContext
