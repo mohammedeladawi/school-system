@@ -24,7 +24,6 @@ public class FileService : IFileService
         using (var stream = new FileStream(fullPath, FileMode.Create))
         {
             await file.CopyToAsync(stream);
-            await stream.FlushAsync();
         }
 
         var relativePath = fullPath.Replace(_webHostEnvironment.WebRootPath, "").Replace("\\", "/");

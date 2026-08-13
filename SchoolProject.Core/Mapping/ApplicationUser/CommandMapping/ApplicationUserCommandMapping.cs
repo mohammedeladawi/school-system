@@ -1,6 +1,6 @@
 using AutoMapper;
-using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
-using SchoolProject.Core.Features.Authentication.Commands.Models;
+using SchoolProject.Core.Features.ApplicationUser.Commands.EditUser;
+using SchoolProject.Core.Features.Authentication.Commands.Register;
 
 namespace SchoolProject.Core.Mapping.ApplicationUser;
 

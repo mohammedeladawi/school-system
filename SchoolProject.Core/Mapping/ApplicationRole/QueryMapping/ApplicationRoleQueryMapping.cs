@@ -1,6 +1,6 @@
 using AutoMapper;
-using SchoolProject.Core.Features.ApplicationRole.Queries.Responses;
-using SchoolProject.Core.Features.ApplicationUser.Queries.Responses;
+using SchoolProject.Core.Features.ApplicationRole.Queries.GetAllRoles;
+using SchoolProject.Core.Features.ApplicationRole.Queries.GetRoleById;
 
 namespace SchoolProject.Core.Mapping.ApplicationRole;
 

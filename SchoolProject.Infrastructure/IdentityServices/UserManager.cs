@@ -132,5 +132,20 @@ public class UserManager : IUserManager
             throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
     }
 
+    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        return token;
+    }
+
+
+    public async Task ConfirmEmailAsync(ApplicationUser user, string token)
+    {
+        var confirmationResult = await _userManager.ConfirmEmailAsync(user, token);
+
+        if (!confirmationResult.Succeeded)
+            throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
+    }
+
     #endregion
 }

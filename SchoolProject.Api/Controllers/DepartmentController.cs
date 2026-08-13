@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Department.Queries.Models;
+using SchoolProject.Core.Features.Department.Queries.GetDepartmentById;
+using SchoolProject.Core.Features.Department.Queries.GetDepartmentStudentsCount;
 
 namespace SchoolProject.Api.Controllers;
 

@@ -16,4 +16,6 @@ public interface IUserManager
     Task<bool> DoesUserNameExist(string userName, int? excludeUserId = null);
     Task<ApplicationUser?> GetByEmailAsync(string email);
     Task<ApplicationUser?> GetByUserNameAndPasswordAsync(string userName, string password);
+    Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+    Task ConfirmEmailAsync(ApplicationUser user, string token);
 }

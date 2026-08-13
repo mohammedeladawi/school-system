@@ -1,4 +1,5 @@
-using SchoolProject.Core.Features.Department.Queries.Responses;
+using SchoolProject.Core.Features.Department.Queries.GetDepartmentById;
+using SchoolProject.Core.Features.Department.Queries.GetDepartmentStudentsCount;
 
 namespace SchoolProject.Core.Mapping.Department;
 
@@ -14,6 +15,12 @@ public partial class DepartmentProfile
         CreateMap<Data.Entities.Instructor, InstructorInDepartmentDto>();
         CreateMap<Data.Entities.Subject, SubjectInDepartmentDto>();
         CreateMap<Data.Entities.Student, StudentInDepartmentDto>();
+    }
+
+    public void MapDepartmentStudentsCountViewToGetDepartmentStudentsCountQueryResponse()
+    {
         CreateMap<Data.Entities.Views.DepartmentStudentsCountView, GetDepartmentStudentsCountQueryResponse>();
+
     }
 }
+

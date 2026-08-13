@@ -7,5 +7,6 @@ public partial class DepartmentProfile : Profile
     public DepartmentProfile()
     {
         MapDepartmentToGetDepartmentByIdQueryResponse();
+        MapDepartmentStudentsCountViewToGetDepartmentStudentsCountQueryResponse();
     }
 }

@@ -49,7 +49,7 @@ public class StudentRepository :
         string studentNameAr,
         int? excludedId = null)
     {
-        return await IsStudentNameExistAsync(s => s.NameEn == studentNameAr, excludedId);
+        return await IsStudentNameExistAsync(s => s.NameAr == studentNameAr, excludedId);
     }
     #endregion
 }

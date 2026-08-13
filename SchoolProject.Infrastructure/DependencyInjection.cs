@@ -49,7 +49,7 @@ public static class DependencyInjection
 
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IFileService, FileService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IAuthorizationService, AuthorizationService>();
 
         #endregion

@@ -1,4 +1,4 @@
-using SchoolProject.Core.Features.Instructor.Commands.Models;
+using SchoolProject.Core.Features.Instructor.Commands.AddInstructor;
 
 namespace SchoolProject.Core.Mapping.Instructor;
 

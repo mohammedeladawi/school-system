@@ -189,8 +189,24 @@
     <value>الاسم العربي مطلوب.</value>
     <comment/>
   </data>
+  <data name="NameArTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز الاسم العربي 100 حرف.</value>
+    <comment/>
+  </data>
+  <data name="NameArAlreadyInUse" xml:space="preserve">
+    <value>اسم عربي مستخدم بالفعل.</value>
+    <comment/>
+  </data>
   <data name="NameEnRequired" xml:space="preserve">
     <value>الاسم الإنجليزي مطلوب.</value>
+    <comment/>
+  </data>
+  <data name="NameEnTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز الاسم الإنجليزي 100 حرف.</value>
+    <comment/>
+  </data>
+  <data name="NameEnAlreadyInUse" xml:space="preserve">
+    <value>اسم إنجليزي مستخدم بالفعل.</value>
     <comment/>
   </data>
   <data name="UsernameRequired" xml:space="preserve">
@@ -227,6 +243,10 @@
   </data>
   <data name="EmailAlreadyInUse" xml:space="preserve">
     <value>البريد الإلكتروني مستخدم بالفعل.</value>
+    <comment/>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>البريد الإلكتروني غير موجود.</value>
     <comment/>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
@@ -269,12 +289,20 @@
     <value>لا يمكن أن يتجاوز الهاتف 20 حرفًا.</value>
     <comment/>
   </data>
+  <data name="PhoneInvalid" xml:space="preserve">
+    <value>تنسيق الهاتف غير صالح.</value>
+    <comment/>
+  </data>
   <data name="AddressRequired" xml:space="preserve">
     <value>العنوان مطلوب.</value>
     <comment/>
   </data>
   <data name="AddressTooLong" xml:space="preserve">
     <value>لا يمكن أن يتجاوز العنوان 200 حرف.</value>
+    <comment/>
+  </data>
+  <data name="CountryTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز اسم الدولة 100 حرف.</value>
     <comment/>
   </data>
   <data name="IdRequired" xml:space="preserve">
@@ -368,15 +396,41 @@
   <data name="EmailSentSuccessfully" xml:space="preserve">
     <value>تم إرسال البريد الإلكتروني بنجاح</value>
     <comment/>
-  </data>  <data name="EmailConfirmedSuccessfully" xml:space="preserve">
+  </data>
+  <data name="SubjectTooLong" xml:space="preserve">
+    <value>لا يمكن أن يتجاوز الموضوع 200 حرف.</value>
+    <comment/>
+  </data>
+  <data name="EmailConfirmedSuccessfully" xml:space="preserve">
     <value>تم تأكيد البريد الإلكتروني بنجاح.</value>
     <comment/>
-  </data>  <data name="Required" xml:space="preserve">
+  </data>
+  <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب</value>
     <comment/>
   </data>
   <data name="InvalidOTP" xml:space="preserve">
     <value>رمز التحقق غير صحيح</value>
+    <comment/>
+  </data>
+  <data name="InvalidUserId" xml:space="preserve">
+    <value>معرّف المستخدم غير صالح.</value>
+    <comment/>
+  </data>
+  <data name="DepartmentNotExist" xml:space="preserve">
+    <value>القسم غير موجود.</value>
+    <comment/>
+  </data>
+  <data name="DepartmentDoesNotExist" xml:space="preserve">
+    <value>القسم غير موجود.</value>
+    <comment/>
+  </data>
+  <data name="SupervisorIdGreaterThanZero" xml:space="preserve">
+    <value>يجب أن يكون SupervisorId أكبر من 0.</value>
+    <comment/>
+  </data>
+  <data name="SupervisorNotExist" xml:space="preserve">
+    <value>المشرف غير موجود.</value>
     <comment/>
   </data>
 </root>

@@ -20,7 +20,11 @@ public static class SharedResourceKeys
     public static string RoleNameAlreadyExists = "RoleNameAlreadyExists";
     public static string RoleHasUsers = "RoleHasUsers";
     public static string NameArRequired = "NameArRequired";
+    public static string NameArTooLong = "NameArTooLong";
+    public static string NameArAlreadyInUse = "NameArAlreadyInUse";
     public static string NameEnRequired = "NameEnRequired";
+    public static string NameEnTooLong = "NameEnTooLong";
+    public static string NameEnAlreadyInUse = "NameEnAlreadyInUse";
     public static string UserNameRequired = "UsernameRequired";
     public static string UserNameInvalid = "UsernameInvalid";
     public static string UserNameTooLong = "UsernameTooLong";
@@ -30,6 +34,7 @@ public static class SharedResourceKeys
     public static string EmailInvalid = "EmailInvalid";
     public static string EmailAlreadyExist = "EmailAlreadyExist";
     public static string EmailAlreadyInUse = "EmailAlreadyInUse";
+    public static string EmailNotFound = "EmailNotFound";
     public static string PasswordRequired = "PasswordRequired";
     public static string PasswordMinimumLength = "PasswordMinimumLength";
     public static string PasswordRequireUppercase = "PasswordRequireUppercase";
@@ -40,8 +45,10 @@ public static class SharedResourceKeys
     public static string PasswordsDoNotMatch = "PasswordsDoNotMatch";
     public static string PhoneRequired = "PhoneRequired";
     public static string PhoneTooLong = "PhoneTooLong";
+    public static string PhoneInvalid = "PhoneInvalid";
     public static string AddressRequired = "AddressRequired";
     public static string AddressTooLong = "AddressTooLong";
+    public static string CountryTooLong = "CountryTooLong";
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
     public static string EmailDoesNotConfirmed = "EmailDoesNotConfirmed";
@@ -57,6 +64,10 @@ public static class SharedResourceKeys
     public static string RetrievedSuccessfully = "RetrievedSuccessfully";
 
     public static string DepartmentIdGreaterThanZero = "DepartmentIdGreaterThanZero";
+    public static string DepartmentNotExist = "DepartmentNotExist";
+    public static string DepartmentDoesNotExist = "DepartmentDoesNotExist";
+    public static string SupervisorIdGreaterThanZero = "SupervisorIdGreaterThanZero";
+    public static string SupervisorNotExist = "SupervisorNotExist";
     public static string RolesRequired = "RolesRequired";
     public static string SomeRolesNotExist = "SomeRolesNotExist";
     public static string IdRequired = "IdRequired";
@@ -69,7 +80,9 @@ public static class SharedResourceKeys
     public static string InvalidPermissionClaims = "InvalidPermissionClaims";
     public static string InvalidEmailAddress = "InvalidEmailAddress";
     public static string EmailSentSuccessfully = "EmailSentSuccessfully";
+    public static string SubjectTooLong = "SubjectTooLong";
     public static string Required = "Required";
     public static string InvalidOTP = "InvalidOTP";
+    public static string InvalidUserId = "InvalidUserId";
     public static string ResetPasswordSuccessfully = "ResetPasswordSuccessfully";
 }

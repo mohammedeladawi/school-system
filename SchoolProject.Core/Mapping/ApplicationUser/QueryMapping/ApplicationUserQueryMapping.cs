@@ -1,5 +1,6 @@
 using AutoMapper;
-using SchoolProject.Core.Features.ApplicationUser.Queries.Responses;
+using SchoolProject.Core.Features.ApplicationUser.Queries.GetPaginatedUsers;
+using SchoolProject.Core.Features.ApplicationUser.Queries.GetUserById;
 
 namespace SchoolProject.Core.Mapping.ApplicationUser;
 
