@@ -1,4 +1,4 @@
-namespace SchoolProject.Shared.ClaimStore
+namespace SchoolProject.Data.ClaimStore
 {
     public static class PermissionClaims
     {

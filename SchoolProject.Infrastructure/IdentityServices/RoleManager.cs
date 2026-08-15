@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Shared.CustomExceptions;
+using SchoolProject.Data.CustomExceptions;
 using SchoolProject.Shared.Resources;
 using SchoolProject.Application.Interfaces.IdentityServices;
 

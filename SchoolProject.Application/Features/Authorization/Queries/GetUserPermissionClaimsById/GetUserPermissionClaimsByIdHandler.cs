@@ -28,7 +28,7 @@ public class GetUserPermissionClaimsByIdHandler : ResponseHandler, IRequestHandl
     private List<PermissionClaims> BuildUserPermissionClaimsResponse(List<string> claimValues)
     {
         var permissionClaimsList = new List<PermissionClaims>();
-        foreach (var permissionName in Shared.ClaimStore.PermissionClaims.UserPermissionClaims)
+        foreach (var permissionName in Data.ClaimStore.PermissionClaims.UserPermissionClaims)
         {
             var pClaim = new PermissionClaims
             {

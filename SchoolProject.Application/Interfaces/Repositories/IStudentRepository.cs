@@ -1,6 +1,5 @@
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Data.Entities;
-using StudentProject.Data.Enums;
 
 namespace SchoolProject.Application.Interfaces.Repositories;
 

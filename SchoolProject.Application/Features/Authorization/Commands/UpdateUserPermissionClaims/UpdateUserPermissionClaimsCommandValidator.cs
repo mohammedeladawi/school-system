@@ -43,7 +43,7 @@ public class UpdateUserPermissionClaimsCommandValidator
     {
         RuleFor(x => x.PermissionClaims)
             .MustAsync(async (permissionClaims, cancellationToken) =>
-                permissionClaims.All(pc => Shared.ClaimStore.PermissionClaims.UserPermissionClaims.Contains(pc)))
+                permissionClaims.All(pc => Data.ClaimStore.PermissionClaims.UserPermissionClaims.Contains(pc)))
             .WithMessage(_localizer[SharedResourceKeys.InvalidPermissionClaims]);
     }
 
