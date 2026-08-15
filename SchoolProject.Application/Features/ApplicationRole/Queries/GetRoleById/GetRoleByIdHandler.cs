@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.ApplicationRole.Queries.GetRoleById;
 

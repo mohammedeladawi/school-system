@@ -1,4 +1,4 @@
-namespace SchoolProject.Shared.Resources;
+namespace SchoolProject.Application.Resources;
 
 public static class SharedResourceKeys
 {

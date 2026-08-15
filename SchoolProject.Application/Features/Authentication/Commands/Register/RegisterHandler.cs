@@ -8,7 +8,7 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Shared.Helpers;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Register
 {

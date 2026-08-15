@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Data.CustomExceptions;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.IdentityServices;
 
 namespace SchoolProject.Infrastructure.IdentityServices;

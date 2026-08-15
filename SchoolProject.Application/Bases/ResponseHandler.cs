@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Bases;
 

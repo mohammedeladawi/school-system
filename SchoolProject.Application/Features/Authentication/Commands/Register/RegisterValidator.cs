@@ -3,7 +3,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Features.ApplicationUser.Commands;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Shared.Helpers;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Register;
 
