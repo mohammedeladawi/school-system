@@ -2,7 +2,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Api.Middlewares;
-using SchoolProject.Core;
+using SchoolProject.Application;
 using Serilog;
 using SchoolProject.Infrastructure;
 

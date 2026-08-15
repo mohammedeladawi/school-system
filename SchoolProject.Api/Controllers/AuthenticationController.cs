@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Authentication.Commands.Register;
-using SchoolProject.Core.Features.Authentication.Commands.Login;
-using SchoolProject.Core.Features.Authentication.Commands.RefreshToken;
-using SchoolProject.Core.Features.Authentication.Commands.Logout;
-using SchoolProject.Core.Features.Authentication.Commands.ConfirmEmail;
-using SchoolProject.Core.Features.Authentication.Commands.ForgotPassword;
-using SchoolProject.Core.Features.Authentication.Commands.VerifyResetCode;
-using SchoolProject.Core.Features.Authentication.Commands.ResetPassword;
+using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.Login;
+using SchoolProject.Application.Features.Authentication.Commands.RefreshToken;
+using SchoolProject.Application.Features.Authentication.Commands.Logout;
+using SchoolProject.Application.Features.Authentication.Commands.ConfirmEmail;
+using SchoolProject.Application.Features.Authentication.Commands.ForgotPassword;
+using SchoolProject.Application.Features.Authentication.Commands.VerifyResetCode;
+using SchoolProject.Application.Features.Authentication.Commands.ResetPassword;
 
 namespace SchoolProject.Api.Controllers;
 

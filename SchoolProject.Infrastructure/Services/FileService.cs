@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using SchoolProject.Core.Interfaces.Services;
+using SchoolProject.Application.Interfaces.Services;
 
 namespace SchoolProject.Infrastructure.Services;
 

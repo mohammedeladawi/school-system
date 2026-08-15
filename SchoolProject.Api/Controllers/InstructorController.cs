@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Instructor.Commands.AddInstructor;
+using SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
 
 namespace SchoolProject.Api.Controllers;
 

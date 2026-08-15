@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Authorization.Commands.UpdateUserRoles;
-using SchoolProject.Core.Features.Authorization.Commands.UpdateUserPermissionClaims;
-using SchoolProject.Core.Features.Authorization.Queries.GetUserRolesById;
-using SchoolProject.Core.Features.Authorization.Queries.GetUserPermissionClaimsById;
+using SchoolProject.Application.Features.Authorization.Commands.UpdateUserRoles;
+using SchoolProject.Application.Features.Authorization.Commands.UpdateUserPermissionClaims;
+using SchoolProject.Application.Features.Authorization.Queries.GetUserRolesById;
+using SchoolProject.Application.Features.Authorization.Queries.GetUserPermissionClaimsById;
 
 namespace SchoolProject.Api.Controllers;
 

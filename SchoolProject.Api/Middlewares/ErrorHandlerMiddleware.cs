@@ -3,7 +3,7 @@ using System.Text.Json;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Core.Bases;
+using SchoolProject.Application.Bases;
 using SchoolProject.Shared.Resources;
 using SchoolProject.Shared.CustomExceptions;
 

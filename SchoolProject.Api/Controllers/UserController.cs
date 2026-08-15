@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Base;
 using SchoolProject.Shared.AppMetaData;
-using SchoolProject.Core.Features.ApplicationUser.Commands.EditUser;
-using SchoolProject.Core.Features.ApplicationUser.Commands.DeleteUserById;
-using SchoolProject.Core.Features.ApplicationUser.Commands.ChangePassword;
-using SchoolProject.Core.Features.ApplicationUser.Queries.GetPaginatedUsers;
-using SchoolProject.Core.Features.ApplicationUser.Queries.GetUserById;
+using SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
+using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteUserById;
+using SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+using SchoolProject.Application.Features.ApplicationUser.Queries.GetPaginatedUsers;
+using SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
