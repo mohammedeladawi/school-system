@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using SchoolProject.Core.Interfaces.Services;
+using SchoolProject.Application.Interfaces.Services;
 
 namespace SchoolProject.Infrastructure.Services;
 
@@ -24,7 +24,6 @@ public class FileService : IFileService
         using (var stream = new FileStream(fullPath, FileMode.Create))
         {
             await file.CopyToAsync(stream);
-            await stream.FlushAsync();
         }
 
         var relativePath = fullPath.Replace(_webHostEnvironment.WebRootPath, "").Replace("\\", "/");

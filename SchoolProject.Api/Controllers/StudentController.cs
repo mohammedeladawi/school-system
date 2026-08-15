@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Student.Commands.Models;
-using SchoolProject.Core.Features.Student.Queries.Models;
+using SchoolProject.Application.Features.Student.Commands.AddStudent;
+using SchoolProject.Application.Features.Student.Commands.EditStudent;
+using SchoolProject.Application.Features.Student.Commands.DeleteStudentById;
+using SchoolProject.Application.Features.Student.Queries.GetAllStudents;
+using SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
+using SchoolProject.Application.Features.Student.Queries.GetStudentById;
 
 
 namespace SchoolProject.Api.Controllers;

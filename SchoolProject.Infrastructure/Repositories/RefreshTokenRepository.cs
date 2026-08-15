@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Core.Interfaces.Repositories;
+using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Data.Entities;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
@@ -35,11 +35,16 @@ public class RefreshTokenRepository :
                              .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash);
     }
 
-    public Task RevokeTokenFamilyAsync(Guid familyId)
+    public Task RevokeFamilyAsync(Guid familyId)
     {
         return _refreshTokens.Where(rt => rt.FamilyId == familyId && !rt.IsRevoked)
                     .ExecuteUpdateAsync(rt => rt.SetProperty(r => r.IsRevoked, true));
+    }
 
+    public Task RevokeAsync(RefreshToken refreshToken)
+    {
+        refreshToken.IsRevoked = true;
+        return UpdateAsync(refreshToken);
     }
 
     public (string RawToken, RefreshToken RefreshToken) GenerateRefreshToken(int userId, Guid? familyId = null)

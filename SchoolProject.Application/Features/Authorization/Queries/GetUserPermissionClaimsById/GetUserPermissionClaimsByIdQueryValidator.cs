@@ -1,0 +1,40 @@
+using FluentValidation;
+using Microsoft.Extensions.Localization;
+using SchoolProject.Application.Interfaces.IdentityServices;
+using SchoolProject.Shared.Resources;
+
+namespace SchoolProject.Application.Features.Authorization.Queries.GetUserPermissionClaimsById;
+
+public class GetUserPermissionClaimsByIdQueryValidator : AbstractValidator<GetUserPermissionClaimsByIdQuery>
+{
+    #region Private Fields
+    private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly IUserManager _userManager;
+    #endregion
+
+    #region Constructors
+    public GetUserPermissionClaimsByIdQueryValidator(
+        IUserManager userManager,
+        IStringLocalizer<SharedResource> localizer
+    )
+    {
+        _localizer = localizer;
+        _userManager = userManager;
+
+        ValidateUserId();
+    }
+    #endregion
+
+    #region Public Methods
+    private void ValidateUserId()
+    {
+        RuleFor(x => x.UserId)
+            .NotEmpty()
+            .WithMessage(_localizer[SharedResourceKeys.IdRequired])
+
+            .MustAsync(async (userId, cancellationToken) =>
+                    await _userManager.DoesExistByIdAsync(userId))
+            .WithMessage(_localizer[SharedResourceKeys.NotExist]);
+    }
+    #endregion
+}

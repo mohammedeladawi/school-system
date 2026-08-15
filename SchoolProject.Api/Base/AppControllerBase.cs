@@ -3,7 +3,7 @@ namespace SchoolProject.Api.Base
     using System.Net;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using SchoolProject.Core.Bases;
+    using SchoolProject.Application.Bases;
 
     [ApiController]
     public class AppControllerBase : ControllerBase

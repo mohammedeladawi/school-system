@@ -17,7 +17,7 @@ The solution includes an API project, a core business layer, an infrastructure l
    - Configures middleware, localization, Swagger, and dependency injection.
    - Contains API controllers and custom middleware.
 
-2. `SchoolProject.Core`
+2. `SchoolProject.Application`
    - Contains business logic, commands, validators, and shared response models.
    - Houses MediatR handlers, FluentValidation rules, AutoMapper profiles, and pipeline behaviors.
    - Defines common response wrappers and request validation behavior.
@@ -40,7 +40,7 @@ The solution includes an API project, a core business layer, an infrastructure l
 - `Properties/` - launch and debug settings.
 - `appsettings.json` / `appsettings.Development.json` - configuration and connection strings.
 
-### `SchoolProject.Core`
+### `SchoolProject.Application`
 
 - `Behaviours/` - pipeline behaviors like validation.
 - `Features/Students/` - student-related commands, models, and validators.

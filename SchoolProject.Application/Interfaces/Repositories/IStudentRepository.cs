@@ -1,0 +1,11 @@
+using SchoolProject.Application.Interfaces.Bases;
+using SchoolProject.Data.Entities;
+using StudentProject.Data.Enums;
+
+namespace SchoolProject.Application.Interfaces.Repositories;
+
+public interface IStudentRepository : IGenericRepositoryAsync<Student>
+{
+    public Task<bool> DoesNameEnExistAsync(string nameEn, int? excludedId = null);
+    public Task<bool> DoesNameArExistAsync(string nameAr, int? excludedId = null);
+}

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.Emails.Commands.Models;
-using SchoolProject.Core.Features.Instructor.Commands.Models;
+using SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
 
 namespace SchoolProject.Api.Controllers;
 

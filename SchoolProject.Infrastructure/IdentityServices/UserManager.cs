@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Core.Interfaces.IdentityServices;
+using SchoolProject.Application.Interfaces.IdentityServices;
 using Microsoft.Extensions.Logging;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
@@ -130,6 +130,21 @@ public class UserManager : IUserManager
 
         if (!changePasswordResult.Succeeded)
             throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
+    }
+
+    public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        return token;
+    }
+
+
+    public async Task ConfirmEmailAsync(ApplicationUser user, string token)
+    {
+        var confirmationResult = await _userManager.ConfirmEmailAsync(user, token);
+
+        if (!confirmationResult.Succeeded)
+            throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
     }
 
     #endregion

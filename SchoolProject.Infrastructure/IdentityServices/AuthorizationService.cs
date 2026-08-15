@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using SchoolProject.Core.Interfaces.IdentityServices;
+using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 
@@ -9,18 +9,18 @@ namespace SchoolProject.Infrastructure.IdentityServices;
 public class AuthorizationService : IAuthorizationService
 {
     #region Fields
-    private readonly IUserManager _ApplicationUserRepositories;
+    private readonly IUserManager _userManager;
     private readonly UserManager<ApplicationUser> _UserManager;
     private readonly AppDbContext _dbContext;
     #endregion
 
     #region Constructors
     public AuthorizationService(
-        IUserManager ApplicationUserRepositories,
+        IUserManager userManager,
         UserManager<ApplicationUser> UserManager,
         AppDbContext dbContext)
     {
-        _ApplicationUserRepositories = ApplicationUserRepositories;
+        _userManager = userManager;
         _UserManager = UserManager;
         _dbContext = dbContext;
     }
@@ -29,7 +29,7 @@ public class AuthorizationService : IAuthorizationService
     #region Public Methods
     public async Task<IList<string>> GetUserRolesAsync(int userId)
     {
-        var user = await _ApplicationUserRepositories.GetByIdAsync(userId);
+        var user = await _userManager.GetByIdAsync(userId);
         if (user == null)
         {
             throw new Exception($"User with ID {userId} not found.");
@@ -78,7 +78,7 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task<IList<string>> GetUserPermissionsAsync(int userId)
     {
-        var user = await _ApplicationUserRepositories.GetByIdAsync(userId);
+        var user = await _userManager.GetByIdAsync(userId);
         var claims = await _UserManager.GetClaimsAsync(user);
         var permissions = claims.Where(c => c.Type == "Permission")
             .Select(c => c.Value)
@@ -112,5 +112,6 @@ public class AuthorizationService : IAuthorizationService
             throw;
         }
     }
+
     #endregion
 }

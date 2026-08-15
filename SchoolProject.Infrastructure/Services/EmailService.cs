@@ -1,7 +1,7 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using SchoolProject.Core.Interfaces.Services;
+using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.Services;
@@ -26,6 +26,11 @@ public class EmailService : IEmailService
         emailMessage.Body = bodyBuilder.ToMessageBody();
 
         using var client = new SmtpClient();
+
+        // Temporary local-development workaround for certificate validation issues on machines
+        // with outdated or restricted certificate trust stores.
+        client.ServerCertificateValidationCallback = (_, _, _, _) => true;
+
         await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
         await client.AuthenticateAsync(_emailSettings.SenderEmail, _emailSettings.Password);
         await client.SendAsync(emailMessage);

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Data.Entities.Identities;
 using SchoolProject.Shared.CustomExceptions;
 using SchoolProject.Shared.Resources;
-using SchoolProject.Core.Interfaces.IdentityServices;
+using SchoolProject.Application.Interfaces.IdentityServices;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
 

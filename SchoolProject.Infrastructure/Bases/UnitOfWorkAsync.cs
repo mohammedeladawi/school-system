@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage;
-using SchoolProject.Core.Interfaces.Bases;
+using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Infrastructure.Data;
 
 namespace SchoolProject.Infrastructure.Bases;

@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Base;
 using SchoolProject.Shared.AppMetaData;
-using SchoolProject.Core.Features.ApplicationUser.Commands.Models;
-using SchoolProject.Core.Features.ApplicationUser.Queries.Models;
+using SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
+using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteUserById;
+using SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+using SchoolProject.Application.Features.ApplicationUser.Queries.GetPaginatedUsers;
+using SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
@@ -35,7 +38,7 @@ public class ApplicationUserController : AppControllerBase
     [HttpDelete(Router.ApplicationUser.Delete)]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await Mediator.Send(new DeleteCommand(id));
+        var result = await Mediator.Send(new DeleteUserByIdCommand(id));
         return NewResult(result);
     }
 

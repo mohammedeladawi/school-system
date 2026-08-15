@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Core.Features.ApplicationRole.Commands.Models;
-using SchoolProject.Core.Features.ApplicationRole.Queries.Models;
+using SchoolProject.Application.Features.ApplicationRole.Commands.AddRole;
+using SchoolProject.Application.Features.ApplicationRole.Commands.EditRole;
+using SchoolProject.Application.Features.ApplicationRole.Commands.DeleteRole;
+using SchoolProject.Application.Features.ApplicationRole.Queries.GetAllRoles;
+using SchoolProject.Application.Features.ApplicationRole.Queries.GetRoleById;
 
 namespace SchoolProject.Api.Controllers;
 
@@ -26,7 +29,7 @@ public class RoleController : AppControllerBase
     [HttpDelete(Router.Role.Delete)]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await Mediator.Send(new DeleteRoleCommand(id));
+        var result = await Mediator.Send(new DeleteRoleByIdCommand(id));
         return NewResult(result);
     }
 

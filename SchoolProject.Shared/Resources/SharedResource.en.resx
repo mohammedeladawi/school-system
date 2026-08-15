@@ -189,8 +189,24 @@
     <value>Arabic name is required.</value>
     <comment/>
   </data>
+  <data name="NameArTooLong" xml:space="preserve">
+    <value>Arabic name cannot exceed 100 characters.</value>
+    <comment/>
+  </data>
+  <data name="NameArAlreadyInUse" xml:space="preserve">
+    <value>Arabic name is already in use.</value>
+    <comment/>
+  </data>
   <data name="NameEnRequired" xml:space="preserve">
     <value>English name is required.</value>
+    <comment/>
+  </data>
+  <data name="NameEnTooLong" xml:space="preserve">
+    <value>English name cannot exceed 100 characters.</value>
+    <comment/>
+  </data>
+  <data name="NameEnAlreadyInUse" xml:space="preserve">
+    <value>English name is already in use.</value>
     <comment/>
   </data>
   <data name="UsernameRequired" xml:space="preserve">
@@ -227,6 +243,10 @@
   </data>
   <data name="EmailAlreadyInUse" xml:space="preserve">
     <value>Email is already in use.</value>
+    <comment/>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>Email not found.</value>
     <comment/>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
@@ -269,12 +289,20 @@
     <value>Phone cannot exceed 20 characters.</value>
     <comment/>
   </data>
+  <data name="PhoneInvalid" xml:space="preserve">
+    <value>Phone format is invalid.</value>
+    <comment/>
+  </data>
   <data name="AddressRequired" xml:space="preserve">
     <value>Address is required.</value>
     <comment/>
   </data>
   <data name="AddressTooLong" xml:space="preserve">
     <value>Address cannot exceed 200 characters.</value>
+    <comment/>
+  </data>
+  <data name="CountryTooLong" xml:space="preserve">
+    <value>Country cannot exceed 100 characters.</value>
     <comment/>
   </data>
   <data name="IdRequired" xml:space="preserve">
@@ -369,6 +397,10 @@
     <value>Email sent successfully</value>
     <comment/>
   </data>
+  <data name="SubjectTooLong" xml:space="preserve">
+    <value>Subject cannot exceed 200 characters.</value>
+    <comment/>
+  </data>
   <data name="EmailConfirmedSuccessfully" xml:space="preserve">
     <value>Email confirmed successfully.</value>
     <comment/>
@@ -379,6 +411,26 @@
   </data>
   <data name="InvalidOTP" xml:space="preserve">
     <value>Invalid verification code</value>
+    <comment/>
+  </data>
+  <data name="InvalidUserId" xml:space="preserve">
+    <value>Invalid user id.</value>
+    <comment/>
+  </data>
+  <data name="DepartmentNotExist" xml:space="preserve">
+    <value>Department does not exist.</value>
+    <comment/>
+  </data>
+  <data name="DepartmentDoesNotExist" xml:space="preserve">
+    <value>Department does not exist.</value>
+    <comment/>
+  </data>
+  <data name="SupervisorIdGreaterThanZero" xml:space="preserve">
+    <value>SupervisorId must be greater than 0.</value>
+    <comment/>
+  </data>
+  <data name="SupervisorNotExist" xml:space="preserve">
+    <value>Supervisor does not exist.</value>
     <comment/>
   </data>
 </root>
