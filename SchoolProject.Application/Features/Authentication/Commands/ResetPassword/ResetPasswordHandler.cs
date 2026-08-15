@@ -7,21 +7,21 @@ using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Shared.Helpers;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.ResetPassword
 {
     public class ResetPasswordHandler : ResponseHandler, IRequestHandler<ResetPasswordCommand, Response<string>>
     {
         #region Private Fields
-        private readonly UserManager<Data.Entities.Identities.ApplicationUser> _userManager;
+        private readonly UserManager<Domain.Entities.Identities.ApplicationUser> _userManager;
         private readonly IPasswordResetCodeRepository _passwordResetCodeRepository;
         private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructors
         public ResetPasswordHandler(
-            UserManager<Data.Entities.Identities.ApplicationUser> userManager,
+            UserManager<Domain.Entities.Identities.ApplicationUser> userManager,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
             IPasswordResetCodeRepository passwordResetCodeRepository,
@@ -45,7 +45,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ResetPasswo
                 throw new Exception("Password reset code is invalid or expired.");
         }
 
-        private async Task ChangePasswordAsync(Data.Entities.Identities.ApplicationUser user, string newPassword)
+        private async Task ChangePasswordAsync(Domain.Entities.Identities.ApplicationUser user, string newPassword)
         {
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user!);
             var result = await _userManager.ResetPasswordAsync(user!, resetToken, newPassword);

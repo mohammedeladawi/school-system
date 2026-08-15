@@ -158,7 +158,7 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Department", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,7 +220,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.DepartmentSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.DepartmentSubject", b =>
                 {
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
@@ -282,7 +282,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Identities.ApplicationUser", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Identities.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -364,7 +364,7 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Identities.RefreshToken", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Identities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -409,7 +409,7 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -510,7 +510,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.InstructorSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.InstructorSubject", b =>
                 {
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
@@ -597,7 +597,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Student", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -727,7 +727,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.StudentSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -850,7 +850,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Subject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -951,7 +951,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationUser", null)
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -960,7 +960,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationUser", null)
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -975,7 +975,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationUser", null)
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -984,32 +984,32 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationUser", null)
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Department", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Department", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Manager")
+                    b.HasOne("SchoolProject.Domain.Entities.Instructor", "Manager")
                         .WithOne()
-                        .HasForeignKey("SchoolProject.Data.Entities.Department", "ManagerId")
+                        .HasForeignKey("SchoolProject.Domain.Entities.Department", "ManagerId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.DepartmentSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.DepartmentSubject", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Department", "Department")
+                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolProject.Data.Entities.Subject", "Subject")
+                    b.HasOne("SchoolProject.Domain.Entities.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1020,9 +1020,9 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Identities.RefreshToken", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Identities.RefreshToken", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Identities.ApplicationUser", "User")
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1031,14 +1031,14 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Department", "Department")
+                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
                         .WithMany("Instructors")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Supervisor")
+                    b.HasOne("SchoolProject.Domain.Entities.Instructor", "Supervisor")
                         .WithMany("Subordinates")
                         .HasForeignKey("SupervisorId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1048,15 +1048,15 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.InstructorSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.InstructorSubject", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Instructor", "Instructor")
+                    b.HasOne("SchoolProject.Domain.Entities.Instructor", "Instructor")
                         .WithMany()
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolProject.Data.Entities.Subject", "Subject")
+                    b.HasOne("SchoolProject.Domain.Entities.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1067,9 +1067,9 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Student", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Department", "Department")
+                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1078,15 +1078,15 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.StudentSubject", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
-                    b.HasOne("SchoolProject.Data.Entities.Student", "Student")
+                    b.HasOne("SchoolProject.Domain.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolProject.Data.Entities.Subject", "Subject")
+                    b.HasOne("SchoolProject.Domain.Entities.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1097,14 +1097,14 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Department", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Instructors");
 
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("SchoolProject.Data.Entities.Instructor", b =>
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Subordinates");
                 });

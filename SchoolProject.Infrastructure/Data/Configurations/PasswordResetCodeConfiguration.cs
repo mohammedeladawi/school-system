@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SchoolProject.Data.Entities;
+using SchoolProject.Domain.Entities;
 
 namespace SchoolProject.Infrastructure.Data.Configurations;
 

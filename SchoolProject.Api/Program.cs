@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
-    .AddCoreDependencies()
+    .AddApplicationDependencies()
     .AddInfrastructureDependencies(builder.Configuration);
 
 #region Localization Configurations

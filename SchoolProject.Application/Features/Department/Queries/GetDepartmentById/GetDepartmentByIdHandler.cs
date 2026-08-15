@@ -4,8 +4,8 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Data.Entities;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Department.Queries.GetDepartmentById;
 
@@ -29,7 +29,7 @@ public class GetDepartmentByIdHandler : ResponseHandler, IRequestHandler<GetDepa
     #region Public Methods
     public async Task<Response<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
-        var includes = new Expression<Func<Data.Entities.Department, object>>[]
+        var includes = new Expression<Func<Domain.Entities.Department, object>>[]
         {
             d => d.Instructors,
             d => d.Students,

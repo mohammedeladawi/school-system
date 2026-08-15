@@ -6,7 +6,7 @@ public partial class InstructorProfile
 {
     private void MapAddInstructorCommandToInstructor()
     {
-        CreateMap<AddInstructorCommand, Data.Entities.Instructor>()
+        CreateMap<AddInstructorCommand, Domain.Entities.Instructor>()
             .ForMember(dest => dest.ImagePath, opt => opt.Ignore())
             .ForSourceMember(src => src.Image, opt => opt.DoNotValidate());
     }

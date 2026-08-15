@@ -1,6 +1,6 @@
 using SchoolProject.Shared.Helpers;
 
-namespace SchoolProject.Data.Entities;
+namespace SchoolProject.Domain.Entities;
 
 public class Student
 {

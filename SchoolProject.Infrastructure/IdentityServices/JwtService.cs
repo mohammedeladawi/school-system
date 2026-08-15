@@ -10,8 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Data.Entities;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Shared.Helpers;
 

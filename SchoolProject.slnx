@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="SchoolProject.Api/SchoolProject.Api.csproj" />
   <Project Path="SchoolProject.Application/SchoolProject.Application.csproj" />
-  <Project Path="SchoolProject.Data/SchoolProject.Data.csproj" />
+  <Project Path="SchoolProject.Domain/SchoolProject.Domain.csproj" />
   <Project Path="SchoolProject.Infrastructure/SchoolProject.Infrastructure.csproj" />
   <Project Path="SchoolProject.Shared/SchoolProject.Shared.csproj" />
 </Solution>

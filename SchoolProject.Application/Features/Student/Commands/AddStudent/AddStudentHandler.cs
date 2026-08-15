@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Student.Commands.AddStudent;
 
@@ -31,7 +31,7 @@ public class AddStudentHandler : ResponseHandler, IRequestHandler<AddStudentComm
     #region Public Methods
     public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = _mapper.Map<Data.Entities.Student>(request);
+        var student = _mapper.Map<Domain.Entities.Student>(request);
 
         await _studentRepository.AddAsync(student);
         await _unitOfWork.SaveChangesAsync();

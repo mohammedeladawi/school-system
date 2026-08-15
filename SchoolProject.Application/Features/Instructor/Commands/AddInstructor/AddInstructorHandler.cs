@@ -6,7 +6,7 @@ using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
 
@@ -41,7 +41,7 @@ public class AddInstructorHandler :
     #region Public Methods
     public async Task<Response<string>> Handle(AddInstructorCommand request, CancellationToken cancellationToken)
     {
-        var instructor = _mapper.Map<Data.Entities.Instructor>(request);
+        var instructor = _mapper.Map<Domain.Entities.Instructor>(request);
 
         var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "Instructors");
 

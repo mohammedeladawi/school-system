@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authorization.Commands.UpdateUserPermissionClaims;
 
@@ -43,7 +43,7 @@ public class UpdateUserPermissionClaimsCommandValidator
     {
         RuleFor(x => x.PermissionClaims)
             .MustAsync(async (permissionClaims, cancellationToken) =>
-                permissionClaims.All(pc => Shared.ClaimStore.PermissionClaims.UserPermissionClaims.Contains(pc)))
+                permissionClaims.All(pc => Domain.ClaimStore.PermissionClaims.UserPermissionClaims.Contains(pc)))
             .WithMessage(_localizer[SharedResourceKeys.InvalidPermissionClaims]);
     }
 

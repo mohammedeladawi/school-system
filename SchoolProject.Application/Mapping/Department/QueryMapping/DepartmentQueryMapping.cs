@@ -7,19 +7,19 @@ public partial class DepartmentProfile
 {
     public void MapDepartmentToGetDepartmentByIdQueryResponse()
     {
-        CreateMap<Data.Entities.Department, GetDepartmentByIdQueryResponse>()
+        CreateMap<Domain.Entities.Department, GetDepartmentByIdQueryResponse>()
             .ForMember(
                 dest => dest.ManagerName,
                 opt => opt.MapFrom(src => src.Manager != null ? $"{src.Manager.Name}" : string.Empty));
 
-        CreateMap<Data.Entities.Instructor, InstructorInDepartmentDto>();
-        CreateMap<Data.Entities.Subject, SubjectInDepartmentDto>();
-        CreateMap<Data.Entities.Student, StudentInDepartmentDto>();
+        CreateMap<Domain.Entities.Instructor, InstructorInDepartmentDto>();
+        CreateMap<Domain.Entities.Subject, SubjectInDepartmentDto>();
+        CreateMap<Domain.Entities.Student, StudentInDepartmentDto>();
     }
 
     public void MapDepartmentStudentsCountViewToGetDepartmentStudentsCountQueryResponse()
     {
-        CreateMap<Data.Entities.Views.DepartmentStudentsCountView, GetDepartmentStudentsCountQueryResponse>();
+        CreateMap<Domain.Entities.Views.DepartmentStudentsCountView, GetDepartmentStudentsCountQueryResponse>();
 
     }
 }

@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Data.Entities;
-using SchoolProject.Data.Entities.Views;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Domain.Entities.Views;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
 

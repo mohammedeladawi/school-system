@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 
 namespace SchoolProject.Infrastructure.IdentityServices;

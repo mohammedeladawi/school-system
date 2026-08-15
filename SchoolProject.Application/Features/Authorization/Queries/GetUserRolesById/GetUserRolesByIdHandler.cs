@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Shared.Resources;
+using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authorization.Queries.GetUserRolesById;
 
@@ -31,7 +31,7 @@ public class GetUserRolesByIdHandler : ResponseHandler, IRequestHandler<GetUserR
     #region Private Methods
     private async Task<List<RoleResponse>> BuildUserRolesResponse(
         List<string> userRoles,
-        List<Data.Entities.Identities.ApplicationRole> allRoles)
+        List<Domain.Entities.Identities.ApplicationRole> allRoles)
     {
         var rolesResponse = new List<RoleResponse>();
 

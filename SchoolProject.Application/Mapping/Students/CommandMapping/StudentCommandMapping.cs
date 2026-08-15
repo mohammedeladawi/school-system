@@ -3,7 +3,7 @@ using SchoolProject.Application.Features.Student.Commands.EditStudent;
 using SchoolProject.Application.Features.Student.Queries.GetAllStudents;
 using SchoolProject.Application.Features.Student.Queries.GetStudentById;
 using SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
-using SchoolProject.Data.Entities;
+using SchoolProject.Domain.Entities;
 
 namespace SchoolProject.Application.Mapping.Students;
 

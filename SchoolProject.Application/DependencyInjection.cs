@@ -9,7 +9,7 @@ namespace SchoolProject.Application;
 public static class DependencyInjection
 {
 
-    public static IServiceCollection AddCoreDependencies(this IServiceCollection services)
+    public static IServiceCollection AddApplicationDependencies(this IServiceCollection services)
     {
         // Register MediatR handlers
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));

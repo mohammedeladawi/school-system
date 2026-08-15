@@ -1,6 +1,6 @@
 using SchoolProject.Application.Interfaces.Bases;
-using SchoolProject.Data.Entities;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Domain.Entities.Identities;
 
 namespace SchoolProject.Application.Interfaces.Repositories;
 

@@ -4,8 +4,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Shared.Resources;
-using SchoolProject.Shared.CustomExceptions;
+using SchoolProject.Domain.CustomExceptions;
 
 namespace SchoolProject.Api.Middlewares;
 
@@ -66,11 +65,11 @@ public class ErrorHandlerMiddleware
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
 
-                case ConflictException:
-                    responseModel.Message = error.Message;
-                    responseModel.StatusCode = HttpStatusCode.Conflict;
-                    response.StatusCode = (int)HttpStatusCode.Conflict;
-                    break;
+                // case ConflictException:
+                //     responseModel.Message = error.Message;
+                //     responseModel.StatusCode = HttpStatusCode.Conflict;
+                //     response.StatusCode = (int)HttpStatusCode.Conflict;
+                //     break;
 
                 case DomainException:
                     responseModel.Message = error.Message;

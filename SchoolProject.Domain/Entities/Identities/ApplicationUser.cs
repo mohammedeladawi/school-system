@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using SchoolProject.Shared.Helpers;
-namespace SchoolProject.Data.Entities.Identities;
+namespace SchoolProject.Domain.Entities.Identities;
 
 public class ApplicationUser : IdentityUser<int>
 {

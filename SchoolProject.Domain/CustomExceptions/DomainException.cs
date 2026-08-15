@@ -1,4 +1,4 @@
-namespace SchoolProject.Shared.CustomExceptions;
+namespace SchoolProject.Domain.CustomExceptions;
 
 public class DomainException : Exception
 {

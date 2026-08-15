@@ -1,4 +1,4 @@
-namespace SchoolProject.Data.Entities.Identities;
+namespace SchoolProject.Domain.Entities.Identities;
 
 public class RefreshToken
 {
