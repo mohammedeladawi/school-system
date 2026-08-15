@@ -1,6 +1,6 @@
 using SchoolProject.Shared.Helpers;
 
-namespace SchoolProject.Data.Entities.Views;
+namespace SchoolProject.Domain.Entities.Views;
 
 public class DepartmentStudentsCountView
 {

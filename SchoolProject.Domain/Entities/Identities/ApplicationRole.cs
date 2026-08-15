@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace SchoolProject.Data.Entities.Identities;
+namespace SchoolProject.Domain.Entities.Identities;
 
 public class ApplicationRole : IdentityRole<int>;

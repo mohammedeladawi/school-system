@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Seeder;
 
 namespace SchoolProject.Infrastructure.Data.Configurations;

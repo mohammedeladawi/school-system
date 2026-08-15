@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Data.Entities;
+using SchoolProject.Domain.Entities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
 

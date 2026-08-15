@@ -8,10 +8,10 @@ public partial class ApplicationUser
 {
     public void MapAddApplicationUserCommandToApplicationUser()
     {
-        CreateMap<RegisterCommand, Data.Entities.Identities.ApplicationUser>();
+        CreateMap<RegisterCommand, Domain.Entities.Identities.ApplicationUser>();
     }
     public void MapEditpplicationUserCommandToApplicationUser()
     {
-        CreateMap<EditUserCommand, Data.Entities.Identities.ApplicationUser>();
+        CreateMap<EditUserCommand, Domain.Entities.Identities.ApplicationUser>();
     }
 }

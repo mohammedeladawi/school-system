@@ -1,6 +1,6 @@
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities.Identities;
 
-namespace SchoolProject.Data.Entities
+namespace SchoolProject.Domain.Entities
 {
     public class PasswordResetCode
     {

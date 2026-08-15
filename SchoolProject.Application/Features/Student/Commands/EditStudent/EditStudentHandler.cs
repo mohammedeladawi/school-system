@@ -31,7 +31,7 @@ public class EditStudentHandler : ResponseHandler, IRequestHandler<EditStudentCo
     #region Public Methods
     public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = _mapper.Map<Data.Entities.Student>(request);
+        var student = _mapper.Map<Domain.Entities.Student>(request);
 
         await _studentRepository.UpdateAsync(student);
         await _unitOfWork.SaveChangesAsync();

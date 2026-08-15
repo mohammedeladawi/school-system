@@ -2,9 +2,9 @@ namespace SchoolProject.Infrastructure.Data;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Data.Entities;
-using SchoolProject.Data.Entities.Identities;
-using SchoolProject.Data.Entities.Views;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Domain.Entities.Identities;
+using SchoolProject.Domain.Entities.Views;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {

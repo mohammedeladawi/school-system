@@ -9,14 +9,14 @@ public partial class ApplicationUser
     public void MapApplicationUserToGetPaginatedApplicationUsersQueryResponse()
     {
         CreateMap<
-            Data.Entities.Identities.ApplicationUser,
+            Domain.Entities.Identities.ApplicationUser,
             GetPaginatedUsersQueryResponse>();
     }
 
     public void MapApplicationUserToGetApplicationUserByIdQueryResponse()
     {
         CreateMap<
-            Data.Entities.Identities.ApplicationUser,
+            Domain.Entities.Identities.ApplicationUser,
             GetUserByIdQueryResponse>();
     }
 

@@ -31,7 +31,7 @@ public class GetUserRolesByIdHandler : ResponseHandler, IRequestHandler<GetUserR
     #region Private Methods
     private async Task<List<RoleResponse>> BuildUserRolesResponse(
         List<string> userRoles,
-        List<Data.Entities.Identities.ApplicationRole> allRoles)
+        List<Domain.Entities.Identities.ApplicationRole> allRoles)
     {
         var rolesResponse = new List<RoleResponse>();
 

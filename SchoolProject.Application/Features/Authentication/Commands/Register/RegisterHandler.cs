@@ -40,7 +40,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
 
         #region Private Methods
         private (string Subject, string Body) GetComposedEmailContent(
-            Data.Entities.Identities.ApplicationUser user,
+            Domain.Entities.Identities.ApplicationUser user,
             string token,
             string confirmationUrlTemplate)
         {
@@ -77,7 +77,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
         #region Public Methods
         public async Task<Response<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<Data.Entities.Identities.ApplicationUser>(request);
+            var user = _mapper.Map<Domain.Entities.Identities.ApplicationUser>(request);
 
             using (await _unitOfWork.BeginTransactionAsync())
             {

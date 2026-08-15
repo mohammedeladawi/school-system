@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Data.Entities;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities;
+using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
 using SchoolProject.Shared.Helpers;

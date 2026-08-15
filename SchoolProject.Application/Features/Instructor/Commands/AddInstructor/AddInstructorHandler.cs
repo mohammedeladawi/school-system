@@ -41,7 +41,7 @@ public class AddInstructorHandler :
     #region Public Methods
     public async Task<Response<string>> Handle(AddInstructorCommand request, CancellationToken cancellationToken)
     {
-        var instructor = _mapper.Map<Data.Entities.Instructor>(request);
+        var instructor = _mapper.Map<Domain.Entities.Instructor>(request);
 
         var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "Instructors");
 

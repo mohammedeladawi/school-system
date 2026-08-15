@@ -1,4 +1,4 @@
-namespace SchoolProject.Data.Entities;
+namespace SchoolProject.Domain.Entities;
 
 public class DepartmentSubject
 {

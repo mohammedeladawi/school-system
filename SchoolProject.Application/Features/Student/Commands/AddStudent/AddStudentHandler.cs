@@ -31,7 +31,7 @@ public class AddStudentHandler : ResponseHandler, IRequestHandler<AddStudentComm
     #region Public Methods
     public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = _mapper.Map<Data.Entities.Student>(request);
+        var student = _mapper.Map<Domain.Entities.Student>(request);
 
         await _studentRepository.AddAsync(student);
         await _unitOfWork.SaveChangesAsync();

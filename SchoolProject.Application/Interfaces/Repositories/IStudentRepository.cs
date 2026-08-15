@@ -1,5 +1,5 @@
 using SchoolProject.Application.Interfaces.Bases;
-using SchoolProject.Data.Entities;
+using SchoolProject.Domain.Entities;
 
 namespace SchoolProject.Application.Interfaces.Repositories;
 

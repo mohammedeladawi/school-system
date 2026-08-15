@@ -4,7 +4,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Data.CustomExceptions;
+using SchoolProject.Domain.CustomExceptions;
 
 namespace SchoolProject.Api.Middlewares;
 

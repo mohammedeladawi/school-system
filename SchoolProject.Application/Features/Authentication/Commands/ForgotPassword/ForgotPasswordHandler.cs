@@ -62,7 +62,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ForgotPassw
 
                     // generate a new password reset code and save it to the database
                     var rawCode = _passwordResetCodeRepository.GeneratePasswordResetCode();
-                    var passwordResetCode = new Data.Entities.PasswordResetCode
+                    var passwordResetCode = new Domain.Entities.PasswordResetCode
                     {
                         UserId = user.Id,
                         HashedCode = Utils.Hash(rawCode),

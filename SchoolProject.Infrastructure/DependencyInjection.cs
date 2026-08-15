@@ -11,7 +11,7 @@ using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Data.Entities.Identities;
+using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Bases;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.IdentityServices;
