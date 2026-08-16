@@ -36,8 +36,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.RefreshToke
         #region Public Methods
         public async Task<Response<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = Utils.Hash(request.RefreshToken);
-            var refreshToken = await _refreshTokenRepository.GetByTokenHashAsync(tokenHash);
+            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken);
             if (refreshToken is null)
                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
 

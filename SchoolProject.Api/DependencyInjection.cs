@@ -57,8 +57,8 @@ public static class DependencyInjection
                 options.SaveToken = true;
 
 
-                var accessTokensSettings = configuration.GetSection("AccessTokensSettings")
-                                                        .Get<AccessTokensSettings>();
+                var jwtSettings = configuration.GetSection("JwtSettings")
+                                                        .Get<JwtSettings>();
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -68,11 +68,11 @@ public static class DependencyInjection
                     ValidateIssuerSigningKey = true,
 
 
-                    ValidIssuer = accessTokensSettings?.Issuer,
-                    ValidAudience = accessTokensSettings?.Audience,
+                    ValidIssuer = jwtSettings?.Issuer,
+                    ValidAudience = jwtSettings?.Audience,
 
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(accessTokensSettings!.Key!)),
+                        Encoding.UTF8.GetBytes(jwtSettings!.Key!)),
 
                     ClockSkew = TimeSpan.Zero
                 };

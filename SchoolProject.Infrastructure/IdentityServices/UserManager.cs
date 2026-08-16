@@ -38,14 +38,15 @@ public class UserManager : IUserManager
     #endregion
 
     #region Public Methods
-    public async Task AddAsync(ApplicationUser user, string password)
+    public async Task AddAsync(ApplicationUser user, string password, string role)
     {
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
 
-        // Todo: Move to application layer 
-        var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
+        var addToRoleResult = await _userManager.AddToRoleAsync(user, role);
+        if (!addToRoleResult.Succeeded)
+            throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
     }
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)

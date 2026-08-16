@@ -15,7 +15,7 @@ public static class DependencyInjection
     {
         #region Binding Configuration
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
-        services.Configure<AccessTokensSettings>(configuration.GetSection("AccessTokensSettings"));
+        services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         #endregion
 
         #region MediatR 

@@ -29,8 +29,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Logout
         #region Public Methods
         public async Task<Response<string>> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = Utils.Hash(request.RefreshToken);
-            var refreshToken = await _refreshTokenRepository.GetByTokenHashAsync(tokenHash);
+            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken);
             if (refreshToken is null)
                 return Unauthorized<string>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
 

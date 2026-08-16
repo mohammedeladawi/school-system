@@ -78,16 +78,17 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             {
                 try
                 {
+                    // Todo: accept role from frontend
                     // Add User To Db
-                    await _userManager.AddAsync(user, request.Password);
+                    await _userManager.AddAsync(user, request.Password, "Admin");
+
+
 
                     // Send Confirmation Email
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string encodedToken = Utils.Encode(token);
-
-                    string confirmationUrlTemplate = GetConfirmationUrl(user.Id, encodedToken);
-                    (string subject, string message) = GetComposedEmailContent(user!.UserName!, confirmationUrlTemplate);
-
+                    string confirmationUrl = GetConfirmationUrl(user.Id, encodedToken);
+                    (string subject, string message) = GetComposedEmailContent(user!.UserName!, confirmationUrl);
                     await _emailService.SendEmailAsync(user.Email!, message, subject);
 
                     await _unitOfWork.CommitAsync();
