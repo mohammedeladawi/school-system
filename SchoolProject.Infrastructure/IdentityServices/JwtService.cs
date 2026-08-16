@@ -13,7 +13,6 @@ using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Domain.Entities;
 using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
 

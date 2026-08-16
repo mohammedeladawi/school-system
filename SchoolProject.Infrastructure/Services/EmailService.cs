@@ -1,8 +1,8 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using SchoolProject.Application.Helpers.ConfigBinders;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.Services;
 

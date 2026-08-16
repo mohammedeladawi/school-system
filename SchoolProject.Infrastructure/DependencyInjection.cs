@@ -17,7 +17,6 @@ using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.IdentityServices;
 using SchoolProject.Infrastructure.Repositories;
 using SchoolProject.Infrastructure.Services;
-using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure;
 

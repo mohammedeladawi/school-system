@@ -3,8 +3,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using SchoolProject.Application.Helpers.ConfigBinders;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Shared.Helpers;
 using Serilog;
 
 namespace SchoolProject.Api;

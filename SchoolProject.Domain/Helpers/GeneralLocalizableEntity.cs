@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace SchoolProject.Shared.Helpers;
+namespace SchoolProject.Domain.Helpers;
 
 public static class GeneralLocalizableEntity
 {

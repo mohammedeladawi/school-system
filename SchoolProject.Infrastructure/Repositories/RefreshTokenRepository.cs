@@ -4,7 +4,7 @@ using SchoolProject.Domain.Entities;
 using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using Microsoft.Extensions.Configuration;
 
 namespace SchoolProject.Infrastructure.Repositories;

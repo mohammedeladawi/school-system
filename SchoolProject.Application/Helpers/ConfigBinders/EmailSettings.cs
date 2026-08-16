@@ -1,4 +1,4 @@
-namespace SchoolProject.Shared.Helpers;
+namespace SchoolProject.Application.Helpers.ConfigBinders;
 
 public class EmailSettings
 {

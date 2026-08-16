@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.ResetPassword;

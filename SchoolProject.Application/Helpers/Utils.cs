@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SchoolProject.Shared.Helpers;
+namespace SchoolProject.Application.Helpers;
 
 public static class Utils
 {
