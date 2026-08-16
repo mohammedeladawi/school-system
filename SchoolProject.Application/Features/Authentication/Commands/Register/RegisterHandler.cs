@@ -96,7 +96,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
                     await _emailService.SendEmailAsync(user.Email!, message, subject);
 
                     await _unitOfWork.CommitAsync();
-                    await _unitOfWork.SaveChangesAsync();
                 }
                 catch (Exception)
                 {

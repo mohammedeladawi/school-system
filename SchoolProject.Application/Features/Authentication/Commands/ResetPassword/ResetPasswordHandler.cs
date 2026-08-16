@@ -71,7 +71,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ResetPasswo
                     await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(user.Id);
 
                     await _unitOfWork.CommitAsync();
-                    await _unitOfWork.SaveChangesAsync();
                 }
                 catch
                 {

@@ -75,7 +75,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ForgotPassw
                     await _emailService.SendEmailAsync(user.Email!, body, subject);
 
                     await _unitOfWork.CommitAsync();
-                    await _unitOfWork.SaveChangesAsync();
                 }
                 catch
                 {

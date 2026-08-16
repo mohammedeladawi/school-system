@@ -63,6 +63,7 @@ public class RoleManager : IRoleManager
 
     public async Task DeleteAsync(ApplicationRole role)
     {
+        // Todo: Move to application layer
         var usersInRole = await _UserManager.GetUsersInRoleAsync(role.Name);
         if (usersInRole.Any())
             throw new DomainException(_localizer[SharedResourceKeys.RoleHasUsers]);

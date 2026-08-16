@@ -44,7 +44,7 @@ public class UserManager : IUserManager
         if (!createResult.Succeeded)
             throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
 
-        // Todo: Change the default role 
+        // Todo: Move to application layer 
         var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
     }
 

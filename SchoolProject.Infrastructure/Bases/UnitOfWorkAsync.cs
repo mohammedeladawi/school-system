@@ -26,7 +26,7 @@ public class UnitOfWork : IUnitOfWork
     public async Task CommitAsync()
     {
         await _dbContext.Database.CommitTransactionAsync();
-
+        await SaveChangesAsync();
     }
 
     public async Task RollbackAsync()
