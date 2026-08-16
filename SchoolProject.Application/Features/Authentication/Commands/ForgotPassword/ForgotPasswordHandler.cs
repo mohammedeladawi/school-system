@@ -53,37 +53,35 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ForgotPassw
             var user = await _userManager.GetByEmailAsync(request.Email);
             if (!user!.EmailConfirmed) return BadRequest<string>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
 
-            using (_unitOfWork.BeginTransactionAsync())
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                try
+                // revoke any existing password reset codes for the user before generating a new one
+                await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(user.Id);
+
+                // generate a new password reset code and save it to the database
+                var rawCode = _passwordResetCodeRepository.GeneratePasswordResetCode();
+                var passwordResetCode = new Domain.Entities.PasswordResetCode
                 {
-                    // revoke any existing password reset codes for the user before generating a new one
-                    await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(user.Id);
+                    UserId = user.Id,
+                    HashedCode = Utils.Hash(rawCode),
+                    ExpirationDate = DateTime.UtcNow.AddMinutes(15)
+                };
+                await _passwordResetCodeRepository.AddAsync(passwordResetCode);
 
-                    // generate a new password reset code and save it to the database
-                    var rawCode = _passwordResetCodeRepository.GeneratePasswordResetCode();
-                    var passwordResetCode = new Domain.Entities.PasswordResetCode
-                    {
-                        UserId = user.Id,
-                        HashedCode = Utils.Hash(rawCode),
-                        ExpirationDate = DateTime.UtcNow.AddMinutes(15)
-                    };
-                    await _passwordResetCodeRepository.AddAsync(passwordResetCode);
+                // send the password reset code to the user's email
+                (string subject, string body) = GetComposedEmailContent(rawCode);
+                await _emailService.SendEmailAsync(user.Email!, body, subject);
 
-                    // send the password reset code to the user's email
-                    (string subject, string body) = GetComposedEmailContent(rawCode);
-                    await _emailService.SendEmailAsync(user.Email!, body, subject);
-
-                    await _unitOfWork.CommitAsync();
-                }
-                catch
-                {
-                    await _unitOfWork.RollbackAsync();
-                    throw;
-                }
-
-                return Success<string>(_localizer[SharedResourceKeys.PasswordResetCodeSentSuccessfully]);
+                await _unitOfWork.CommitAsync();
             }
+            catch
+            {
+                await _unitOfWork.RollbackAsync();
+                throw;
+            }
+
+            return Success<string>(_localizer[SharedResourceKeys.PasswordResetCodeSentSuccessfully]);
         }
         #endregion
     }

@@ -61,22 +61,20 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ResetPasswo
             string userId = Utils.Decode(request.EncodedUserId);
             var user = await _userManager.FindByIdAsync(userId);
 
-            using (await _unitOfWork.BeginTransactionAsync())
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                try
-                {
-                    string code = Utils.Decode(request.EncodedCode);
-                    await ValidatePasswordResetCodeAsync(user!.Id, code);
-                    await ChangePasswordAsync(user!, request.NewPassword);
-                    await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(user.Id);
+                string code = Utils.Decode(request.EncodedCode);
+                await ValidatePasswordResetCodeAsync(user!.Id, code);
+                await ChangePasswordAsync(user!, request.NewPassword);
+                await _passwordResetCodeRepository.RevokeOldPasswordResetCodesAsync(user.Id);
 
-                    await _unitOfWork.CommitAsync();
-                }
-                catch
-                {
-                    await _unitOfWork.RollbackAsync();
-                    throw;
-                }
+                await _unitOfWork.CommitAsync();
+            }
+            catch
+            {
+                await _unitOfWork.RollbackAsync();
+                throw;
             }
 
             return Success<string>(_localizer[SharedResourceKeys.ResetPasswordSuccessfully]);

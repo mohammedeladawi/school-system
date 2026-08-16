@@ -7,6 +7,7 @@ namespace SchoolProject.Infrastructure.Bases;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _dbContext;
+    private IDbContextTransaction? _transaction;
 
     public UnitOfWork(AppDbContext dbContext)
     {
@@ -18,24 +19,31 @@ public class UnitOfWork : IUnitOfWork
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    public async Task BeginTransactionAsync()
     {
-        return await _dbContext.Database.BeginTransactionAsync();
+        _transaction =
+            await _dbContext.Database.BeginTransactionAsync();
+
     }
 
     public async Task CommitAsync()
     {
-        await _dbContext.Database.CommitTransactionAsync();
+        if (_transaction is null)
+            throw new InvalidOperationException("No active transaction.");
+
         await SaveChangesAsync();
+        await _dbContext.Database.CommitTransactionAsync();
+        await _transaction.DisposeAsync();
+        _transaction = null;
     }
 
     public async Task RollbackAsync()
     {
-        await _dbContext.Database.RollbackTransactionAsync();
-    }
+        if (_transaction is null)
+            return;
 
-    public void Dispose()
-    {
-        _dbContext.Dispose();
+        await _dbContext.Database.RollbackTransactionAsync();
+        await _transaction.DisposeAsync();
+        _transaction = null;
     }
 }

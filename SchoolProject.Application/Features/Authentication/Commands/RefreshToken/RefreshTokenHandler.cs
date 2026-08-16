@@ -53,7 +53,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.RefreshToke
             string rawToken; ;
             string newAccessToken;
 
-            using var transaction = await _unitOfWork.BeginTransactionAsync();
+            await _unitOfWork.BeginTransactionAsync();
             try
             {
                 // revoke old one, generate a new one and save it, and generate new access token
