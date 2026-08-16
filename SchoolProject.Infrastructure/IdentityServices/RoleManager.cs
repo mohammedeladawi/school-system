@@ -63,10 +63,6 @@ public class RoleManager : IRoleManager
 
     public async Task DeleteAsync(ApplicationRole role)
     {
-        var usersInRole = await _UserManager.GetUsersInRoleAsync(role.Name);
-        if (usersInRole.Any())
-            throw new DomainException(_localizer[SharedResourceKeys.RoleHasUsers]);
-
         var result = await _roleManager.DeleteAsync(role);
 
         if (!result.Succeeded)
@@ -86,6 +82,12 @@ public class RoleManager : IRoleManager
         var allRoles = await GetAllAsync();
         var existingRoleNames = allRoles.Select(r => r.Name).ToList();
         return roleNames.All(roleName => existingRoleNames.Contains(roleName));
+    }
+
+    public async Task<bool> IsRoleInUseAsync(string roleName)
+    {
+        var usersInRole = await _UserManager.GetUsersInRoleAsync(roleName);
+        return usersInRole.Any();
     }
 
     #endregion

@@ -4,8 +4,10 @@ using SchoolProject.Domain.Entities;
 using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using Microsoft.Extensions.Configuration;
+using SchoolProject.Application.Helpers.ConfigBinders;
+using Microsoft.Extensions.Options;
 
 namespace SchoolProject.Infrastructure.Repositories;
 
@@ -15,22 +17,26 @@ public class RefreshTokenRepository :
 {
     #region Private Fields
     private readonly DbSet<RefreshToken> _refreshTokens;
-    private readonly IConfiguration _config;
+    private readonly JwtSettings _jwtSettings;
     #endregion
 
     #region Constructors
-    public RefreshTokenRepository(AppDbContext context, IConfiguration config) : base(context)
+    public RefreshTokenRepository(
+        AppDbContext context,
+        IOptions<JwtSettings> jwtSettings) : base(context)
     {
         _refreshTokens = context.RefreshTokens;
-        _config = config;
+        _jwtSettings = jwtSettings.Value;
     }
 
     #endregion
 
     #region Public Methods
 
-    public Task<RefreshToken?> GetByTokenHashAsync(string tokenHash)
+    public Task<RefreshToken?> GetByTokenAsync(string token)
+
     {
+        string tokenHash = Utils.Hash(token);
         return _refreshTokens.Include(rt => rt.User)
                              .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash);
     }
@@ -58,7 +64,7 @@ public class RefreshTokenRepository :
             UserId = userId,
             TokenHash = tokenHash,
             ExpiresAt = DateTime.UtcNow.AddMinutes(
-                Convert.ToDouble(_config["Jwt:RefreshTokenInMinutes"])
+                Convert.ToDouble(_jwtSettings.RefreshTokenDurationInMinutes)
             ),
             CreatedAt = DateTime.UtcNow,
             IsRevoked = false,

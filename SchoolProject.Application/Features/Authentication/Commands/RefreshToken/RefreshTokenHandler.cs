@@ -5,7 +5,7 @@ using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.RefreshToken
@@ -36,8 +36,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.RefreshToke
         #region Public Methods
         public async Task<Response<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = Utils.Hash(request.RefreshToken);
-            var refreshToken = await _refreshTokenRepository.GetByTokenHashAsync(tokenHash);
+            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken);
             if (refreshToken is null)
                 return Unauthorized<AuthResponse>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
 
@@ -65,7 +64,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.RefreshToke
                 newAccessToken = await __jwtService.GenerateJwtTokenAsync(refreshToken.User);
 
                 await _unitOfWork.CommitAsync();
-                _unitOfWork.SaveChangesAsync();
             }
             catch (Exception)
             {

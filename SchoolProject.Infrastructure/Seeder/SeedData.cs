@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using SchoolProject.Domain.Entities;
 using SchoolProject.Domain.Entities.Identities;
-using SchoolProject.Shared.Helpers;
 
 namespace SchoolProject.Infrastructure.Seeder;
 

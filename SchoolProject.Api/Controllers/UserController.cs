@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.Base;
-using SchoolProject.Shared.AppMetaData;
+using SchoolProject.Api.AppMetaData;
 using SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
 using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteUserById;
 using SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;

@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
@@ -28,6 +29,9 @@ public class DeleteRoleByIdHandler : ResponseHandler, IRequestHandler<DeleteRole
     public async Task<Response<string>> Handle(DeleteRoleByIdCommand request, CancellationToken cancellationToken)
     {
         var role = await _roleManager.GetByIdAsync(request.Id);
+        if (await _roleManager.IsRoleInUseAsync(role!.Name!))
+            return BadRequest<string>(_localizer[SharedResourceKeys.RoleHasUsers]);
+
         await _roleManager.DeleteAsync(role!);
         return Deleted<string>();
     }

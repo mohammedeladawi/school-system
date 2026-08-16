@@ -4,5 +4,5 @@ namespace SchoolProject.Application.Interfaces.Services;
 
 public interface IFileService
 {
-    Task<string> UploadFileAsync(IFormFile file, string folderPath);
+    Task<string> UploadFileAsync(IFormFile file, string webRootPath, string relativeFolderPath);
 }

@@ -49,7 +49,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Login
             var (rawToken, refreshToken) = _refreshTokenRepository.GenerateRefreshToken(user.Id);
 
             await _refreshTokenRepository.AddAsync(refreshToken);
-            await _unitOfWork.SaveChangesAsync();
 
             var authResponse = new AuthResponse
             {

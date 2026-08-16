@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Logout
@@ -29,8 +29,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Logout
         #region Public Methods
         public async Task<Response<string>> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
-            string tokenHash = Utils.Hash(request.RefreshToken);
-            var refreshToken = await _refreshTokenRepository.GetByTokenHashAsync(tokenHash);
+            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken);
             if (refreshToken is null)
                 return Unauthorized<string>(_localizer[SharedResourceKeys.RefreshTokenNotFound]);
 

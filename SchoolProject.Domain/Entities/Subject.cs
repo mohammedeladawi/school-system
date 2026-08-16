@@ -1,4 +1,4 @@
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Domain.Helpers;
 
 namespace SchoolProject.Domain.Entities;
 

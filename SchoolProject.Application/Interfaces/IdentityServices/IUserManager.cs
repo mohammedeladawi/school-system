@@ -5,7 +5,7 @@ namespace SchoolProject.Application.Interfaces.IdentityServices;
 public interface IUserManager
 {
     Task<List<ApplicationUser>> GetPaginatedListAsync(int pageNumber, int pageSize);
-    Task AddAsync(ApplicationUser user, string password);
+    Task AddAsync(ApplicationUser user, string password, string role);
     Task<ApplicationUser?> GetByIdAsync(int id);
     Task UpdateAsync(ApplicationUser user);
     Task DeleteAsync(ApplicationUser user);

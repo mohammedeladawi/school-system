@@ -3,7 +3,7 @@ using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Domain.Entities;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Infrastructure.Bases;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 
 namespace SchoolProject.Infrastructure.Repositories;
 

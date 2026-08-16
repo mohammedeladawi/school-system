@@ -6,15 +6,10 @@ namespace SchoolProject.Infrastructure.Services;
 
 public class FileService : IFileService
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
-
-    public FileService(IWebHostEnvironment webHostEnvironment)
+    public async Task<string> UploadFileAsync(IFormFile file, string webRootPath, string relativeFolderPath)
     {
-        _webHostEnvironment = webHostEnvironment;
-    }
+        string folderPath = Path.Combine(webRootPath, relativeFolderPath);
 
-    public async Task<string> UploadFileAsync(IFormFile file, string folderPath)
-    {
         if (!Directory.Exists(folderPath))
             Directory.CreateDirectory(folderPath);
 
@@ -26,7 +21,6 @@ public class FileService : IFileService
             await file.CopyToAsync(stream);
         }
 
-        var relativePath = fullPath.Replace(_webHostEnvironment.WebRootPath, "").Replace("\\", "/");
-        return relativePath;
+        return $"{relativeFolderPath}/{fileName}";
     }
 }

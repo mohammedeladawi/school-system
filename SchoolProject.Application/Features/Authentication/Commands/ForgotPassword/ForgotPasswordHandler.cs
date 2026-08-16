@@ -6,7 +6,7 @@ using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Shared.Helpers;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.ForgotPassword
@@ -75,7 +75,6 @@ namespace SchoolProject.Application.Features.Authentication.Commands.ForgotPassw
                     await _emailService.SendEmailAsync(user.Email!, body, subject);
 
                     await _unitOfWork.CommitAsync();
-                    await _unitOfWork.SaveChangesAsync();
                 }
                 catch
                 {

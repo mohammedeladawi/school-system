@@ -5,12 +5,9 @@ using SchoolProject.Api.Middlewares;
 using SchoolProject.Application;
 using Serilog;
 using SchoolProject.Infrastructure;
+using SchoolProject.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger();
 
 builder.Host.UseSerilog();
 
@@ -21,7 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
-    .AddApplicationDependencies()
+    .AddApiDependencies(builder.Configuration)
+    .AddApplicationDependencies(builder.Configuration)
     .AddInfrastructureDependencies(builder.Configuration);
 
 #region Localization Configurations
@@ -42,7 +40,6 @@ var localizationOptions = new RequestLocalizationOptions
     SupportedUICultures = supportedCultures
 };
 #endregion
-
 
 var app = builder.Build();
 

@@ -11,5 +11,6 @@ public interface IRoleManager
     public Task DeleteAsync(ApplicationRole role);
     public Task<List<ApplicationRole>> GetAllAsync();
 
+    public Task<bool> IsRoleInUseAsync(string roleName);
     public Task<bool> ValidateRolesExistAsync(string[] roleNames);
 }

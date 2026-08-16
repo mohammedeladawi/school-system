@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
+using SchoolProject.Application.Interfaces.ApiServices;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Interfaces.Services;
@@ -17,7 +18,7 @@ public class AddInstructorHandler :
     #region Private Fields
     private readonly IInstructorRepository _instructorService;
     private readonly IFileService _fileService;
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly ILocationService _locationService;
     private readonly IUnitOfWork _unitOfWork;
     #endregion
 
@@ -26,14 +27,14 @@ public class AddInstructorHandler :
         IMapper mapper,
         IInstructorRepository instructorService,
         IFileService fileService,
-        IWebHostEnvironment webHostEnvironment,
+        ILocationService locationService,
         IStringLocalizer<SharedResource> localizer,
         IUnitOfWork unitOfWork)
         : base(localizer, mapper)
     {
         _instructorService = instructorService;
         _fileService = fileService;
-        _webHostEnvironment = webHostEnvironment;
+        _locationService = locationService;
         _unitOfWork = unitOfWork;
     }
     #endregion
@@ -43,12 +44,13 @@ public class AddInstructorHandler :
     {
         var instructor = _mapper.Map<Domain.Entities.Instructor>(request);
 
-        var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "Instructors");
+        string webRootPath = _locationService.GetWebRootPath();
+        string relativeFolderPath = "Images/Instructors";
 
         if (request.Image != null)
         {
-            var imagePath = await _fileService.UploadFileAsync(request.Image, folderPath);
-            instructor.ImagePath = imagePath;
+            string imageRelativePath = await _fileService.UploadFileAsync(request.Image, webRootPath, relativeFolderPath);
+            instructor.ImagePath = imageRelativePath;
         }
 
         await _instructorService.AddAsync(instructor);
