@@ -6,10 +6,9 @@ using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
-using SchoolProject.Application.Helpers;
+using SchoolProject.Application.Interfaces.ApiServices;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Register
 {
@@ -18,7 +17,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
         #region Private Fields
         private readonly IUserManager _userManager;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUrlService _urlService;
         private readonly IEmailService _emailService;
         #endregion
 
@@ -27,13 +26,13 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             IUserManager userManager,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
-            IHttpContextAccessor httpContextAccessor,
+            IUrlService urlService,
             IEmailService emailService,
             IUnitOfWork unitOfWork)
             : base(localizer, mapper)
         {
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            _urlService = urlService;
             _emailService = emailService;
             _unitOfWork = unitOfWork;
         }
@@ -41,14 +40,12 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
 
         #region Private Methods
         private (string Subject, string Body) GetComposedEmailContent(
-            Domain.Entities.Identities.ApplicationUser user,
-            string token,
-            string confirmationUrlTemplate)
+            string userName,
+            string confirmationUrl)
         {
-            string confirmationUrl = string.Format(confirmationUrlTemplate, user.Id, token);
             string emailSubject = "Confirm your email";
             string emailBody = $"""
-                <h1>Welcome {user.UserName}</h1>
+                <h1>Welcome {userName}</h1>
 
                 <p>Thank you for registering.</p>
 
@@ -64,13 +61,10 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             return (emailSubject, emailBody);
         }
 
-        private string GetConfirmationUrlTemplate()
+        private string GetConfirmationUrl(int userId, string token)
         {
-            var request = _httpContextAccessor.HttpContext?.Request;
-            var baseUrl = $"{request?.Scheme}://{request?.Host}";
-            string path = Router.Authentication.ConfirmEmail;
-
-            return $"{baseUrl}/{path}?userId={{0}}&token={{1}}";
+            string confirmEmailUrl = _urlService.GetConfirmEmailUrl();
+            return $"{confirmEmailUrl}?userId={userId}&token={token}";
         }
 
         #endregion
@@ -91,8 +85,8 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string encodedToken = Utils.Encode(token);
 
-                    string confirmationUrlTemplate = GetConfirmationUrlTemplate();
-                    (string subject, string message) = GetComposedEmailContent(user, encodedToken, confirmationUrlTemplate);
+                    string confirmationUrlTemplate = GetConfirmationUrl(user.Id, encodedToken);
+                    (string subject, string message) = GetComposedEmailContent(user!.UserName!, confirmationUrlTemplate);
 
                     await _emailService.SendEmailAsync(user.Email!, message, subject);
 

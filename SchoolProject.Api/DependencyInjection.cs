@@ -3,7 +3,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using SchoolProject.Api.Services;
 using SchoolProject.Application.Helpers.ConfigBinders;
+using SchoolProject.Application.Interfaces.ApiServices;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using Serilog;
 
@@ -146,6 +148,11 @@ public static class DependencyInjection
            });
         });
 
+        #endregion
+
+        #region #Services
+        services.AddSingleton<IUrlService, UrlService>();
+        services.AddSingleton<ILocationService, LocationService>();
         #endregion
 
         return services;

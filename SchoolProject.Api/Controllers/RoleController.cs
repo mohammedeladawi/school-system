@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SchoolProject.Shared.AppMetaData;
+using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
 using SchoolProject.Application.Features.ApplicationRole.Commands.AddRole;
 using SchoolProject.Application.Features.ApplicationRole.Commands.EditRole;

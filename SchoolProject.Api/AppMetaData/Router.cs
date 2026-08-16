@@ -1,4 +1,4 @@
-namespace SchoolProject.Shared.AppMetaData;
+namespace SchoolProject.Api.AppMetaData;
 
 public static class Router
 {
@@ -74,7 +74,7 @@ public static class Router
 
     }
 
-    public class Role
+    public static class Role
     {
         private const string RoleBase = Base + "/" + "Role" + "/";
         public const string Add = RoleBase + "Add";
@@ -84,7 +84,7 @@ public static class Router
         public const string GetById = RoleBase + "{id}";
     }
 
-    public class Authorization
+    public static class Authorization
     {
         private const string AuthorizationBase = Base + "/Authorization/";
         public const string GetUserRolesById = AuthorizationBase + "Get-User-Roles" + "/{userId}";

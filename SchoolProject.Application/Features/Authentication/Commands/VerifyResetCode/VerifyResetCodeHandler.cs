@@ -1,15 +1,12 @@
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Shared.AppMetaData;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
-using SchoolProject.Application.Helpers;
+using SchoolProject.Application.Interfaces.ApiServices;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.VerifyResetCode
 {
@@ -18,7 +15,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.VerifyReset
         #region Private Fields
         private readonly IUserManager _userManager;
         private readonly IPasswordResetCodeRepository _passwordResetCodeRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUrlService _urlService;
         #endregion
 
         #region Constructors
@@ -27,12 +24,12 @@ namespace SchoolProject.Application.Features.Authentication.Commands.VerifyReset
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
             IPasswordResetCodeRepository passwordResetCodeRepository,
-            IHttpContextAccessor httpContextAccessor)
+            IUrlService urlService)
             : base(localizer, mapper)
         {
             _userManager = userManager;
             _passwordResetCodeRepository = passwordResetCodeRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _urlService = urlService;
         }
         #endregion
 
@@ -40,12 +37,8 @@ namespace SchoolProject.Application.Features.Authentication.Commands.VerifyReset
 
         private string GetResetPasswordUrl(string encodedUserId, string encodedCode)
         {
-            var request = _httpContextAccessor.HttpContext!.Request;
-            string scheme = request.Scheme;
-            string host = request.Host.ToString();
-            string path = Router.Authentication.ResetPassword;
-
-            return $"{scheme}://{host}/{path}?encodedUserId={encodedUserId}&encodedCode={encodedCode}";
+            string resetPasswordUr = _urlService.GetResetPasswordUrl();
+            return $"{resetPasswordUr}?encodedUserId={encodedUserId}&encodedCode={encodedCode}";
         }
 
         #endregion
