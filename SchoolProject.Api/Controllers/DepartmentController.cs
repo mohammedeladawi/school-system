@@ -6,8 +6,10 @@ using SchoolProject.Application.Features.Department.Queries.GetDepartmentStudent
 
 namespace SchoolProject.Api.Controllers;
 
+// Todo: Policy based
 public class DepartmentController : AppControllerBase
 {
+
     [HttpGet(Router.Department.GetById)]
     public async Task<IActionResult> GetDepartmentById(int id)
     {

@@ -8,6 +8,7 @@ using SchoolProject.Application.Features.Authorization.Queries.GetUserPermission
 
 namespace SchoolProject.Api.Controllers;
 
+// Todo: initially, Super Admin
 public class AuthorizationController : AppControllerBase
 {
     [HttpGet(Router.Authorization.GetUserRolesById)]

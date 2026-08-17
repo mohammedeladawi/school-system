@@ -80,7 +80,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<IList<string>> GetUserPermissionsAsync(int userId)
     {
         var user = await _userManager.GetByIdAsync(userId);
-        var claims = await _UserManager.GetClaimsAsync(user);
+        var claims = await _UserManager.GetClaimsAsync(user!);
         var permissions = claims.Where(c => c.Type == "Permission")
             .Select(c => c.Value)
             .ToList();

@@ -10,10 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolProject.Api.Controllers;
 
+// Todo: All for Super Admin, unless get-by-id, change-password, and update are policy based;
 public class ApplicationUserController : AppControllerBase
 {
-
-    [Authorize(Policy = "User.GetPaginated")]
     [HttpGet(Router.ApplicationUser.PaginatedList)]
     public async Task<IActionResult> GetPaginatedList([FromQuery] GetPaginatedUsersQuery query)
     {

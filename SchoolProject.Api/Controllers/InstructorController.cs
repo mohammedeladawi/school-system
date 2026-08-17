@@ -5,6 +5,7 @@ using SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
 
 namespace SchoolProject.Api.Controllers;
 
+// Policy based
 public class InstructorController : AppControllerBase
 {
     [HttpPost(Router.Instructor.Add)]

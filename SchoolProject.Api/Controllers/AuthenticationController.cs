@@ -14,6 +14,7 @@ namespace SchoolProject.Api.Controllers;
 
 public class AuthenticationController : AppControllerBase
 {
+    // Todo: Super Admin
     [HttpPost(Router.Authentication.Register)]
     public async Task<IActionResult> Register(RegisterCommand command)
     {

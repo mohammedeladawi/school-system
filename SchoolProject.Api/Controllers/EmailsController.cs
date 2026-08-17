@@ -5,6 +5,7 @@ using SchoolProject.Application.Features.Emails.Commands.SendEmail;
 
 namespace SchoolProject.Api.Controllers;
 
+// Todo: Super Admin
 public class EmailsController : AppControllerBase
 {
     [HttpPost(Router.Emails.Send)]

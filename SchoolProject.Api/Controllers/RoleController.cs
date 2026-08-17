@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
@@ -10,6 +9,7 @@ using SchoolProject.Application.Features.ApplicationRole.Queries.GetRoleById;
 
 namespace SchoolProject.Api.Controllers;
 
+// Todo: Super Admin
 public class RoleController : AppControllerBase
 {
     [HttpPost(Router.Role.Add)]

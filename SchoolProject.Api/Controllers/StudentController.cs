@@ -10,9 +10,9 @@ using SchoolProject.Application.Features.Student.Queries.GetAllStudents;
 using SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
 using SchoolProject.Application.Features.Student.Queries.GetStudentById;
 
-
 namespace SchoolProject.Api.Controllers;
 
+// Todo: Policy based
 public class StudentController : AppControllerBase
 {
     [HttpGet(Router.Student.List)]
