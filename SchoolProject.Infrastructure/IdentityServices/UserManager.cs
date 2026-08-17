@@ -118,6 +118,16 @@ public class UserManager : IUserManager
         return paginatedApplicationUsers;
     }
 
+
+    public async Task ChangePasswordAsync(ApplicationUser user, string newPassword)
+    {
+        string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user!);
+
+        var result = await _userManager.ResetPasswordAsync(user!, resetToken, newPassword);
+        if (!result.Succeeded)
+            throw new Exception(string.Join(" ", result.Errors.Select(e => e.Description)));
+    }
+
     public async Task ChangePasswordAsync(int id, string currentPassword, string newPassword)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
