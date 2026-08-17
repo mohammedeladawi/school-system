@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Infrastructure.Data;
@@ -59,11 +60,11 @@ public class AuthorizationService : IAuthorizationService
         {
             var removeResult = await _UserManager.RemoveClaimsAsync(user, claimsToRemove);
             if (!removeResult.Succeeded)
-                throw new Exception($"Failed to remove claims from user {user.UserName}: {string.Join(", ", removeResult.Errors.Select(e => e.Description))}");
+                throw new Exception($"Failed to remove claims from user {user.UserName}: {Utils.IdentityErrorsFormater(removeResult.Errors)}");
 
             var addResult = await _UserManager.AddClaimsAsync(user, claimsToAdd);
             if (!addResult.Succeeded)
-                throw new Exception($"Failed to add claims to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
+                throw new Exception($"Failed to add claims to user {user.UserName}: {Utils.IdentityErrorsFormater(addResult.Errors)}");
 
             await _UserManager.UpdateSecurityStampAsync(user);
 
@@ -96,11 +97,11 @@ public class AuthorizationService : IAuthorizationService
         {
             var removeResult = await _UserManager.RemoveFromRolesAsync(user, existingRoles);
             if (!removeResult.Succeeded)
-                throw new Exception($"Failed to remove roles from user {user.UserName}: {string.Join(", ", removeResult.Errors.Select(e => e.Description))}");
+                throw new Exception($"Failed to remove roles from user {user.UserName}: {Utils.IdentityErrorsFormater(removeResult.Errors)}");
 
             var addResult = await _UserManager.AddToRolesAsync(user, roleNames);
             if (!addResult.Succeeded)
-                throw new Exception($"Failed to add roles to user {user.UserName}: {string.Join(", ", addResult.Errors.Select(e => e.Description))}");
+                throw new Exception($"Failed to add roles to user {user.UserName}: {Utils.IdentityErrorsFormater(addResult.Errors)}");
 
             await _UserManager.UpdateSecurityStampAsync(user);
 

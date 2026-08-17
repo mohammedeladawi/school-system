@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Localization;
 using SchoolProject.Domain.Entities.Identities;
-using SchoolProject.Domain.CustomExceptions;
-using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.IdentityServices;
+using SchoolProject.Application.Helpers;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
 
@@ -13,18 +10,15 @@ public class RoleManager : IRoleManager
     #region Private Fields
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<ApplicationUser> _UserManager;
-    private readonly IStringLocalizer<SharedResource> _localizer;
     #endregion
 
     #region Constructor
     public RoleManager(
         RoleManager<ApplicationRole> roleManager,
-        UserManager<ApplicationUser> UserManager,
-        IStringLocalizer<SharedResource> localizer)
+        UserManager<ApplicationUser> UserManager)
     {
         _roleManager = roleManager;
         _UserManager = UserManager;
-        _localizer = localizer;
     }
     #endregion
 
@@ -34,10 +28,7 @@ public class RoleManager : IRoleManager
     {
         var result = await _roleManager.CreateAsync(new ApplicationRole { Name = roleName });
         if (!result.Succeeded)
-        {
-            var errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception(errorMessage);
-        }
+            throw new Exception(Utils.IdentityErrorsFormater(result.Errors));
     }
 
     public Task<bool> DoesExistByNameAsync(string roleName)
@@ -50,10 +41,7 @@ public class RoleManager : IRoleManager
         var result = await _roleManager.UpdateAsync(role);
 
         if (!result.Succeeded)
-        {
-            var errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception(errorMessage);
-        }
+            throw new Exception(Utils.IdentityErrorsFormater(result.Errors));
     }
 
     public Task<ApplicationRole?> GetByIdAsync(int id)
@@ -66,10 +54,7 @@ public class RoleManager : IRoleManager
         var result = await _roleManager.DeleteAsync(role);
 
         if (!result.Succeeded)
-        {
-            var errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception(errorMessage);
-        }
+            throw new Exception(Utils.IdentityErrorsFormater(result.Errors));
     }
 
     public async Task<List<ApplicationRole>> GetAllAsync()

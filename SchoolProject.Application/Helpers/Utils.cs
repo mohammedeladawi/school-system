@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace SchoolProject.Application.Helpers;
 
@@ -31,5 +32,12 @@ public static class Utils
         var base64 = incoming.Replace('-', '+').Replace('_', '/');
         var bytes = Convert.FromBase64String(base64);
         return Encoding.UTF8.GetString(bytes);
+    }
+
+    public static string IdentityErrorsFormater(IEnumerable<IdentityError> errors)
+    {
+        return string.Join(" ", errors.Select(e => e.Description));
+
+
     }
 }

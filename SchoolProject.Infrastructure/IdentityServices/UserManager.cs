@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using Microsoft.Extensions.Logging;
+using SchoolProject.Application.Helpers;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
 
@@ -42,11 +43,11 @@ public class UserManager : IUserManager
     {
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
-            throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(createResult.Errors));
 
         var addToRoleResult = await _userManager.AddToRoleAsync(user, role);
         if (!addToRoleResult.Succeeded)
-            throw new Exception(string.Join(" ", createResult.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(addToRoleResult.Errors));
     }
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
@@ -86,14 +87,14 @@ public class UserManager : IUserManager
     {
         var updatedUser = await _userManager.UpdateAsync(user);
         if (!updatedUser.Succeeded)
-            throw new Exception(string.Join(" ", updatedUser.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(updatedUser.Errors));
     }
 
     public async Task DeleteAsync(ApplicationUser user)
     {
         var deleteResult = await _userManager.DeleteAsync(user);
         if (!deleteResult.Succeeded)
-            throw new Exception(string.Join(" ", deleteResult.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(deleteResult.Errors));
     }
 
     public Task<bool> DoesExistByIdAsync(int id)
@@ -125,7 +126,7 @@ public class UserManager : IUserManager
 
         var result = await _userManager.ResetPasswordAsync(user!, resetToken, newPassword);
         if (!result.Succeeded)
-            throw new Exception(string.Join(" ", result.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(result.Errors));
     }
 
     public async Task ChangePasswordAsync(int id, string currentPassword, string newPassword)
@@ -140,7 +141,7 @@ public class UserManager : IUserManager
         var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
         if (!changePasswordResult.Succeeded)
-            throw new Exception(string.Join(" ", changePasswordResult.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(changePasswordResult.Errors));
     }
 
     public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
@@ -155,7 +156,7 @@ public class UserManager : IUserManager
         var confirmationResult = await _userManager.ConfirmEmailAsync(user, token);
 
         if (!confirmationResult.Succeeded)
-            throw new Exception(string.Join(" ", confirmationResult.Errors.Select(e => e.Description)));
+            throw new Exception(Utils.IdentityErrorsFormater(confirmationResult.Errors));
     }
 
     #endregion
