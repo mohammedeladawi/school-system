@@ -59,7 +59,9 @@ public static class Router
     public static class Authentication
     {
         private const string AuthBase = Base + "/" + "Authentication" + "/";
-        public const string Register = AuthBase + "Register";
+        public const string RegisterAdmin = AuthBase + "Register-Admin";
+        public const string RegisterInstructor = AuthBase + "Register-Instructor";
+        public const string RegisterStudent = AuthBase + "Register-Student";
 
         public const string Login = AuthBase + "Login";
         public const string RefreshToken = AuthBase + "Refresh-Token";

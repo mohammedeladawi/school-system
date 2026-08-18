@@ -9,14 +9,29 @@ using SchoolProject.Application.Features.Authentication.Commands.ConfirmEmail;
 using SchoolProject.Application.Features.Authentication.Commands.ForgotPassword;
 using SchoolProject.Application.Features.Authentication.Commands.VerifyResetCode;
 using SchoolProject.Application.Features.Authentication.Commands.ResetPassword;
+using SchoolProject.Application.Features.Authentication.Commands.Register.Admin;
 
 namespace SchoolProject.Api.Controllers;
 
 public class AuthenticationController : AppControllerBase
 {
     // Todo: Super Admin
-    [HttpPost(Router.Authentication.Register)]
-    public async Task<IActionResult> Register(RegisterCommand command)
+    [HttpPost(Router.Authentication.RegisterAdmin)]
+    public async Task<IActionResult> RegisterAdmin([FromForm] RegisterAdminCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
+    [HttpPost(Router.Authentication.RegisterInstructor)]
+    public async Task<IActionResult> RegisterInstructor([FromForm] RegisterInstructorCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
+    [HttpPost(Router.Authentication.RegisterStudent)]
+    public async Task<IActionResult> RegisterStudent([FromForm] RegisterStudentCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);

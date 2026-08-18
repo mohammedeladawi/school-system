@@ -1,13 +1,12 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Register;
 
-public class RegisterValidator : AbstractValidator<RegisterCommand>
+public class CommonRegisterValidator : AbstractValidator<CommonRegisterCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -15,7 +14,7 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
     #endregion
 
     #region Constructors
-    public RegisterValidator(
+    public CommonRegisterValidator(
         IStringLocalizer<SharedResource> localizer,
         IUserManager userManager)
     {
@@ -27,7 +26,7 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
         ValidatePhone();
         ValidateNameEn();
         ValidateNameAr();
-        ValidateCountry();
+        ValidateAddress();
         ValidatePassword();
         ValidateConfirmPassword();
     }
@@ -95,11 +94,11 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong]);
     }
 
-    private void ValidateCountry()
+    private void ValidateAddress()
     {
-        RuleFor(x => x.Country)
+        RuleFor(x => x.Address)
             .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.CountryTooLong]);
+            .WithMessage(_ => _localizer[SharedResourceKeys.AddressTooLong]);
     }
 
     private void ValidatePassword()

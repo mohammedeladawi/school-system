@@ -32,6 +32,8 @@ deploy.pubxml
 *.user
 *.userosscache
 *.sln.docstates
+*.jpg
+*.png
 
 ## Visual Studio Code
 .vscode/
