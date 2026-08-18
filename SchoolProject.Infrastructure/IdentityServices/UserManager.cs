@@ -5,6 +5,7 @@ using SchoolProject.Domain.Entities.Identities;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using Microsoft.Extensions.Logging;
 using SchoolProject.Application.Helpers;
+using SchoolProject.Domain.Entities;
 
 namespace SchoolProject.Infrastructure.IdentityServices;
 
@@ -39,7 +40,11 @@ public class UserManager : IUserManager
     #endregion
 
     #region Public Methods
-    public async Task AddAsync(ApplicationUser user, string password, string role)
+    public async Task AddAsync<TUser>(
+        TUser user,
+        string password,
+        string role)
+        where TUser : ApplicationUser
     {
         var createResult = await _userManager.CreateAsync(user, password);
         if (!createResult.Succeeded)
@@ -49,6 +54,7 @@ public class UserManager : IUserManager
         if (!addToRoleResult.Succeeded)
             throw new Exception(Utils.IdentityErrorsFormater(addToRoleResult.Errors));
     }
+
 
     public async Task<bool> DoesEmailExist(string email, int? excludeUserId = null)
     {

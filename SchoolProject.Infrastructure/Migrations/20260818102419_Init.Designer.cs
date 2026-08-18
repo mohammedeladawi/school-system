@@ -12,15 +12,15 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260726104603_AddPasswordResetCodeCompositeIndex")]
-    partial class AddPasswordResetCodeCompositeIndex
+    [Migration("20260818102419_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.3")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -133,6 +133,81 @@ namespace SchoolProject.Infrastructure.Migrations
                         {
                             UserId = 5,
                             RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 6,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 7,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 8,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 9,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 10,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 11,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 12,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 13,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 14,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 15,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 16,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 17,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 18,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 19,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 20,
+                            RoleId = 2
                         });
                 });
 
@@ -320,8 +395,8 @@ namespace SchoolProject.Infrastructure.Migrations
                         {
                             Id = 2,
                             ConcurrencyStamp = "0731cd45-e921-4851-842d-7eaaa0ba7b40",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
+                            Name = "Instructor",
+                            NormalizedName = "INSTRUCTOR"
                         },
                         new
                         {
@@ -343,19 +418,24 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -365,11 +445,13 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.Property<string>("NameAr")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NameEn")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -380,9 +462,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -398,8 +478,13 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -413,13 +498,15 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
+                    b.UseTptMappingStrategy();
+
                     b.HasData(
                         new
                         {
                             Id = 1,
                             AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
                             ConcurrencyStamp = "b1a89a8d-8b32-4946-bae5-334c2e11fdd2",
-                            Country = "Egypt",
                             Email = "admin@yahoo.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -428,91 +515,12 @@ namespace SchoolProject.Infrastructure.Migrations
                             NormalizedEmail = "ADMIN@YAHOO.COM",
                             NormalizedUserName = "ADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEPEeEauhgQ1f/Kj6xJnhtrTrcQL5kvtLLOnz+LZLW0EFn64MoT7kLPSVGvfofF1A0w==",
-                            Phone = "01001234567",
+                            PhoneNumber = "01001234567",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "0c2f2bc3-6e4d-4e94-aecb-32bae418d7c2",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a7c17b1a-33a4-48e5-9fd7-765421a99234",
-                            Country = "Egypt",
-                            Email = "teacher1@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NameAr = "المعلم الأول",
-                            NameEn = "Teacher One",
-                            NormalizedEmail = "TEACHER1@YAHOO.COM",
-                            NormalizedUserName = "TEACHER1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
-                            Phone = "01101234567",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "b719ecff-c01e-4641-a622-4150c4a3c274",
-                            TwoFactorEnabled = false,
-                            UserName = "teacher1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c9081a84-6af9-4469-ad9c-9ba72a9fca1d",
-                            Country = "Egypt",
-                            Email = "teacher2@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NameAr = "المعلم الثاني",
-                            NameEn = "Teacher Two",
-                            NormalizedEmail = "TEACHER2@YAHOO.COM",
-                            NormalizedUserName = "TEACHER2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
-                            Phone = "01201234567",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "a053d27a-715b-4af4-a5bc-660278dfd9ff",
-                            TwoFactorEnabled = false,
-                            UserName = "teacher2"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d910958e-d9b5-4ab8-bd90-6ba0645dcc13",
-                            Country = "Egypt",
-                            Email = "student1@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NameAr = "الطالب الأول",
-                            NameEn = "Student One",
-                            NormalizedEmail = "STUDENT1@YAHOO.COM",
-                            NormalizedUserName = "STUDENT1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
-                            Phone = "01001234568",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "50729c87-1113-4c48-bbe4-80f88425eb01",
-                            TwoFactorEnabled = false,
-                            UserName = "student1"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "13c8aa62-fafb-4710-9341-7850c3f82868",
-                            Country = "Egypt",
-                            Email = "student2@yahoo.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NameAr = "الطالب الثاني",
-                            NameEn = "Student Two",
-                            NormalizedEmail = "STUDENT2@YAHOO.COM",
-                            NormalizedUserName = "STUDENT2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
-                            Phone = "01101234568",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "a3ae62a1-4c23-480c-8049-f90c2334fad8",
-                            TwoFactorEnabled = false,
-                            UserName = "student2"
+                            UserName = "admin",
+                            UserType = "Admin"
                         });
                 });
 
@@ -561,107 +569,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameAr")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DepartmentId = 1,
-                            NameAr = "د. علي منصور",
-                            NameEn = "Dr. Ali Mansour"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DepartmentId = 1,
-                            NameAr = "د. سارة يوسف",
-                            NameEn = "Dr. Sarah Youssef",
-                            SupervisorId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DepartmentId = 2,
-                            NameAr = "د. كريم عادل",
-                            NameEn = "Dr. Karim Adel"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DepartmentId = 2,
-                            NameAr = "د. منى سمير",
-                            NameEn = "Dr. Mona Samir",
-                            SupervisorId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DepartmentId = 3,
-                            NameAr = "د. طارق نجيب",
-                            NameEn = "Dr. Tarek Naguib"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            DepartmentId = 3,
-                            NameAr = "د. نور فتحي",
-                            NameEn = "Dr. Nour Fathy",
-                            SupervisorId = 5
-                        },
-                        new
-                        {
-                            Id = 7,
-                            DepartmentId = 4,
-                            NameAr = "د. حنان عباس",
-                            NameEn = "Dr. Hanan Abbas"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            DepartmentId = 4,
-                            NameAr = "د. يارا حامد",
-                            NameEn = "Dr. Yara Hamed",
-                            SupervisorId = 7
-                        },
-                        new
-                        {
-                            Id = 9,
-                            DepartmentId = 5,
-                            NameAr = "د. رانيا فاضل",
-                            NameEn = "Dr. Rania Fadel"
-                        });
-                });
-
             modelBuilder.Entity("SchoolProject.Domain.Entities.InstructorSubject", b =>
                 {
                     b.Property<int>("InstructorId")
@@ -679,72 +586,72 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            InstructorId = 1,
+                            InstructorId = 2,
                             SubjectId = 1
                         },
                         new
                         {
-                            InstructorId = 1,
+                            InstructorId = 2,
                             SubjectId = 2
                         },
                         new
                         {
-                            InstructorId = 1,
+                            InstructorId = 2,
                             SubjectId = 3
                         },
                         new
                         {
-                            InstructorId = 2,
+                            InstructorId = 3,
                             SubjectId = 1
                         },
                         new
                         {
-                            InstructorId = 2,
+                            InstructorId = 3,
                             SubjectId = 3
                         },
                         new
                         {
-                            InstructorId = 3,
+                            InstructorId = 14,
                             SubjectId = 4
                         },
                         new
                         {
-                            InstructorId = 3,
+                            InstructorId = 14,
                             SubjectId = 5
                         },
                         new
                         {
-                            InstructorId = 4,
+                            InstructorId = 15,
                             SubjectId = 4
                         },
                         new
                         {
-                            InstructorId = 5,
+                            InstructorId = 16,
                             SubjectId = 6
                         },
                         new
                         {
-                            InstructorId = 5,
+                            InstructorId = 16,
                             SubjectId = 7
                         },
                         new
                         {
-                            InstructorId = 6,
+                            InstructorId = 17,
                             SubjectId = 7
                         },
                         new
                         {
-                            InstructorId = 7,
+                            InstructorId = 18,
                             SubjectId = 8
                         },
                         new
                         {
-                            InstructorId = 8,
+                            InstructorId = 19,
                             SubjectId = 8
                         },
                         new
                         {
-                            InstructorId = 9,
+                            InstructorId = 20,
                             SubjectId = 9
                         });
                 });
@@ -780,136 +687,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.ToTable("PasswordResetCodes");
                 });
 
-            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Cairo, Egypt",
-                            DepartmentId = 1,
-                            NameAr = "أحمد حسن",
-                            NameEn = "Ahmed Hassan",
-                            Phone = "01001234567"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Giza, Egypt",
-                            DepartmentId = 1,
-                            NameAr = "فاطمة محمد",
-                            NameEn = "Fatima Mohamed",
-                            Phone = "01101234567"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "Alexandria, Egypt",
-                            DepartmentId = 2,
-                            NameAr = "عمر علي",
-                            NameEn = "Omar Ali",
-                            Phone = "01201234567"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "Cairo, Egypt",
-                            DepartmentId = 2,
-                            NameAr = "ليلى إبراهيم",
-                            NameEn = "Layla Ibrahim",
-                            Phone = "01001234568"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Address = "Helwan, Egypt",
-                            DepartmentId = 3,
-                            NameAr = "مصطفى كريم",
-                            NameEn = "Mustafa Karim",
-                            Phone = "01101234568"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Address = "New Cairo, Egypt",
-                            DepartmentId = 3,
-                            NameAr = "أميرة حسن",
-                            NameEn = "Amira Hassan",
-                            Phone = "01201234568"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Address = "Cairo, Egypt",
-                            DepartmentId = 4,
-                            NameAr = "خالد أحمد",
-                            NameEn = "Khaled Ahmed",
-                            Phone = "01001234569"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Address = "Giza, Egypt",
-                            DepartmentId = 4,
-                            NameAr = "نور صالح",
-                            NameEn = "Noor Saleh",
-                            Phone = "01101234569"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Address = "Cairo, Egypt",
-                            DepartmentId = 5,
-                            NameAr = "يوسف نصر",
-                            NameEn = "Youssef Nasr",
-                            Phone = "01201234569"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Address = "Helwan, Egypt",
-                            DepartmentId = 5,
-                            NameAr = "دينا خليل",
-                            NameEn = "Dina Khalil",
-                            Phone = "01001234570"
-                        });
-                });
-
             modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
                     b.Property<int>("StudentId")
@@ -931,103 +708,103 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = 1,
+                            StudentId = 4,
                             SubjectId = 1,
                             Grade = 85.5m
                         },
                         new
                         {
-                            StudentId = 1,
+                            StudentId = 4,
                             SubjectId = 2,
                             Grade = 90.0m
                         },
                         new
                         {
-                            StudentId = 1,
+                            StudentId = 4,
                             SubjectId = 3,
                             Grade = 78.0m
                         },
                         new
                         {
-                            StudentId = 2,
+                            StudentId = 5,
                             SubjectId = 1,
                             Grade = 92.5m
                         },
                         new
                         {
-                            StudentId = 2,
+                            StudentId = 5,
                             SubjectId = 3,
                             Grade = 88.0m
                         },
                         new
                         {
-                            StudentId = 3,
+                            StudentId = 6,
                             SubjectId = 4,
                             Grade = 65.0m
                         },
                         new
                         {
-                            StudentId = 3,
+                            StudentId = 6,
                             SubjectId = 5,
                             Grade = 72.5m
                         },
                         new
                         {
-                            StudentId = 4,
+                            StudentId = 7,
                             SubjectId = 4,
                             Grade = 81.0m
                         },
                         new
                         {
-                            StudentId = 4,
+                            StudentId = 7,
                             SubjectId = 5,
                             Grade = 89.5m
                         },
                         new
                         {
-                            StudentId = 5,
+                            StudentId = 8,
                             SubjectId = 6,
                             Grade = 95.0m
                         },
                         new
                         {
-                            StudentId = 5,
+                            StudentId = 8,
                             SubjectId = 7,
                             Grade = 87.0m
                         },
                         new
                         {
-                            StudentId = 6,
+                            StudentId = 9,
                             SubjectId = 6,
                             Grade = 74.5m
                         },
                         new
                         {
-                            StudentId = 6,
+                            StudentId = 9,
                             SubjectId = 7,
                             Grade = 80.0m
                         },
                         new
                         {
-                            StudentId = 7,
+                            StudentId = 10,
                             SubjectId = 8,
                             Grade = 83.0m
                         },
                         new
                         {
-                            StudentId = 8,
+                            StudentId = 11,
                             SubjectId = 8,
                             Grade = 91.5m
                         },
                         new
                         {
-                            StudentId = 9,
+                            StudentId = 12,
                             SubjectId = 9,
                             Grade = 77.0m
                         },
                         new
                         {
-                            StudentId = 10,
+                            StudentId = 13,
                             SubjectId = 9,
                             Grade = 86.5m
                         });
@@ -1123,6 +900,482 @@ namespace SchoolProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Views.DepartmentStudentsCountView", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DepartmentNameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DepartmentNameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentsCount")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vw_DepartmentStudentsCount", (string)null);
+                });
+
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
+                {
+                    b.HasBaseType("SchoolProject.Domain.Entities.Identities.ApplicationUser");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("Instructors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "a7c17b1a-33a4-48e5-9fd7-765421a99234",
+                            Email = "teacher1@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. علي منصور",
+                            NameEn = "Dr. Ali Mansour",
+                            NormalizedEmail = "TEACHER1@YAHOO.COM",
+                            NormalizedUserName = "TEACHER1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234567",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "b719ecff-c01e-4641-a622-4150c4a3c274",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher1",
+                            UserType = "Instructor",
+                            DepartmentId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "c9081a84-6af9-4469-ad9c-9ba72a9fca1d",
+                            Email = "teacher2@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. سارة يوسف",
+                            NameEn = "Dr. Sarah Youssef",
+                            NormalizedEmail = "TEACHER2@YAHOO.COM",
+                            NormalizedUserName = "TEACHER2",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234567",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a053d27a-715b-4af4-a5bc-660278dfd9ff",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher2",
+                            UserType = "Instructor",
+                            DepartmentId = 1,
+                            SupervisorId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "c9234567-1234-1234-1234-123456789012",
+                            Email = "teacher3@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. كريم عادل",
+                            NameEn = "Dr. Karim Adel",
+                            NormalizedEmail = "TEACHER3@YAHOO.COM",
+                            NormalizedUserName = "TEACHER3",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234573",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c9234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher3",
+                            UserType = "Instructor",
+                            DepartmentId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "ca234567-1234-1234-1234-123456789012",
+                            Email = "teacher4@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. منى سمير",
+                            NameEn = "Dr. Mona Samir",
+                            NormalizedEmail = "TEACHER4@YAHOO.COM",
+                            NormalizedUserName = "TEACHER4",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234573",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "ca234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher4",
+                            UserType = "Instructor",
+                            DepartmentId = 2,
+                            SupervisorId = 14
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "cb234567-1234-1234-1234-123456789012",
+                            Email = "teacher5@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. طارق نجيب",
+                            NameEn = "Dr. Tarek Naguib",
+                            NormalizedEmail = "TEACHER5@YAHOO.COM",
+                            NormalizedUserName = "TEACHER5",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234574",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "cb234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher5",
+                            UserType = "Instructor",
+                            DepartmentId = 3
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "cc234567-1234-1234-1234-123456789012",
+                            Email = "teacher6@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. نور فتحي",
+                            NameEn = "Dr. Nour Fathy",
+                            NormalizedEmail = "TEACHER6@YAHOO.COM",
+                            NormalizedUserName = "TEACHER6",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234574",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "cc234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher6",
+                            UserType = "Instructor",
+                            DepartmentId = 3,
+                            SupervisorId = 16
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "cd234567-1234-1234-1234-123456789012",
+                            Email = "teacher7@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. حنان عباس",
+                            NameEn = "Dr. Hanan Abbas",
+                            NormalizedEmail = "TEACHER7@YAHOO.COM",
+                            NormalizedUserName = "TEACHER7",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234574",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "cd234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher7",
+                            UserType = "Instructor",
+                            DepartmentId = 4
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "ce234567-1234-1234-1234-123456789012",
+                            Email = "teacher8@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. يارا حامد",
+                            NameEn = "Dr. Yara Hamed",
+                            NormalizedEmail = "TEACHER8@YAHOO.COM",
+                            NormalizedUserName = "TEACHER8",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234575",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "ce234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher8",
+                            UserType = "Instructor",
+                            DepartmentId = 4,
+                            SupervisorId = 18
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "cf234567-1234-1234-1234-123456789012",
+                            Email = "teacher9@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "د. رانيا فاضل",
+                            NameEn = "Dr. Rania Fadel",
+                            NormalizedEmail = "TEACHER9@YAHOO.COM",
+                            NormalizedUserName = "TEACHER9",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234575",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "cf234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "teacher9",
+                            UserType = "Instructor",
+                            DepartmentId = 5
+                        });
+                });
+
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
+                {
+                    b.HasBaseType("SchoolProject.Domain.Entities.Identities.ApplicationUser");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "d910958e-d9b5-4ab8-bd90-6ba0645dcc13",
+                            Email = "student1@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "أحمد حسن",
+                            NameEn = "Ahmed Hassan",
+                            NormalizedEmail = "STUDENT1@YAHOO.COM",
+                            NormalizedUserName = "STUDENT1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234568",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "50729c87-1113-4c48-bbe4-80f88425eb01",
+                            TwoFactorEnabled = false,
+                            UserName = "student1",
+                            UserType = "Student",
+                            DepartmentId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AccessFailedCount = 0,
+                            Address = "Giza, Egypt",
+                            ConcurrencyStamp = "13c8aa62-fafb-4710-9341-7850c3f82868",
+                            Email = "student2@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "فاطمة محمد",
+                            NameEn = "Fatima Mohamed",
+                            NormalizedEmail = "STUDENT2@YAHOO.COM",
+                            NormalizedUserName = "STUDENT2",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234568",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a3ae62a1-4c23-480c-8049-f90c2334fad8",
+                            TwoFactorEnabled = false,
+                            UserName = "student2",
+                            UserType = "Student",
+                            DepartmentId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AccessFailedCount = 0,
+                            Address = "Alexandria, Egypt",
+                            ConcurrencyStamp = "c1234567-1234-1234-1234-123456789012",
+                            Email = "student3@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "عمر علي",
+                            NameEn = "Omar Ali",
+                            NormalizedEmail = "STUDENT3@YAHOO.COM",
+                            NormalizedUserName = "STUDENT3",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234570",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c1234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student3",
+                            UserType = "Student",
+                            DepartmentId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "c2234567-1234-1234-1234-123456789012",
+                            Email = "student4@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "ليلى إبراهيم",
+                            NameEn = "Layla Ibrahim",
+                            NormalizedEmail = "STUDENT4@YAHOO.COM",
+                            NormalizedUserName = "STUDENT4",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234571",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c2234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student4",
+                            UserType = "Student",
+                            DepartmentId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AccessFailedCount = 0,
+                            Address = "Helwan, Egypt",
+                            ConcurrencyStamp = "c3234567-1234-1234-1234-123456789012",
+                            Email = "student5@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "مصطفى كريم",
+                            NameEn = "Mustafa Karim",
+                            NormalizedEmail = "STUDENT5@YAHOO.COM",
+                            NormalizedUserName = "STUDENT5",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234571",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c3234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student5",
+                            UserType = "Student",
+                            DepartmentId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AccessFailedCount = 0,
+                            Address = "New Cairo, Egypt",
+                            ConcurrencyStamp = "c4234567-1234-1234-1234-123456789012",
+                            Email = "student6@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "أميرة حسن",
+                            NameEn = "Amira Hassan",
+                            NormalizedEmail = "STUDENT6@YAHOO.COM",
+                            NormalizedUserName = "STUDENT6",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234571",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c4234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student6",
+                            UserType = "Student",
+                            DepartmentId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "c5234567-1234-1234-1234-123456789012",
+                            Email = "student7@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "خالد أحمد",
+                            NameEn = "Khaled Ahmed",
+                            NormalizedEmail = "STUDENT7@YAHOO.COM",
+                            NormalizedUserName = "STUDENT7",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234572",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c5234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student7",
+                            UserType = "Student",
+                            DepartmentId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AccessFailedCount = 0,
+                            Address = "Giza, Egypt",
+                            ConcurrencyStamp = "c6234567-1234-1234-1234-123456789012",
+                            Email = "student8@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "نور صالح",
+                            NameEn = "Noor Saleh",
+                            NormalizedEmail = "STUDENT8@YAHOO.COM",
+                            NormalizedUserName = "STUDENT8",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01101234572",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c6234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student8",
+                            UserType = "Student",
+                            DepartmentId = 4
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AccessFailedCount = 0,
+                            Address = "Cairo, Egypt",
+                            ConcurrencyStamp = "c7234567-1234-1234-1234-123456789012",
+                            Email = "student9@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "يوسف نصر",
+                            NameEn = "Youssef Nasr",
+                            NormalizedEmail = "STUDENT9@YAHOO.COM",
+                            NormalizedUserName = "STUDENT9",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01201234572",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c7234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student9",
+                            UserType = "Student",
+                            DepartmentId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AccessFailedCount = 0,
+                            Address = "Helwan, Egypt",
+                            ConcurrencyStamp = "c8234567-1234-1234-1234-123456789012",
+                            Email = "student10@yahoo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NameAr = "دينا خليل",
+                            NameEn = "Dina Khalil",
+                            NormalizedEmail = "STUDENT10@YAHOO.COM",
+                            NormalizedUserName = "STUDENT10",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGgmuCLZWf94oa24FH2/rouApN2oGDwRIygAbVxhDGez79ryX8CUrYiJQarwvIpPPw==",
+                            PhoneNumber = "01001234573",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c8234567-1234-1234-1234-123456789012",
+                            TwoFactorEnabled = false,
+                            UserName = "student10",
+                            UserType = "Student",
+                            DepartmentId = 5
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationRole", null)
@@ -1214,23 +1467,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
-                {
-                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
-                        .WithMany("Instructors")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("SchoolProject.Domain.Entities.Instructor", "Supervisor")
-                        .WithMany("Subordinates")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Supervisor");
-                });
-
             modelBuilder.Entity("SchoolProject.Domain.Entities.InstructorSubject", b =>
                 {
                     b.HasOne("SchoolProject.Domain.Entities.Instructor", "Instructor")
@@ -1261,17 +1497,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
-                {
-                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
-                        .WithMany("Students")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
                     b.HasOne("SchoolProject.Domain.Entities.Student", "Student")
@@ -1289,6 +1514,46 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
+                {
+                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
+                        .WithMany("Instructors")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("SchoolProject.Domain.Entities.Instructor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolProject.Domain.Entities.Instructor", "Supervisor")
+                        .WithMany("Subordinates")
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
+                {
+                    b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolProject.Domain.Entities.Identities.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("SchoolProject.Domain.Entities.Student", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("SchoolProject.Domain.Entities.Department", b =>

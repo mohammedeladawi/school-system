@@ -6,6 +6,6 @@ public partial class InstructorProfile : Profile
 {
     public InstructorProfile()
     {
-        MapAddInstructorCommandToInstructor();
+        MapRegisterInstructorCommandToInstructor();
     }
 }

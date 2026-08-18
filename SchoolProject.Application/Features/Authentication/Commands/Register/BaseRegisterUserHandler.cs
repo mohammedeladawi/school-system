@@ -1,6 +1,5 @@
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
@@ -12,34 +11,45 @@ using SchoolProject.Application.Interfaces.ApiServices;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.Register
 {
-    public class RegisterHandler : ResponseHandler, IRequestHandler<RegisterCommand, Response<string>>
+    public abstract class BaseRegisterUserHandler<TCommand, TUser> :
+        ResponseHandler,
+        IRequestHandler<TCommand, Response<string>>
+        where TCommand : CommonRegisterCommand, IRequest<Response<string>>
+        where TUser : Domain.Entities.Identities.ApplicationUser
     {
-        #region Private Fields
-        private readonly IUserManager _userManager;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IUrlService _urlService;
-        private readonly IEmailService _emailService;
+        #region Protected Fields
+        protected readonly IUserManager _userManager;
+        protected readonly IUnitOfWork _unitOfWork;
+        protected readonly IFileService _fileService;
+        protected readonly IUrlService _urlService;
+        protected readonly IEmailService _emailService;
+        protected readonly ILocationService _locationService;
         #endregion
 
         #region Constructors
-        public RegisterHandler(
+        protected BaseRegisterUserHandler(
             IUserManager userManager,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
             IUrlService urlService,
             IEmailService emailService,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IFileService fileService,
+            ILocationService locationService)
+
             : base(localizer, mapper)
         {
             _userManager = userManager;
             _urlService = urlService;
             _emailService = emailService;
             _unitOfWork = unitOfWork;
+            _fileService = fileService;
+            _locationService = locationService;
         }
         #endregion
 
-        #region Private Methods
-        private (string Subject, string Body) GetComposedEmailContent(
+        #region Protected Methods
+        protected (string Subject, string Body) GetComposedEmailContent(
             string userName,
             string confirmationUrl)
         {
@@ -61,25 +71,26 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             return (emailSubject, emailBody);
         }
 
-        private string GetConfirmationUrl(int userId, string token)
+        protected string GetConfirmationUrl(int userId, string token)
         {
             string confirmEmailUrl = _urlService.GetConfirmEmailUrl();
             return $"{confirmEmailUrl}?userId={userId}&token={token}";
         }
 
+        /// <summary>
+        /// Abstract method to add a user to the database with the specified role.
+        /// </summary>
+        protected abstract Task<TUser> AddUser(TCommand request);
+
         #endregion
 
         #region Public Methods
-        public async Task<Response<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(TCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<Domain.Entities.Identities.ApplicationUser>(request);
-
             await _unitOfWork.BeginTransactionAsync();
             try
             {
-                // Todo: accept role from api
-                // Add User To Db
-                await _userManager.AddAsync(user, request.Password, "Admin");
+                var user = await AddUser(request);
 
                 // Send Confirmation Email
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -99,6 +110,5 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             return Created<string>(_localizer[SharedResourceKeys.AddedSuccessfully]);
         }
         #endregion
-
     }
 }

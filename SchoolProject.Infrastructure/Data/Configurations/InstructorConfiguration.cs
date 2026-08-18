@@ -9,16 +9,6 @@ public class InstructorConfiguration : IEntityTypeConfiguration<Instructor>
 {
     public void Configure(EntityTypeBuilder<Instructor> builder)
     {
-        builder.HasKey(d => d.Id);
-
-        builder.Property(d => d.NameEn).IsRequired()
-            .HasMaxLength(200);
-
-        builder.Property(d => d.NameAr)
-            .HasMaxLength(200);
-
-        builder.Ignore(d => d.Name);
-
         builder.HasOne(i => i.Department)
             .WithMany(d => d.Instructors)
             .HasForeignKey(i => i.DepartmentId)
@@ -29,7 +19,7 @@ public class InstructorConfiguration : IEntityTypeConfiguration<Instructor>
             .HasForeignKey(i => i.SupervisorId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Seed data
+        // Seed instructor data
         builder.HasData(SeedData.Instructors);
     }
 };
