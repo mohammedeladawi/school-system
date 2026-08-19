@@ -1,17 +1,16 @@
 using AutoMapper;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Bases;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
-using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
+using SchoolProject.Application.Features.Authentication.Commands.Register;
 
-namespace SchoolProject.Application.Features.Authentication.Commands.Register.Admin
+namespace SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser
 {
     public class RegisterAdminHandler :
-        BaseRegisterUserHandler<RegisterAdminCommand, Domain.Entities.Identities.ApplicationUser>
+        BaseRegisterUserHandler<RegisterUserCommand, Domain.Entities.Identities.ApplicationUser>
     {
         #region Constructors
         public RegisterAdminHandler(
@@ -29,7 +28,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register.Ad
         #endregion
 
         #region Protected Methods
-        protected override async Task<Domain.Entities.Identities.ApplicationUser> AddUser(RegisterAdminCommand request)
+        protected override async Task<Domain.Entities.Identities.ApplicationUser> AddUser(RegisterUserCommand request)
         {
             var admin = _mapper.Map<Domain.Entities.Identities.ApplicationUser>(request);
             if (request.Image is not null)

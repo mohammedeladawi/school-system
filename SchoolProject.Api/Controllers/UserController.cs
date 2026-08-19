@@ -7,12 +7,20 @@ using SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword
 using SchoolProject.Application.Features.ApplicationUser.Queries.GetPaginatedUsers;
 using SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser;
 
 namespace SchoolProject.Api.Controllers;
 
 // Todo: All for Super Admin, unless get-by-id, change-password, and update are policy based;
 public class ApplicationUserController : AppControllerBase
 {
+    [HttpGet(Router.ApplicationUser.Register)]
+    public async Task<IActionResult> Register([FromForm] RegisterUserCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
+
     [HttpGet(Router.ApplicationUser.PaginatedList)]
     public async Task<IActionResult> GetPaginatedList([FromQuery] GetPaginatedUsersQuery query)
     {

@@ -1,14 +1,12 @@
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Application.Features.Student.Commands.AddStudent;
 using SchoolProject.Application.Features.Student.Commands.EditStudent;
 using SchoolProject.Application.Features.Student.Commands.DeleteStudentById;
 using SchoolProject.Application.Features.Student.Queries.GetAllStudents;
 using SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
 using SchoolProject.Application.Features.Student.Queries.GetStudentById;
+using SchoolProject.Application.Features.Student.Commands.RegisterStudent;
 
 namespace SchoolProject.Api.Controllers;
 
@@ -36,8 +34,16 @@ public class StudentController : AppControllerBase
         return NewResult(students);
     }
 
-    [HttpPost(Router.Student.Add)]
-    public async Task<IActionResult> Add([FromBody] AddStudentCommand command)
+    // [HttpPost(Router.Student.Add)]
+    // public async Task<IActionResult> Add([FromBody] AddStudentCommand command)
+    // {
+    //     var result = await Mediator.Send(command);
+    //     return NewResult(result);
+    // }
+
+
+    [HttpPost(Router.Student.Register)]
+    public async Task<IActionResult> Register([FromForm] RegisterStudentCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);

@@ -13,7 +13,7 @@ public static class Router
         public const string List = StudentBase + "List";
         public const string GetById = StudentBase + "{id}";
 
-        public const string Add = StudentBase + "Add";
+        public const string Register = StudentBase + "Register";
 
         public const string Update = StudentBase + "Update";
 
@@ -43,12 +43,12 @@ public static class Router
     public static class Instructor
     {
         private const string InstructorBase = Base + "/" + "Instructor" + "/";
-        public const string Add = InstructorBase + "Add";
+        public const string Register = InstructorBase + "Register";
     }
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
-
+        public const string Register = Base + "Register";
         public const string PaginatedList = ApplicationUserBase + "Paginated-List";
         public const string GetById = ApplicationUserBase + "{id}";
         public const string Update = ApplicationUserBase + "Update";
@@ -59,10 +59,6 @@ public static class Router
     public static class Authentication
     {
         private const string AuthBase = Base + "/" + "Authentication" + "/";
-        public const string RegisterAdmin = AuthBase + "Register-Admin";
-        public const string RegisterInstructor = AuthBase + "Register-Instructor";
-        public const string RegisterStudent = AuthBase + "Register-Student";
-
         public const string Login = AuthBase + "Login";
         public const string RefreshToken = AuthBase + "Refresh-Token";
         public const string Logout = AuthBase + "Logout";

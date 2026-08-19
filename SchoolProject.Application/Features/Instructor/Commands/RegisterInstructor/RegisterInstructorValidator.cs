@@ -1,59 +1,40 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Interfaces.Repositories;
+using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
+using SchoolProject.Application.Interfaces.Repositories;
+using SchoolProject.Application.Features.Authentication.Commands.Register;
 
-namespace SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
+namespace SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 
-public class AddInstructorCommandValidator : AbstractValidator<AddInstructorCommand>
+public class RegisterInstructorValidator : AbstractValidator<RegisterInstructorCommand>
 {
+    #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IInstructorRepository _instructrorRepository;
     private readonly IDepartmentRepository _departmentRepository;
+    private readonly IInstructorRepository _instructrorRepository;
 
-    public AddInstructorCommandValidator(
+    #endregion
+
+    #region Constructors
+    public RegisterInstructorValidator(
         IStringLocalizer<SharedResource> localizer,
-        IInstructorRepository instructorRepository,
-        IDepartmentRepository departmentRepository)
+        IUserManager userManager,
+        IDepartmentRepository departmentRepository,
+        IInstructorRepository instructrorRepository)
     {
         _localizer = localizer;
-        _instructrorRepository = instructorRepository;
         _departmentRepository = departmentRepository;
+        _instructrorRepository = instructrorRepository;
 
-        ValidateNameEn();
-        ValidateNameAr();
+        Include(new CommonRegisterValidator(localizer, userManager));
+
         ValidateDepartmentId();
         ValidateSupervisorId();
     }
+    #endregion
 
-    private void ValidateNameAr()
-    {
-        RuleFor(x => x.NameAr)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameArRequired])
-
-            .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameArTooLong])
-
-            .MustAsync(async (nameAr, cancellationToken) =>
-                !await _instructrorRepository.DoesNameArExistAsync(nameAr))
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameArAlreadyInUse]);
-    }
-
-    private void ValidateNameEn()
-    {
-        RuleFor(x => x.NameEn)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameEnRequired])
-
-            .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong])
-
-            .MustAsync(async (nameEn, cancellationToken) =>
-                !await _instructrorRepository.DoesNameEnExistAsync(nameEn))
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameEnAlreadyInUse]);
-
-    }
+    #region Private Methods
 
     private void ValidateDepartmentId()
     {
@@ -88,4 +69,6 @@ public class AddInstructorCommandValidator : AbstractValidator<AddInstructorComm
                 SharedResourceKeys.SupervisorNotExist])
             .When(x => x.SupervisorId.HasValue);
     }
+    #endregion
+
 }

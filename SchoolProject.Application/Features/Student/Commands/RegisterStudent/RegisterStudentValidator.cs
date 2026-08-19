@@ -1,12 +1,11 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
 using SchoolProject.Application.Interfaces.IdentityServices;
-using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.Repositories;
+using SchoolProject.Application.Features.Authentication.Commands.Register;
 
-namespace SchoolProject.Application.Features.Authentication.Commands.Register;
+namespace SchoolProject.Application.Features.Student.Commands.RegisterStudent;
 
 public class RegisterStudentValidator : AbstractValidator<RegisterStudentCommand>
 {

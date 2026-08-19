@@ -1,5 +1,5 @@
 using SchoolProject.Application.Features.Authentication.Commands.Register;
-using SchoolProject.Application.Features.Instructor.Commands.AddInstructor;
+using SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 
 namespace SchoolProject.Application.Mapping.Instructor;
 

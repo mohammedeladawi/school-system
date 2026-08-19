@@ -66,7 +66,7 @@ public class CommonRegisterValidator : AbstractValidator<CommonRegisterCommand>
 
     private void ValidatePhone()
     {
-        RuleFor(x => x.Phone)
+        RuleFor(x => x.PhoneNumber)
             .MaximumLength(20)
             .WithMessage(_ => _localizer[SharedResourceKeys.PhoneTooLong])
 

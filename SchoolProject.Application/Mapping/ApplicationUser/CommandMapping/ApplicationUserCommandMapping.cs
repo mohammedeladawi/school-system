@@ -1,5 +1,6 @@
 using AutoMapper;
 using SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
+using SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser;
 using SchoolProject.Application.Features.Authentication.Commands.Register;
 using SchoolProject.Application.Features.Authentication.Commands.Register.Admin;
 
@@ -9,7 +10,7 @@ public partial class ApplicationUser
 {
     public void MapAddApplicationUserCommandToApplicationUser()
     {
-        CreateMap<RegisterAdminCommand, Domain.Entities.Identities.ApplicationUser>()
+        CreateMap<RegisterUserCommand, Domain.Entities.Identities.ApplicationUser>()
             .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
     }
     public void MapEditApplicationUserCommandToApplicationUser()
