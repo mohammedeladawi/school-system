@@ -5,15 +5,15 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
-using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
 
 namespace SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser
 {
-    public class RegisterAdminHandler :
-        BaseRegisterUserHandler<RegisterUserCommand, Domain.Entities.Identities.ApplicationUser>
+    public class RegisterUserHandler :
+        BaseRegisterOrUpdateUserHandler<RegisterUserCommand, Domain.Entities.Identities.ApplicationUser>
     {
         #region Constructors
-        public RegisterAdminHandler(
+        public RegisterUserHandler(
             IUserManager userManager,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
@@ -28,7 +28,7 @@ namespace SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUs
         #endregion
 
         #region Protected Methods
-        protected override async Task<Domain.Entities.Identities.ApplicationUser> AddUser(RegisterUserCommand request)
+        protected override async Task<Domain.Entities.Identities.ApplicationUser> CreateOrUpdateUserAsync(RegisterUserCommand request)
         {
             var admin = _mapper.Map<Domain.Entities.Identities.ApplicationUser>(request);
             if (request.Image is not null)

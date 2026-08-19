@@ -8,13 +8,14 @@ using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
+using SchoolProject.Application.Features.ApplicationUser.Commands;
 
-namespace SchoolProject.Application.Features.Authentication.Commands.Register
+namespace SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate
 {
-    public abstract class BaseRegisterUserHandler<TCommand, TUser> :
+    public abstract class BaseRegisterOrUpdateUserHandler<TCommand, TUser> :
         ResponseHandler,
         IRequestHandler<TCommand, Response<string>>
-        where TCommand : CommonRegisterCommand, IRequest<Response<string>>
+        where TCommand : CommonUserCommand, IRequest<Response<string>>
         where TUser : Domain.Entities.Identities.ApplicationUser
     {
         #region Protected Fields
@@ -27,7 +28,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
         #endregion
 
         #region Constructors
-        protected BaseRegisterUserHandler(
+        protected BaseRegisterOrUpdateUserHandler(
             IUserManager userManager,
             IMapper mapper,
             IStringLocalizer<SharedResource> localizer,
@@ -77,10 +78,18 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             return $"{confirmEmailUrl}?userId={userId}&token={token}";
         }
 
+
+        protected void RemoveOldImage(TCommand request, TUser user)
+        {
+            string webRootPath = _locationService.GetWebRootPath();
+            string filePath = Path.Combine(webRootPath, user!.ImagePath!);
+            _fileService.DeleteFile(filePath);
+        }
+
         /// <summary>
         /// Abstract method to add a user to the database with the specified role.
         /// </summary>
-        protected abstract Task<TUser> AddUser(TCommand request);
+        protected abstract Task<TUser> CreateOrUpdateUserAsync(TCommand request);
 
         #endregion
 
@@ -90,7 +99,7 @@ namespace SchoolProject.Application.Features.Authentication.Commands.Register
             await _unitOfWork.BeginTransactionAsync();
             try
             {
-                var user = await AddUser(request);
+                var user = await CreateOrUpdateUserAsync(request);
 
                 // Send Confirmation Email
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -7,12 +7,12 @@ using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
-using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
 
 namespace SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 
 public class RegisterInstructorHandler :
-    BaseRegisterUserHandler<RegisterInstructorCommand, Domain.Entities.Instructor>
+    BaseRegisterOrUpdateUserHandler<RegisterInstructorCommand, Domain.Entities.Instructor>
 {
     #region Constructors
     public RegisterInstructorHandler(
@@ -30,7 +30,7 @@ public class RegisterInstructorHandler :
     #endregion
 
     #region Protected Methods
-    protected override async Task<Domain.Entities.Instructor> AddUser(RegisterInstructorCommand request)
+    protected override async Task<Domain.Entities.Instructor> CreateOrUpdateUserAsync(RegisterInstructorCommand request)
     {
         var instructor = _mapper.Map<Domain.Entities.Instructor>(request);
         if (request.Image is not null)

@@ -6,6 +6,16 @@ namespace SchoolProject.Infrastructure.Services;
 
 public class FileService : IFileService
 {
+    public bool DeleteFile(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            return true;
+        }
+        return false;
+    }
+
     public async Task<string> UploadFileAsync(IFormFile file, string webRootPath, string relativeFolderPath)
     {
         string folderPath = Path.Combine(webRootPath, relativeFolderPath);

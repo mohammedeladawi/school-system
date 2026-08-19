@@ -1,15 +1,18 @@
 using MediatR;
 using SchoolProject.Application.Bases;
 using SchoolProject.Application.Features.ApplicationUser.Commands;
-using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
 
 namespace SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor
 {
     public record RegisterInstructorCommand :
-        CommonRegisterCommand,
+        CommonUserCommand,
         IRequest<Response<string>>
     {
         public int? DepartmentId { get; init; }
         public int? SupervisorId { get; init; }
+
+        public string Password { get; init; } = null!;
+        public string ConfirmPassword { get; init; } = null!;
     }
 }
