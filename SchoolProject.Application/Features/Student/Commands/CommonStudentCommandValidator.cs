@@ -27,7 +27,7 @@ public class CommonStudentCommandValidator : AbstractValidator<CommonStudentDto>
 
     private void ValidatePhone(IStringLocalizer<SharedResource> localizer)
     {
-        RuleFor(x => x.Phone)
+        RuleFor(x => x.PhoneNumber)
             .NotEmpty()
             .WithMessage(_ => localizer[SharedResourceKeys.PhoneRequired]);
     }

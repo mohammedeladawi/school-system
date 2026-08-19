@@ -1,3 +1,4 @@
+using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Domain.Entities.Identities;
 
 namespace SchoolProject.Application.Interfaces.IdentityServices;

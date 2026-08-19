@@ -273,15 +273,15 @@
     <comment/>
   </data>
   <data name="PhoneRequired" xml:space="preserve">
-    <value>Phone is required.</value>
+    <value>PhoneNumberis required.</value>
     <comment/>
   </data>
   <data name="PhoneTooLong" xml:space="preserve">
-    <value>Phone cannot exceed 20 characters.</value>
+    <value>PhoneNumbercannot exceed 20 characters.</value>
     <comment/>
   </data>
   <data name="PhoneInvalid" xml:space="preserve">
-    <value>Phone format is invalid.</value>
+    <value>PhoneNumberformat is invalid.</value>
     <comment/>
   </data>
   <data name="AddressRequired" xml:space="preserve">
@@ -292,8 +292,8 @@
     <value>Address cannot exceed 200 characters.</value>
     <comment/>
   </data>
-  <data name="CountryTooLong" xml:space="preserve">
-    <value>Country cannot exceed 100 characters.</value>
+  <data name="AddressTooLong" xml:space="preserve">
+    <value>Address cannot exceed 100 characters.</value>
     <comment/>
   </data>
   <data name="IdRequired" xml:space="preserve">

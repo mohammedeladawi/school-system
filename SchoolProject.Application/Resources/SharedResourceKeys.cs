@@ -48,7 +48,6 @@ public static class SharedResourceKeys
     public static string PhoneInvalid = "PhoneInvalid";
     public static string AddressRequired = "AddressRequired";
     public static string AddressTooLong = "AddressTooLong";
-    public static string CountryTooLong = "CountryTooLong";
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
     public static string EmailDoesNotConfirmed = "EmailDoesNotConfirmed";

@@ -292,7 +292,7 @@
     <value>لا يمكن أن يتجاوز العنوان 200 حرف.</value>
     <comment/>
   </data>
-  <data name="CountryTooLong" xml:space="preserve">
+  <data name="AddressTooLong" xml:space="preserve">
     <value>لا يمكن أن يتجاوز اسم الدولة 100 حرف.</value>
     <comment/>
   </data>

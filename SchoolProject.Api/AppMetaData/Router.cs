@@ -48,7 +48,7 @@ public static class Router
     public static class ApplicationUser
     {
         private const string ApplicationUserBase = Base + "/" + "User" + "/";
-        public const string Register = Base + "Register";
+        public const string Register = ApplicationUserBase + "Register";
         public const string PaginatedList = ApplicationUserBase + "Paginated-List";
         public const string GetById = ApplicationUserBase + "{id}";
         public const string Update = ApplicationUserBase + "Update";

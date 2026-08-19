@@ -30,15 +30,7 @@ public class DeleteUserByIdCommandValidator :
     private void ValidateId()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdRequired])
-
-            .GreaterThan(0)
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
-
-            .MustAsync(async (id, CancellationToken) =>
-                await _userManager.DoesExistByIdAsync(id))
-            .WithMessage(_ => _localizer[SharedResourceKeys.NotFound]);
+            .ValidateUserId(_localizer, _userManager.DoesExistByIdAsync);
     }
     #endregion
 }
