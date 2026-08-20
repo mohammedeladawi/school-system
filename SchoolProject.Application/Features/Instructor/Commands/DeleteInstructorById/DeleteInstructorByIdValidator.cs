@@ -5,10 +5,10 @@ using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Helpers.Validations;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
+namespace SchoolProject.Application.Features.ApplicationUser.Commands.DeleteInstructorById;
 
-public class EditUserCommandValidator :
-    AbstractValidator<EditUserCommand>
+public class DeleteInstructorByIdCommandValidator :
+    AbstractValidator<DeleteInstructorByIdCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -16,18 +16,14 @@ public class EditUserCommandValidator :
     #endregion
 
     #region Constructors
-    public EditUserCommandValidator(
+    public DeleteInstructorByIdCommandValidator(
         IStringLocalizer<SharedResource> localizer,
         IUserManager userManager)
     {
         _localizer = localizer;
         _userManager = userManager;
 
-        Include(new CommonUserCommandValidator(localizer));
-
         ValidateId();
-        ValidateEmail();
-        ValidateUserName();
     }
     #endregion
 
@@ -37,19 +33,5 @@ public class EditUserCommandValidator :
         RuleFor(x => x.Id)
             .ValidateUserId(_localizer, _userManager.DoesExistByIdAsync);
     }
-
-    private void ValidateEmail()
-    {
-        RuleFor(x => x.Email)
-            .ValidateEmail(_localizer, _userManager, x => x.Id);
-    }
-
-    private void ValidateUserName()
-    {
-        RuleFor(x => x.UserName)
-            .ValidateUserName(_localizer, _userManager, x => x.Id);
-    }
-
-
     #endregion
 }

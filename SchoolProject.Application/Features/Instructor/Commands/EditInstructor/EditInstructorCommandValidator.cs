@@ -4,30 +4,39 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Helpers.Validations;
+using SchoolProject.Application.Interfaces.Repositories;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
+namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditInstructor;
 
-public class EditUserCommandValidator :
-    AbstractValidator<EditUserCommand>
+public class EditInstructorCommandValidator :
+    AbstractValidator<EditInstructorCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly IUserManager _userManager;
+    private readonly IDepartmentRepository _departmentRepository;
+    private readonly IInstructorManager _instructorManager;
     #endregion
 
     #region Constructors
-    public EditUserCommandValidator(
+    public EditInstructorCommandValidator(
         IStringLocalizer<SharedResource> localizer,
-        IUserManager userManager)
+        IUserManager userManager,
+        IDepartmentRepository departmentRepository,
+        IInstructorManager instructorManager)
     {
         _localizer = localizer;
         _userManager = userManager;
+        _departmentRepository = departmentRepository;
+        _instructorManager = instructorManager;
 
         Include(new CommonUserCommandValidator(localizer));
 
         ValidateId();
         ValidateEmail();
         ValidateUserName();
+        ValidateDepartmentId();
+        ValidateSupervisorId();
     }
     #endregion
 
@@ -35,7 +44,7 @@ public class EditUserCommandValidator :
     private void ValidateId()
     {
         RuleFor(x => x.Id)
-            .ValidateUserId(_localizer, _userManager.DoesExistByIdAsync);
+            .ValidateUserId(_localizer, _instructorManager.DoesExistByIdAsync);
     }
 
     private void ValidateEmail()
@@ -48,6 +57,18 @@ public class EditUserCommandValidator :
     {
         RuleFor(x => x.UserName)
             .ValidateUserName(_localizer, _userManager, x => x.Id);
+    }
+
+    private void ValidateDepartmentId()
+    {
+        RuleFor(x => x.DepartmentId)
+            .ValidateDepartmentId(_localizer, _departmentRepository.DoesExistByIdAsync);
+    }
+
+    private void ValidateSupervisorId()
+    {
+        RuleFor(x => x.SupervisorId)
+            .ValidateSupervisorId(_localizer, _instructorManager.DoesExistByIdAsync);
     }
 
 

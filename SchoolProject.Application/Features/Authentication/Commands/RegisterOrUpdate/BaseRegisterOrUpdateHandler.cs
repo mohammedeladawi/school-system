@@ -162,7 +162,7 @@ public abstract class BaseRegisterOrUpdateUserHandler<TCommand, TUser> :
 
     protected async Task<TUser> UpdateAsync(int id, TCommand request, string role)
     {
-        var user = (TUser)await _userManager.GetByIdAsync(id);
+        var user = (TUser?)await _userManager.GetByIdAsync(id);
         bool isEmailChanged = IsEmailChanged(user, request);
         await UpdateImageAsync(user, request, role);
         _mapper.Map(request, user);
