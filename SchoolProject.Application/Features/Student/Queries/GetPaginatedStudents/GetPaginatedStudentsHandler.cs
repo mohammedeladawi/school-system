@@ -10,16 +10,16 @@ namespace SchoolProject.Application.Features.Student.Queries.GetPaginatedStudent
 public class GetPaginatedStudentsHandler : ResponseHandler, IRequestHandler<GetPaginatedStudentsQuery, PaginatedResponse<GetPaginatedStudentsQueryResponse>>
 {
     #region Private Fields
-    private readonly IStudentRepository _studentRepository;
+    private readonly IStudentManager _StudentManager;
     #endregion
 
     #region Constructors
     public GetPaginatedStudentsHandler(
-        IStudentRepository studentRepository,
+        IStudentManager StudentManager,
         IMapper mapper,
         IStringLocalizer<SharedResource> localizer) : base(localizer, mapper)
     {
-        _studentRepository = studentRepository;
+        _StudentManager = StudentManager;
     }
     #endregion
 
@@ -28,8 +28,8 @@ public class GetPaginatedStudentsHandler : ResponseHandler, IRequestHandler<GetP
     {
         int pageNumber = request.PageNumber < 0 ? 1 : request.PageNumber;
         int pageSize = (request.PageSize <= 0 || request.PageSize >= 20) ? 20 : request.PageSize;
-        int totalRecords = await _studentRepository.GetTotalCountAsync();
-        var students = await _studentRepository.GetPaginatedListAsync(pageNumber, pageSize, [s => s.Department]);
+        int totalRecords = await _StudentManager.GetTotalCountAsync();
+        var students = await _StudentManager.GetPaginatedListAsync(pageNumber, pageSize, [s => s.Department]);
         var studentsDto = _mapper.Map<List<GetPaginatedStudentsQueryResponse>>(students);
 
         var paginatedResponse = new PaginatedResponse<GetPaginatedStudentsQueryResponse>(studentsDto, pageNumber, pageSize, totalRecords);

@@ -11,19 +11,19 @@ namespace SchoolProject.Application.Features.Student.Commands.EditStudent;
 public class EditStudentHandler : ResponseHandler, IRequestHandler<EditStudentCommand, Response<string>>
 {
     #region Private Fields
-    private readonly IStudentRepository _studentRepository;
+    private readonly IStudentManager _StudentManager;
     private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
     public EditStudentHandler(
         IMapper mapper,
-        IStudentRepository studentRepository,
+        IStudentManager StudentManager,
         IStringLocalizer<SharedResource> localizer,
         IUnitOfWork unitOfWork)
         : base(localizer, mapper)
     {
-        _studentRepository = studentRepository;
+        _StudentManager = StudentManager;
         _unitOfWork = unitOfWork;
     }
     #endregion
@@ -33,7 +33,7 @@ public class EditStudentHandler : ResponseHandler, IRequestHandler<EditStudentCo
     {
         var student = _mapper.Map<Domain.Entities.Student>(request);
 
-        await _studentRepository.UpdateAsync(student);
+        await _StudentManager.UpdateAsync(student);
         await _unitOfWork.SaveChangesAsync();
 
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);

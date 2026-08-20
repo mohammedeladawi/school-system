@@ -5,9 +5,9 @@ using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 
-namespace SchoolProject.Application.Helpers;
+namespace SchoolProject.Application.Helpers.Validations;
 
-public static class ValidationRules
+public static class UserValidationRules
 {
     public static IRuleBuilderOptions<TCommand, int> ValidateUserId<TCommand>(
         this IRuleBuilder<TCommand, int> ruleBuilder,
@@ -67,6 +67,47 @@ public static class ValidationRules
 
                 .Equal(passwordSelector)
                 .WithMessage(_ => _localizer[SharedResourceKeys.PasswordsDoNotMatch]);
+    }
+
+    public static IRuleBuilderOptions<TCommand, string> ValidateEmail<TCommand>(
+        this IRuleBuilder<TCommand, string> ruleBuilder,
+        IStringLocalizer<SharedResource> _localizer,
+        IUserManager userManager,
+        Func<TCommand, int>? excludeUserId = null)
+        where TCommand : class
+    {
+        return ruleBuilder
+            .NotEmpty()
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
+
+            .Matches(RegxPatterns.EmailPattern)
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
+
+            .MustAsync(async (command, email, cancellationToken) =>
+                !await userManager.DoesEmailExist(email, excludeUserId?.Invoke(command)))
+            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
+    }
+
+    public static IRuleBuilderOptions<TCommand, string> ValidateUserName<TCommand>(
+        this IRuleBuilder<TCommand, string> ruleBuilder,
+        IStringLocalizer<SharedResource> _localizer,
+        IUserManager userManager,
+        Func<TCommand, int>? excludeUserId = null)
+        where TCommand : class
+    {
+        return ruleBuilder
+            .NotEmpty()
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
+
+            .MaximumLength(50)
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
+
+            .Matches(RegxPatterns.UserNamePattern)
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
+
+            .MustAsync(async (command, userName, cancellationToken) =>
+                !await userManager.DoesUserNameExist(userName, excludeUserId?.Invoke(command)))
+            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
     }
 
 

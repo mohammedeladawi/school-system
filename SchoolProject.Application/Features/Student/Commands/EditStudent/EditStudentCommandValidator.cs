@@ -9,17 +9,17 @@ public class EditStudentCommandValidator : AbstractValidator<EditStudentCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IStudentRepository _studentRepository;
+    private readonly IStudentManager _StudentManager;
     #endregion
 
     #region Constructors
     public EditStudentCommandValidator(
         IStringLocalizer<SharedResource> localizer,
         IDepartmentRepository departmentRepository,
-        IStudentRepository studentRepository)
+        IStudentManager StudentManager)
     {
         _localizer = localizer;
-        _studentRepository = studentRepository;
+        _StudentManager = StudentManager;
 
         Include(new CommonStudentCommandValidator(localizer, departmentRepository));
 
@@ -37,7 +37,7 @@ public class EditStudentCommandValidator : AbstractValidator<EditStudentCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
 
             .MustAsync(async (id, cancellationToken) =>
-                await _studentRepository.DoesExistByIdAsync(id))
+                await _StudentManager.DoesExistByIdAsync(id))
             .WithMessage(_localizer[SharedResourceKeys.NotFound]);
     }
 
@@ -48,11 +48,7 @@ public class EditStudentCommandValidator : AbstractValidator<EditStudentCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.NameEnRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameEnTooLong])
-
-            .MustAsync(async (student, nameEn, cancellationToken) =>
-                !await _studentRepository.DoesNameEnExistAsync(nameEn, student.Id))
-            .WithMessage(_localizer[SharedResourceKeys.NameEnAlreadyInUse]);
+            .WithMessage(_localizer[SharedResourceKeys.NameEnTooLong]);
     }
 
     private void ValidateNameAr()
@@ -62,12 +58,7 @@ public class EditStudentCommandValidator : AbstractValidator<EditStudentCommand>
             .WithMessage(_ => _localizer[SharedResourceKeys.NameArRequired])
 
             .MaximumLength(100)
-            .WithMessage(_localizer[SharedResourceKeys.NameArTooLong])
-
-            .MustAsync(async (student, nameAr, cancellationToken) =>
-                !await _studentRepository.DoesNameArExistAsync(nameAr, student.Id))
-            .WithMessage(_localizer[SharedResourceKeys.NameArAlreadyInUse]);
-
+            .WithMessage(_localizer[SharedResourceKeys.NameArTooLong]);
     }
     #endregion
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
+using SchoolProject.Application.Helpers.Validations;
 
 namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
 
@@ -40,32 +41,13 @@ public class EditUserCommandValidator :
     private void ValidateEmail()
     {
         RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
-
-            .Matches(RegxPatterns.EmailPattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
-
-            .MustAsync(async (command, email, cancellationToken) =>
-                !await _userManager.DoesEmailExist(email, command.Id))
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
+            .ValidateEmail(_localizer, _userManager, x => x.Id);
     }
 
     private void ValidateUserName()
     {
         RuleFor(x => x.UserName)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
-
-            .MaximumLength(50)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
-
-            .Matches(RegxPatterns.UserNamePattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
-
-            .MustAsync(async (command, userName, cancellationToken) =>
-                !await _userManager.DoesUserNameExist(userName, command.Id))
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
+        .ValidateUserName(_localizer, _userManager, x => x.Id);
     }
 
 

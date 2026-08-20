@@ -32,15 +32,8 @@ public class RegisterInstructorHandler :
     #region Protected Methods
     protected override async Task<Domain.Entities.Instructor> CreateOrUpdateUserAsync(RegisterInstructorCommand request)
     {
-        var instructor = _mapper.Map<Domain.Entities.Instructor>(request);
-        if (request.Image is not null)
-        {
-            string webRootPath = _locationService.GetWebRootPath();
-            string relativeFolderPath = "Images/Instructors";
-            instructor.ImagePath = await _fileService.UploadFileAsync(request.Image, webRootPath, relativeFolderPath);
-        }
-        await _userManager.AddAsync(instructor, request.Password, "Instructor");
-        return instructor;
+        var admin = await CreateAsync(request, request.Password, "Instructor");
+        return admin;
     }
     #endregion
 
