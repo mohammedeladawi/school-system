@@ -125,6 +125,11 @@ public class UserManager : IUserManager
         return paginatedApplicationUsers;
     }
 
+    public async Task<bool> CheckPasswordAsync(int id, string password)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        return user is not null && await _userManager.CheckPasswordAsync(user, password);
+    }
 
     public async Task ChangePasswordAsync(ApplicationUser user, string newPassword)
     {

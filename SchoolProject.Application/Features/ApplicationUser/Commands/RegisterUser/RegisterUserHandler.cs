@@ -30,15 +30,7 @@ namespace SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUs
         #region Protected Methods
         protected override async Task<Domain.Entities.Identities.ApplicationUser> CreateOrUpdateUserAsync(RegisterUserCommand request)
         {
-            var admin = _mapper.Map<Domain.Entities.Identities.ApplicationUser>(request);
-            if (request.Image is not null)
-            {
-                string webRootPath = _locationService.GetWebRootPath();
-                string relativeFolderPath = "Images/Admins";
-                admin.ImagePath = await _fileService.UploadFileAsync(request.Image, webRootPath, relativeFolderPath);
-            }
-
-            await _userManager.AddAsync(admin, request.Password, "Admin");
+            var admin = await CreateAsync(request, request.Password, "Admin");
             return admin;
         }
 

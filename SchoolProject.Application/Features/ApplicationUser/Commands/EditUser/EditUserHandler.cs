@@ -61,31 +61,14 @@ public class EditUserHandler :
     }
     #endregion
 
+    // Update
+    // Id, request, role
+
     #region Protected Methods
     protected override async Task<Domain.Entities.Identities.ApplicationUser> CreateOrUpdateUserAsync(EditUserCommand request)
     {
-        var user = await _userManager.GetByIdAsync(request.Id);
-
-        // Remove old image if new image is uploaded
-        if (request.Image is not null && user?.ImagePath is not null)
-        {
-            RemoveOldImage(request, user);
-
-            string webRootPath = _locationService.GetWebRootPath();
-            string relativeFolderPath = "Images/Users";
-            user.ImagePath = await _fileService.UploadFileAsync(request.Image, webRootPath, relativeFolderPath);
-        }
-
-        // stop confirmaition the email chaged
-        _mapper.Map(request, user);
-        if (request.Email != user?.Email)
-        {
-            user!.EmailConfirmed = false;
-        }
-
-        await _userManager.UpdateAsync(user!);
-
-        return user!;
+        var admin = await UpdateAsync(request.Id, request, "Admin");
+        return admin;
     }
 }
     #endregion

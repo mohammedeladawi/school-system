@@ -49,7 +49,7 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
-    [Authorize(Policy = "User.ChangePassword")]
+    // [Authorize(Policy = "User.ChangePassword")]
     [HttpPut(Router.ApplicationUser.ChangePassword)]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
     {

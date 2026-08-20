@@ -244,6 +244,10 @@
     <value>كلمة المرور مطلوبة.</value>
     <comment/>
   </data>
+  <data name="InvalidCurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية غير صحيحة.</value>
+    <comment/>
+  </data>
   <data name="PasswordMinimumLength" xml:space="preserve">
     <value>يجب أن تكون كلمة المرور 6 أحرف على الأقل.</value>
     <comment/>
