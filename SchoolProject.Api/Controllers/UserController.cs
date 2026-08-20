@@ -14,7 +14,7 @@ namespace SchoolProject.Api.Controllers;
 // Todo: All for Super Admin, unless get-by-id, change-password, and update are policy based;
 public class ApplicationUserController : AppControllerBase
 {
-    [HttpGet(Router.ApplicationUser.Register)]
+    [HttpPost(Router.ApplicationUser.Register)]
     public async Task<IActionResult> Register([FromForm] RegisterUserCommand command)
     {
         var result = await Mediator.Send(command);
@@ -49,7 +49,7 @@ public class ApplicationUserController : AppControllerBase
         return NewResult(result);
     }
 
-    [Authorize(Policy = "User.ChangePassword")]
+    // [Authorize(Policy = "User.ChangePassword")]
     [HttpPut(Router.ApplicationUser.ChangePassword)]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
     {

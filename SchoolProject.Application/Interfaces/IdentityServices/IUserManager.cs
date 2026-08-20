@@ -1,3 +1,4 @@
+using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Domain.Entities.Identities;
 
 namespace SchoolProject.Application.Interfaces.IdentityServices;
@@ -11,6 +12,7 @@ public interface IUserManager
     Task DeleteAsync(ApplicationUser user);
     Task<bool> DoesExistByIdAsync(int id);
     Task<int> GetTotalCountAsync();
+    Task<bool> CheckPasswordAsync(int id, string password);
     Task ChangePasswordAsync(ApplicationUser user, string newPassword);
     Task ChangePasswordAsync(int id, string currentPassword, string newPassword);
     Task<bool> DoesEmailExist(string email, int? excludeUserId = null);

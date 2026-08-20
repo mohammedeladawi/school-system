@@ -22,13 +22,11 @@ public class EditUserCommandValidator :
         _localizer = localizer;
         _userManager = userManager;
 
+        Include(new CommonUserCommandValidator(localizer));
+
         ValidateId();
         ValidateEmail();
         ValidateUserName();
-        ValidatePhone();
-        ValidateNameEn();
-        ValidateNameAr();
-        ValidateCountry();
     }
     #endregion
 
@@ -36,15 +34,7 @@ public class EditUserCommandValidator :
     private void ValidateId()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdRequired])
-
-            .GreaterThan(0)
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
-
-            .MustAsync(async (id, CancellationToken) =>
-                await _userManager.DoesExistByIdAsync((id)))
-            .WithMessage(_ => _localizer[SharedResourceKeys.NotFound]);
+            .ValidateUserId(_localizer, _userManager.DoesExistByIdAsync);
     }
 
     private void ValidateEmail()
@@ -56,8 +46,8 @@ public class EditUserCommandValidator :
             .Matches(RegxPatterns.EmailPattern)
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
 
-            .MustAsync(async (user, email, cancellationToken) =>
-                !await _userManager.DoesEmailExist(email, user.Id))
+            .MustAsync(async (command, email, cancellationToken) =>
+                !await _userManager.DoesEmailExist(email, command.Id))
             .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
     }
 
@@ -73,48 +63,11 @@ public class EditUserCommandValidator :
             .Matches(RegxPatterns.UserNamePattern)
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
 
-
-            .MustAsync(async (user, userName, cancellationToken) =>
-                !await _userManager.DoesUserNameExist(userName, user.Id))
+            .MustAsync(async (command, userName, cancellationToken) =>
+                !await _userManager.DoesUserNameExist(userName, command.Id))
             .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
     }
 
-    private void ValidatePhone()
-    {
-        RuleFor(x => x.Phone)
-            .MaximumLength(20)
-            .WithMessage(_ => _localizer[SharedResourceKeys.PhoneTooLong])
-
-            .Matches(RegxPatterns.PhonePattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.PhoneInvalid]);
-    }
-
-    private void ValidateNameEn()
-    {
-        RuleFor(x => x.NameEn)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameRequired])
-
-            .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong]);
-    }
-
-    private void ValidateNameAr()
-    {
-        RuleFor(x => x.NameAr)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameRequired])
-
-            .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.NameTooLong]);
-    }
-
-    private void ValidateCountry()
-    {
-        RuleFor(x => x.Country)
-            .MaximumLength(100)
-            .WithMessage(_ => _localizer[SharedResourceKeys.CountryTooLong]);
-    }
 
     #endregion
 }

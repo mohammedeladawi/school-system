@@ -5,12 +5,12 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
-using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
 
 namespace SchoolProject.Application.Features.Student.Commands.RegisterStudent;
 
 public class RegisterStudentHandler :
-    BaseRegisterUserHandler<RegisterStudentCommand, Domain.Entities.Student>
+    BaseRegisterOrUpdateUserHandler<RegisterStudentCommand, Domain.Entities.Student>
 {
     #region Constructors
     public RegisterStudentHandler(
@@ -28,7 +28,7 @@ public class RegisterStudentHandler :
     #endregion
 
     #region Protected Methods
-    protected override async Task<Domain.Entities.Student> AddUser(RegisterStudentCommand request)
+    protected override async Task<Domain.Entities.Student> CreateOrUpdateUserAsync(RegisterStudentCommand request)
     {
         var student = _mapper.Map<Domain.Entities.Student>(request);
         if (request.Image is not null)

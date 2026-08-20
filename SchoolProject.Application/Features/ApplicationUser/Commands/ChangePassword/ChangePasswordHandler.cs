@@ -27,6 +27,13 @@ public class ChangePasswordHandler : ResponseHandler, IRequestHandler<ChangePass
     #region Public Methods
     public async Task<Response<string>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
+        // check password valid
+        var isValid = await _userManager.CheckPasswordAsync(request.Id, request.CurrentPassword);
+        if (!isValid)
+        {
+            return BadRequest<string>(_localizer[SharedResourceKeys.InvalidCurrentPassword]);
+        }
+
         await _userManager.ChangePasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
     }

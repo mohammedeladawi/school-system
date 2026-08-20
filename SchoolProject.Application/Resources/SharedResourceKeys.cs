@@ -36,6 +36,7 @@ public static class SharedResourceKeys
     public static string EmailAlreadyInUse = "EmailAlreadyInUse";
     public static string EmailNotFound = "EmailNotFound";
     public static string PasswordRequired = "PasswordRequired";
+    public static string InvalidCurrentPassword = "InvalidCurrentPassword";
     public static string PasswordMinimumLength = "PasswordMinimumLength";
     public static string PasswordRequireUppercase = "PasswordRequireUppercase";
     public static string PasswordRequireLowercase = "PasswordRequireLowercase";
@@ -48,7 +49,6 @@ public static class SharedResourceKeys
     public static string PhoneInvalid = "PhoneInvalid";
     public static string AddressRequired = "AddressRequired";
     public static string AddressTooLong = "AddressTooLong";
-    public static string CountryTooLong = "CountryTooLong";
 
     public static string InvalidUserNameOrPassword = "InvalidUserNameOrPassword";
     public static string EmailDoesNotConfirmed = "EmailDoesNotConfirmed";

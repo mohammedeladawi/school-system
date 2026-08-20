@@ -4,6 +4,6 @@ public record GetUserByIdQueryResponse
 {
     public string Name { get; init; } = null!;
     public string Email { get; init; } = null!;
-    public string? Country { get; init; }
-    public string? Phone { get; init; }
+    public string? Address { get; init; }
+    public string? PhoneNumber { get; init; }
 }

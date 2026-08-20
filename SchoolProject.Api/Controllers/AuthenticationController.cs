@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Application.Features.Authentication.Commands.Register;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
 using SchoolProject.Application.Features.Authentication.Commands.Login;
 using SchoolProject.Application.Features.Authentication.Commands.RefreshToken;
 using SchoolProject.Application.Features.Authentication.Commands.Logout;
@@ -9,7 +9,7 @@ using SchoolProject.Application.Features.Authentication.Commands.ConfirmEmail;
 using SchoolProject.Application.Features.Authentication.Commands.ForgotPassword;
 using SchoolProject.Application.Features.Authentication.Commands.VerifyResetCode;
 using SchoolProject.Application.Features.Authentication.Commands.ResetPassword;
-using SchoolProject.Application.Features.Authentication.Commands.Register.Admin;
+using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate.Admin;
 using SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser;
 
 namespace SchoolProject.Api.Controllers;

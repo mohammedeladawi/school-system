@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
+using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 
@@ -30,51 +31,23 @@ public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCo
     private void ValidateId()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdRequired])
-
-            .GreaterThan(0)
-            .WithMessage(_ => _localizer[SharedResourceKeys.IdGreaterThanZero])
-
-            .MustAsync(async (id, CancellationToken) =>
-                await _userManager.DoesExistByIdAsync(id))
-            .WithMessage(_ => _localizer[SharedResourceKeys.NotExist]);
+            .ValidateUserId(_localizer, _userManager.DoesExistByIdAsync);
     }
 
     private void ValidateCurrentPassword()
     {
         RuleFor(x => x.CurrentPassword)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequired]);
+            .ValidatePassword(_localizer);
     }
 
     private void ValidateNewPassword()
     {
         RuleFor(x => x.NewPassword)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequired])
-
-            .MinimumLength(6)
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordMinimumLength])
-
-            .Matches("[A-Z]")
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireUppercase])
-
-            .Matches("[a-z]")
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireLowercase])
-
-            .Matches("\\d")
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireDigit])
-
-            .Matches("[^\\w\\s]")
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordRequireNonAlphanumeric]);
+            .ValidatePassword(_localizer);
 
         RuleFor(x => x.ConfirmNewPassword)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.ConfirmPasswordRequired])
-
-            .Equal(x => x.NewPassword)
-            .WithMessage(_ => _localizer[SharedResourceKeys.PasswordsDoNotMatch]);
+            .ValidateConfirmPassword(x => x.NewPassword, _localizer);
     }
+
     #endregion
 }
