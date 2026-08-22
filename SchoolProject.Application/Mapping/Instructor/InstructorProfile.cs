@@ -8,5 +8,9 @@ public partial class InstructorProfile : Profile
     {
         MapRegisterInstructorCommandToInstructor();
         MapEditInstructorCommandToInstructor();
+        MapInstructorToGetPaginatedInstructorsResponse();
+        MapInstructorToGetInstructorByIdResponse();
     }
 }
+
+

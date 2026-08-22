@@ -7,7 +7,7 @@ using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 
 namespace SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 

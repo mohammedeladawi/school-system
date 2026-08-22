@@ -1,13 +1,14 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
+using SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands;
+namespace SchoolProject.Application.Features.Base.Users.Commands.Validators;
 
-public class CommonUserCommandValidator : AbstractValidator<CommonUserCommand>
+public class BaseUserCommandValidator : AbstractValidator<BaseRegisterUpdateUserCommand>
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
@@ -15,7 +16,7 @@ public class CommonUserCommandValidator : AbstractValidator<CommonUserCommand>
     #endregion
 
     #region Constructors
-    public CommonUserCommandValidator(
+    public BaseUserCommandValidator(
         IStringLocalizer<SharedResource> localizer)
     {
         _localizer = localizer;

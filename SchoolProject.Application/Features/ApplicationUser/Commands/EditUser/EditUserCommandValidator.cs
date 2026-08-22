@@ -4,6 +4,7 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Helpers.Validations;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
 
 namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
 
@@ -23,7 +24,7 @@ public class EditUserCommandValidator :
         _localizer = localizer;
         _userManager = userManager;
 
-        Include(new CommonUserCommandValidator(localizer));
+        Include(new BaseUserCommandValidator(localizer));
 
         ValidateId();
         ValidateEmail();

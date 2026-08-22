@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 using SchoolProject.Application.Interfaces.ApiServices;
 using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Interfaces.IdentityServices;

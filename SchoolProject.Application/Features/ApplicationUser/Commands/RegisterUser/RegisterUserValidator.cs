@@ -4,7 +4,7 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Features.ApplicationUser.Commands.RegisterUser;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
 using SchoolProject.Application.Helpers.Validations;
 
 namespace SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate.Admin;
@@ -24,7 +24,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
         _localizer = localizer;
         _userManager = userManager;
 
-        Include(new CommonUserCommandValidator(_localizer));
+        Include(new BaseUserCommandValidator(_localizer));
 
         ValidatePassword();
         ValidateEmail();

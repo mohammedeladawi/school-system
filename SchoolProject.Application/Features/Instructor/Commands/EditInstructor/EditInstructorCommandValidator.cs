@@ -5,6 +5,7 @@ using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Helpers.Validations;
 using SchoolProject.Application.Interfaces.Repositories;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
 
 namespace SchoolProject.Application.Features.ApplicationUser.Commands.EditInstructor;
 
@@ -30,7 +31,7 @@ public class EditInstructorCommandValidator :
         _departmentRepository = departmentRepository;
         _instructorManager = instructorManager;
 
-        Include(new CommonUserCommandValidator(localizer));
+        Include(new BaseUserCommandValidator(localizer));
 
         ValidateId();
         ValidateEmail();

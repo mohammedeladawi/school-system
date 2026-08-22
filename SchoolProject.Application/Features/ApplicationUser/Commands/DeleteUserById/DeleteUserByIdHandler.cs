@@ -2,34 +2,26 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.ApplicationUser.Commands.DeleteUserById;
 
-public class DeleteUserByIdHandler : ResponseHandler, IRequestHandler<DeleteUserByIdCommand, Response<string>>
+public class DeleteUserByIdHandler :
+    BaseDeleteUserByIdHandler<
+        DeleteUserByIdCommand,
+        IUserManager,
+        Domain.Entities.Identities.ApplicationUser>
 {
-    #region Private Fields
-    private readonly IUserManager _userManager;
-    #endregion
-
     #region Constructors
     public DeleteUserByIdHandler(
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
         IUserManager userManager)
-        : base(localizer, mapper)
+        : base(localizer, mapper, userManager)
     {
-        _userManager = userManager;
     }
     #endregion
 
-    #region Public Methods
-    public async Task<Response<string>> Handle(DeleteUserByIdCommand request, CancellationToken cancellationToken)
-    {
-        var user = await _userManager.GetByIdAsync(request.Id);
-        await _userManager.DeleteAsync(user!);
-        return Deleted<string>();
-    }
-    #endregion
 }

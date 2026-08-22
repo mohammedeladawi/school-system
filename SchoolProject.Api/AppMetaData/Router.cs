@@ -45,6 +45,7 @@ public static class Router
         private const string InstructorBase = Base + "/" + "Instructor" + "/";
         public const string Register = InstructorBase + "Register";
         public const string Delete = InstructorBase + "{id}";
+        public const string GetById = InstructorBase + "{id}";
         public const string Update = InstructorBase + "Update";
         public const string PaginatedList = InstructorBase + "Paginated-List";
     }

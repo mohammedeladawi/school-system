@@ -4,6 +4,8 @@ using SchoolProject.Api.Base;
 using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteInstructorById;
 using SchoolProject.Application.Features.ApplicationUser.Commands.EditInstructor;
 using SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
+using SchoolProject.Application.Features.Instructor.Queries.GetInstructorById;
+using SchoolProject.Application.Features.Instructor.Queries.GetPaginatedInstructors;
 
 namespace SchoolProject.Api.Controllers;
 
@@ -17,19 +19,19 @@ public class InstructorController : AppControllerBase
         return NewResult(result);
     }
 
-    // [HttpGet(Router.Instructor.PaginatedList)]
-    // public async Task<IActionResult> GetPaginatedList([FromQuery] GetPaginatedInstructorsQuery query)
-    // {
-    //     var result = await Mediator.Send(query);
-    //     return Ok(result);
-    // }
+    [HttpGet(Router.Instructor.PaginatedList)]
+    public async Task<IActionResult> GetPaginatedList([FromQuery] GetPaginatedInstructorsQuery query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
 
-    // [HttpGet(Router.Instructor.GetById)]
-    // public async Task<IActionResult> GetById(int id)
-    // {
-    //     var result = await Mediator.Send(new GetInstructorByIdQuery(id));
-    //     return NewResult(result);
-    // }
+    [HttpGet(Router.Instructor.GetById)]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var result = await Mediator.Send(new GetInstructorByIdQuery(id));
+        return NewResult(result);
+    }
 
     [HttpPut(Router.Instructor.Update)]
     public async Task<IActionResult> Update(EditInstructorCommand command)
