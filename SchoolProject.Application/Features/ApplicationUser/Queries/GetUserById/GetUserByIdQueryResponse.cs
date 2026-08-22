@@ -1,9 +1,5 @@
+using SchoolProject.Application.Features.Base.ApplicationUser.Queries.ResponseDTOs;
+
 namespace SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 
-public record GetUserByIdQueryResponse
-{
-    public string Name { get; init; } = null!;
-    public string Email { get; init; } = null!;
-    public string? Address { get; init; }
-    public string? PhoneNumber { get; init; }
-}
+public record GetUserByIdQueryResponse : BaseGetUserByIdResponse;

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands;
+namespace SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
 
-public record CommonUserCommand
+public record BaseRegisterUpdateUserCommand
 {
     public string Email { get; init; } = null!;
     public string UserName { get; init; } = null!;

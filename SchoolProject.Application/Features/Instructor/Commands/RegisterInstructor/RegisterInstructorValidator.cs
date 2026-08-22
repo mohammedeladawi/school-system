@@ -3,9 +3,9 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
-using SchoolProject.Application.Helpers;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
+using SchoolProject.Application.Helpers.Validations;
 
 namespace SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 
@@ -14,7 +14,7 @@ public class RegisterInstructorValidator : AbstractValidator<RegisterInstructorC
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly IDepartmentRepository _departmentRepository;
-    private readonly IInstructorRepository _instructrorRepository;
+    private readonly IInstructorManager _instructrorRepository;
     private readonly IUserManager _userManager;
     #endregion
 
@@ -22,7 +22,7 @@ public class RegisterInstructorValidator : AbstractValidator<RegisterInstructorC
     public RegisterInstructorValidator(
         IStringLocalizer<SharedResource> localizer,
         IDepartmentRepository departmentRepository,
-        IInstructorRepository instructrorRepository,
+        IInstructorManager instructrorRepository,
         IUserManager userManager)
     {
         _localizer = localizer;
@@ -30,7 +30,7 @@ public class RegisterInstructorValidator : AbstractValidator<RegisterInstructorC
         _instructrorRepository = instructrorRepository;
         _userManager = userManager;
 
-        Include(new CommonUserCommandValidator(localizer));
+        Include(new BaseUserCommandValidator(localizer));
 
         ValidateDepartmentId();
         ValidateSupervisorId();
@@ -45,66 +45,25 @@ public class RegisterInstructorValidator : AbstractValidator<RegisterInstructorC
     private void ValidateEmail()
     {
         RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
-
-            .Matches(RegxPatterns.EmailPattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
-
-            .MustAsync(async (email, cancellationToken) =>
-                !await _userManager.DoesEmailExist(email))
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
+            .ValidateEmail(_localizer, _userManager);
     }
 
     private void ValidateUserName()
     {
         RuleFor(x => x.UserName)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
-
-            .MaximumLength(50)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
-
-            .Matches(RegxPatterns.UserNamePattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
-
-            .MustAsync(async (userName, cancellationToken) =>
-                !await _userManager.DoesUserNameExist(userName))
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
+            .ValidateUserName(_localizer, _userManager);
     }
 
     private void ValidateDepartmentId()
     {
         RuleFor(x => x.DepartmentId)
-            .GreaterThan(0)
-            .WithMessage(_ => _localizer[
-                SharedResourceKeys.DepartmentIdGreaterThanZero])
-            .When(x => x.DepartmentId.HasValue);
-
-        RuleFor(x => x.DepartmentId)
-            .MustAsync(async (departmentId, cancellationToken) =>
-                await _departmentRepository.DoesExistByIdAsync(
-                    departmentId!.Value))
-            .WithMessage(_ => _localizer[
-                SharedResourceKeys.DepartmentNotExist])
-            .When(x => x.DepartmentId.HasValue);
+            .ValidateDepartmentId(_localizer, _departmentRepository.DoesExistByIdAsync);
     }
 
     private void ValidateSupervisorId()
     {
         RuleFor(x => x.SupervisorId)
-            .GreaterThan(0)
-            .WithMessage(_ => _localizer[
-                SharedResourceKeys.SupervisorIdGreaterThanZero])
-            .When(x => x.SupervisorId.HasValue);
-
-        RuleFor(x => x.SupervisorId)
-            .MustAsync(async (supervisorId, cancellationToken) =>
-                await _instructrorRepository.DoesExistByIdAsync(
-                    supervisorId!.Value))
-            .WithMessage(_ => _localizer[
-                SharedResourceKeys.SupervisorNotExist])
-            .When(x => x.SupervisorId.HasValue);
+            .ValidateSupervisorId(_localizer, _instructrorRepository.DoesExistByIdAsync);
     }
 
     private void ValidatePassword()

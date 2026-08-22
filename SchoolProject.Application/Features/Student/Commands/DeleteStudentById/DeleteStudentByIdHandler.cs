@@ -11,19 +11,19 @@ namespace SchoolProject.Application.Features.Student.Commands.DeleteStudentById;
 public class DeleteStudentByIdHandler : ResponseHandler, IRequestHandler<DeleteStudentByIdCommand, Response<string>>
 {
     #region Private Fields
-    private readonly IStudentRepository _studentRepository;
+    private readonly IStudentManager _StudentManager;
     private readonly IUnitOfWork _unitOfWork;
     #endregion
 
     #region Constructors
     public DeleteStudentByIdHandler(
         IMapper mapper,
-        IStudentRepository studentRepository,
+        IStudentManager StudentManager,
         IStringLocalizer<SharedResource> localizer,
         IUnitOfWork unitOfWork)
         : base(localizer, mapper)
     {
-        _studentRepository = studentRepository;
+        _StudentManager = StudentManager;
         _unitOfWork = unitOfWork;
     }
     #endregion
@@ -31,11 +31,11 @@ public class DeleteStudentByIdHandler : ResponseHandler, IRequestHandler<DeleteS
     #region Public Methods
     public async Task<Response<string>> Handle(DeleteStudentByIdCommand request, CancellationToken cancellationToken)
     {
-        var student = await _studentRepository.GetByIdAsync(request.Id);
+        var student = await _StudentManager.GetByIdAsync(request.Id);
         if (student is null)
             return NotFound<string>(_localizer[SharedResourceKeys.NotFound]);
 
-        await _studentRepository.DeleteAsync(student);
+        await _StudentManager.DeleteAsync(student);
         await _unitOfWork.SaveChangesAsync();
 
         return Deleted<string>();

@@ -5,7 +5,7 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.ApiServices;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 
 namespace SchoolProject.Application.Features.Student.Commands.RegisterStudent;
 

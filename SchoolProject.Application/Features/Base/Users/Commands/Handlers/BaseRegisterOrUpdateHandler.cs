@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
+using SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
 using SchoolProject.Application.Helpers;
 using SchoolProject.Application.Interfaces.ApiServices;
 using SchoolProject.Application.Interfaces.Bases;
@@ -11,12 +11,12 @@ using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Resources;
 
-namespace SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
+namespace SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 
 public abstract class BaseRegisterOrUpdateUserHandler<TCommand, TUser> :
     ResponseHandler,
     IRequestHandler<TCommand, Response<string>>
-    where TCommand : CommonUserCommand, IRequest<Response<string>>
+    where TCommand : BaseRegisterUpdateUserCommand, IRequest<Response<string>>
     where TUser : Domain.Entities.Identities.ApplicationUser
 {
     #region Protected Fields
@@ -162,7 +162,7 @@ public abstract class BaseRegisterOrUpdateUserHandler<TCommand, TUser> :
 
     protected async Task<TUser> UpdateAsync(int id, TCommand request, string role)
     {
-        var user = (TUser)await _userManager.GetByIdAsync(id);
+        var user = (TUser?)await _userManager.GetByIdAsync(id);
         bool isEmailChanged = IsEmailChanged(user, request);
         await UpdateImageAsync(user, request, role);
         _mapper.Map(request, user);

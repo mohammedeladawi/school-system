@@ -3,9 +3,10 @@ using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 using SchoolProject.Application.Interfaces.Repositories;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
 using SchoolProject.Application.Helpers;
+using SchoolProject.Application.Helpers.Validations;
 
 namespace SchoolProject.Application.Features.Student.Commands.RegisterStudent;
 
@@ -27,7 +28,7 @@ public class RegisterStudentValidator : AbstractValidator<RegisterStudentCommand
         _departmentRepository = departmentRepository;
         _userManager = userManager;
 
-        Include(new CommonUserCommandValidator(localizer));
+        Include(new BaseUserCommandValidator(localizer));
         ValidateDepartmentId();
         ValidatePassword();
         ValidateEmail();

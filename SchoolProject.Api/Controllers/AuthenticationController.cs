@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
-using SchoolProject.Application.Features.Authentication.Commands.RegisterOrUpdate;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 using SchoolProject.Application.Features.Authentication.Commands.Login;
 using SchoolProject.Application.Features.Authentication.Commands.RefreshToken;
 using SchoolProject.Application.Features.Authentication.Commands.Logout;

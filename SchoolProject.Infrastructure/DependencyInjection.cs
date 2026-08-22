@@ -25,8 +25,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         #region Repositories
-        services.AddScoped<IStudentRepository, StudentRepository>();
-        services.AddScoped<IInstructorRepository, InstructorRepository>();
+        services.AddScoped<IStudentManager, StudentManager>();
+        services.AddScoped<IInstructorManager, InstructorManager>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<ISubjectRepository, SubjectRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();

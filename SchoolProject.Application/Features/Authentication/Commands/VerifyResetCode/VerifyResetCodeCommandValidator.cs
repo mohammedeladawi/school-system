@@ -1,6 +1,6 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Features.ApplicationUser.Commands;
+using SchoolProject.Application.Features.Base.Users.Commands.Validators;
 using SchoolProject.Application.Interfaces.IdentityServices;
 using SchoolProject.Application.Resources;
 
