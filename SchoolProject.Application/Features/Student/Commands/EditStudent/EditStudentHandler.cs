@@ -1,42 +1,37 @@
 using AutoMapper;
-using MediatR;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Bases;
+using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
+using SchoolProject.Application.Interfaces.ApiServices;
 using SchoolProject.Application.Interfaces.Bases;
-using SchoolProject.Application.Interfaces.Repositories;
+using SchoolProject.Application.Interfaces.IdentityServices;
+using SchoolProject.Application.Interfaces.Services;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Student.Commands.EditStudent;
 
-public class EditStudentHandler : ResponseHandler, IRequestHandler<EditStudentCommand, Response<string>>
+public class EditStudentHandler :
+    BaseRegisterOrUpdateUserHandler<EditStudentCommand, Domain.Entities.Student>
 {
-    #region Private Fields
-    private readonly IStudentManager _StudentManager;
-    private readonly IUnitOfWork _unitOfWork;
-    #endregion
-
     #region Constructors
     public EditStudentHandler(
+        IUserManager userManager,
         IMapper mapper,
-        IStudentManager StudentManager,
         IStringLocalizer<SharedResource> localizer,
-        IUnitOfWork unitOfWork)
-        : base(localizer, mapper)
+        IUrlService urlService,
+        IEmailService emailService,
+        IUnitOfWork unitOfWork,
+        IFileService fileService,
+        ILocationService locationService)
+        : base(userManager, mapper, localizer, urlService, emailService, unitOfWork, fileService, locationService)
     {
-        _StudentManager = StudentManager;
-        _unitOfWork = unitOfWork;
     }
     #endregion
 
-    #region Public Methods
-    public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
+    #region Protected Methods
+    protected override async Task<Domain.Entities.Student> CreateOrUpdateUserAsync(EditStudentCommand request)
     {
-        var student = _mapper.Map<Domain.Entities.Student>(request);
-
-        await _StudentManager.UpdateAsync(student);
-        await _unitOfWork.SaveChangesAsync();
-
-        return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);
+        var student = await UpdateAsync(request.Id, request, "Student");
+        return student;
     }
     #endregion
 }

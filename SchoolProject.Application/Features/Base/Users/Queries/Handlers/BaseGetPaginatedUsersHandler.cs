@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -16,10 +17,9 @@ public class BaseGetPaginatedUsersHandler<TQuery, TResponse, TManager, TUser> :
     where TResponse : BaseGetPaginatedUsersResponse
     where TManager : IGenericIdentityUserManagerAsync<TUser>
     where TUser : Domain.Entities.Identities.ApplicationUser
-
 {
-    #region Private Fields
-    private readonly TManager _userManager;
+    #region Protected Fields
+    protected readonly TManager _userManager;
     #endregion
 
     #region Constructors
@@ -32,6 +32,10 @@ public class BaseGetPaginatedUsersHandler<TQuery, TResponse, TManager, TUser> :
     }
     #endregion
 
+    #region Protected Methods
+    protected virtual Expression<Func<TUser, object>>[]? GetIncludes() => null;
+    #endregion
+
     #region Public Methods
     public async Task<PaginatedResponse<TResponse>> Handle(
         TQuery request,
@@ -42,10 +46,9 @@ public class BaseGetPaginatedUsersHandler<TQuery, TResponse, TManager, TUser> :
 
         int totalRecords = await _userManager.GetTotalCountAsync();
 
-        var applicationUsers = await _userManager.GetPaginatedListAsync(pageNumber, pageSize);
+        var applicationUsers = await _userManager.GetPaginatedListAsync(pageNumber, pageSize, GetIncludes());
 
-        var applicationUsersDto = _mapper.Map<List<TResponse
-        >>(applicationUsers);
+        var applicationUsersDto = _mapper.Map<List<TResponse>>(applicationUsers);
 
         var paginatedResponse = new PaginatedResponse<TResponse>(
             applicationUsersDto,

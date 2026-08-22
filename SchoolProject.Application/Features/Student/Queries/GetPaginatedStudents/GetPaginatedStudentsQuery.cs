@@ -1,11 +1,5 @@
-using MediatR;
-using SchoolProject.Application.Bases;
-using SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
+using SchoolProject.Application.Features.Base.Users.Queries.RequestDTOs;
 
 namespace SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
 
-public record GetPaginatedStudentsQuery : IRequest<PaginatedResponse<GetPaginatedStudentsQueryResponse>>
-{
-    public int PageNumber { get; init; }
-    public int PageSize { get; init; }
-}
+public record GetPaginatedStudentsQuery : BaseGetPaginatedUsersQuery<GetPaginatedStudentsQueryResponse>;

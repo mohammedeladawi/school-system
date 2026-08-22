@@ -30,19 +30,9 @@ public class RegisterStudentHandler :
     #region Protected Methods
     protected override async Task<Domain.Entities.Student> CreateOrUpdateUserAsync(RegisterStudentCommand request)
     {
-        var student = _mapper.Map<Domain.Entities.Student>(request);
-        if (request.Image is not null)
-        {
-            string webRootPath = _locationService.GetWebRootPath();
-            string relativeFolderPath = "Images/Students";
-            student.ImagePath = await _fileService.UploadFileAsync(request.Image, webRootPath, relativeFolderPath);
-        }
-
-        await _userManager.AddAsync(student, request.Password, "Student");
+        var student = await CreateAsync(request, request.Password, "Student");
         return student;
     }
-
     #endregion
-
 }
 

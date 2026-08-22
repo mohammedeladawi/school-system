@@ -4,16 +4,16 @@ using SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Resources;
 
-namespace SchoolProject.Application.Features.Student.Commands.DeleteStudentById;
+namespace SchoolProject.Application.Features.Student.Commands.ChangeStudentPassword;
 
-public class DeleteStudentByIdHandler :
-    BaseDeleteUserByIdHandler<
-        DeleteStudentByIdCommand,
+public class ChangeStudentPasswordHandler :
+    BaseChangePasswordHandler<
+        ChangeStudentPasswordCommand,
         IStudentManager,
         Domain.Entities.Student>
 {
     #region Constructors
-    public DeleteStudentByIdHandler(
+    public ChangeStudentPasswordHandler(
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
         IStudentManager studentManager)

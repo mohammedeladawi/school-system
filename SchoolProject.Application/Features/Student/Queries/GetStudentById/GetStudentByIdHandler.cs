@@ -1,36 +1,31 @@
+using System.Linq.Expressions;
 using AutoMapper;
-using MediatR;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Bases;
+using SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Student.Queries.GetStudentById;
 
-public class GetStudentByIdHandler : ResponseHandler, IRequestHandler<GetStudentByIdQuery, Response<GetStudentByIdQueryResponse>>
+public class GetStudentByIdHandler :
+    BaseGetUserByIdHandler<
+        GetStudentByIdQuery,
+        GetStudentByIdQueryResponse,
+        IStudentManager,
+        Domain.Entities.Student>
 {
-    #region Private Fields
-    private readonly IStudentManager _StudentManager;
-    #endregion
-
     #region Constructors
     public GetStudentByIdHandler(
-        IStudentManager StudentManager,
+        IStudentManager studentManager,
         IMapper mapper,
-        IStringLocalizer<SharedResource> localizer) : base(localizer, mapper)
+        IStringLocalizer<SharedResource> localizer)
+        : base(studentManager, mapper, localizer)
     {
-        _StudentManager = StudentManager;
     }
     #endregion
 
-    #region Public Methods
-    public async Task<Response<GetStudentByIdQueryResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
-    {
-        var student = await _StudentManager.GetByIdAsync(request.Id, [s => s.Department]);
-        if (student is null) return NotFound<GetStudentByIdQueryResponse>(_localizer[SharedResourceKeys.NotFound]);
-
-        var response = _mapper.Map<GetStudentByIdQueryResponse>(student);
-        return Success(response);
-    }
+    #region Protected Methods
+    protected override Expression<Func<Domain.Entities.Student, object>>[]? GetIncludes()
+        => [s => s.Department];
     #endregion
 }
