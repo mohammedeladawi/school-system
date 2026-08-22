@@ -2,22 +2,27 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Application.Bases;
-using SchoolProject.Application.Interfaces.IdentityServices;
+using SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
+using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Resources;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+namespace SchoolProject.Application.Features.Base.Users.Commands.Handlers;
 
-public class ChangePasswordHandler : ResponseHandler, IRequestHandler<ChangePasswordCommand, Response<string>>
+public class BaseChangePasswordHandler<TCommand, TManager, TUser> :
+    ResponseHandler, IRequestHandler<TCommand, Response<string>>
+    where TCommand : BaseChangePasswordCommand
+    where TManager : IGenericIdentityUserManagerAsync<TUser>
+    where TUser : Domain.Entities.Identities.ApplicationUser
 {
     #region Private Fields
-    private readonly IUserManager _userManager;
+    private readonly TManager _userManager;
     #endregion
 
     #region Constructors
-    public ChangePasswordHandler(
+    public BaseChangePasswordHandler(
         IStringLocalizer<SharedResource> localizer,
         IMapper mapper,
-        IUserManager userManager)
+        TManager userManager)
         : base(localizer, mapper)
     {
         _userManager = userManager;
@@ -25,14 +30,11 @@ public class ChangePasswordHandler : ResponseHandler, IRequestHandler<ChangePass
     #endregion
 
     #region Public Methods
-    public async Task<Response<string>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+    public async Task<Response<string>> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        // check password valid
         var isValid = await _userManager.CheckPasswordAsync(request.Id, request.CurrentPassword);
         if (!isValid)
-        {
             return BadRequest<string>(_localizer[SharedResourceKeys.InvalidCurrentPassword]);
-        }
 
         await _userManager.ChangePasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
         return Success<string>(_localizer[SharedResourceKeys.UpdatedSuccessfully]);

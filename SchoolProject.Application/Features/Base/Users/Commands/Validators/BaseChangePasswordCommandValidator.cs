@@ -1,23 +1,26 @@
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Helpers;
+using SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
 using SchoolProject.Application.Helpers.Validations;
-using SchoolProject.Application.Interfaces.IdentityServices;
+using SchoolProject.Application.Interfaces.Bases;
 using SchoolProject.Application.Resources;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+namespace SchoolProject.Application.Features.Base.Users.Commands.Validators;
 
-public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
+public class BaseChangePasswordCommandValidator<TManager, TUser> :
+    AbstractValidator<BaseChangePasswordCommand>
+    where TManager : IGenericIdentityUserManagerAsync<TUser>
+    where TUser : Domain.Entities.Identities.ApplicationUser
 {
     #region Private Fields
     private readonly IStringLocalizer<SharedResource> _localizer;
-    private readonly IUserManager _userManager;
+    private readonly TManager _userManager;
     #endregion
 
     #region Constructors
-    public ChangePasswordCommandValidator(
+    public BaseChangePasswordCommandValidator(
         IStringLocalizer<SharedResource> localizer,
-        IUserManager userManager)
+        TManager userManager)
     {
         _localizer = localizer;
         _userManager = userManager;

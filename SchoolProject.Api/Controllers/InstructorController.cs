@@ -3,6 +3,7 @@ using SchoolProject.Api.AppMetaData;
 using SchoolProject.Api.Base;
 using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteInstructorById;
 using SchoolProject.Application.Features.ApplicationUser.Commands.EditInstructor;
+using SchoolProject.Application.Features.Instructor.Commands.ChangeInstructorPassword;
 using SchoolProject.Application.Features.Instructor.Commands.RegisterInstructor;
 using SchoolProject.Application.Features.Instructor.Queries.GetInstructorById;
 using SchoolProject.Application.Features.Instructor.Queries.GetPaginatedInstructors;
@@ -47,4 +48,10 @@ public class InstructorController : AppControllerBase
         return NewResult(result);
     }
 
+    [HttpPut(Router.Instructor.ChangePassword)]
+    public async Task<IActionResult> ChangePassword(ChangeInstructorPasswordCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return NewResult(result);
+    }
 }

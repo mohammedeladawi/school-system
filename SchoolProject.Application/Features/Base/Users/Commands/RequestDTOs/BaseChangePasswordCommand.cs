@@ -1,9 +1,9 @@
 using MediatR;
 using SchoolProject.Application.Bases;
 
-namespace SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+namespace SchoolProject.Application.Features.Base.Users.Commands.RequestDTOs;
 
-public record ChangePasswordCommand : IRequest<Response<string>>
+public record BaseChangePasswordCommand : IRequest<Response<string>>
 {
     public int Id { get; init; }
     public string CurrentPassword { get; init; } = null!;

@@ -3,7 +3,7 @@ using SchoolProject.Api.Base;
 using SchoolProject.Api.AppMetaData;
 using SchoolProject.Application.Features.ApplicationUser.Commands.EditUser;
 using SchoolProject.Application.Features.ApplicationUser.Commands.DeleteUserById;
-using SchoolProject.Application.Features.ApplicationUser.Commands.ChangePassword;
+using SchoolProject.Application.Features.ApplicationUser.Commands.ChangeUserPassword;
 using SchoolProject.Application.Features.ApplicationUser.Queries.GetPaginatedUsers;
 using SchoolProject.Application.Features.ApplicationUser.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
@@ -51,7 +51,7 @@ public class ApplicationUserController : AppControllerBase
 
     // [Authorize(Policy = "User.ChangePassword")]
     [HttpPut(Router.ApplicationUser.ChangePassword)]
-    public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+    public async Task<IActionResult> ChangePassword(ChangeUserPasswordCommand command)
     {
         var result = await Mediator.Send(command);
         return NewResult(result);
