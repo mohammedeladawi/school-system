@@ -10,7 +10,6 @@ namespace SchoolProject.Application.Features.Student.Commands.RegisterStudent
         IRequest<Response<string>>
     {
         public int DepartmentId { get; init; }
-
         public string Password { get; init; } = null!;
         public string ConfirmPassword { get; init; } = null!;
     }
