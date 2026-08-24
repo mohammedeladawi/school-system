@@ -1,39 +1,32 @@
+using System.Linq.Expressions;
 using AutoMapper;
-using MediatR;
 using Microsoft.Extensions.Localization;
-using SchoolProject.Application.Bases;
+using SchoolProject.Application.Features.Base.Users.Queries.Handlers;
 using SchoolProject.Application.Interfaces.Repositories;
 using SchoolProject.Application.Resources;
 
 namespace SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
 
-public class GetPaginatedStudentsHandler : ResponseHandler, IRequestHandler<GetPaginatedStudentsQuery, PaginatedResponse<GetPaginatedStudentsQueryResponse>>
+public class GetPaginatedStudentsHandler :
+    BaseGetPaginatedUsersHandler<
+        GetPaginatedStudentsQuery,
+        GetPaginatedStudentsQueryResponse,
+        IStudentManager,
+        Domain.Entities.Student>
 {
-    #region Private Fields
-    private readonly IStudentManager _StudentManager;
-    #endregion
-
     #region Constructors
     public GetPaginatedStudentsHandler(
-        IStudentManager StudentManager,
         IMapper mapper,
-        IStringLocalizer<SharedResource> localizer) : base(localizer, mapper)
+        IStringLocalizer<SharedResource> localizer,
+        IStudentManager studentManager)
+        : base(mapper, localizer, studentManager)
     {
-        _StudentManager = StudentManager;
+
     }
     #endregion
 
-    #region Public Methods
-    public async Task<PaginatedResponse<GetPaginatedStudentsQueryResponse>> Handle(GetPaginatedStudentsQuery request, CancellationToken cancellationToken)
-    {
-        int pageNumber = request.PageNumber < 0 ? 1 : request.PageNumber;
-        int pageSize = (request.PageSize <= 0 || request.PageSize >= 20) ? 20 : request.PageSize;
-        int totalRecords = await _StudentManager.GetTotalCountAsync();
-        var students = await _StudentManager.GetPaginatedListAsync(pageNumber, pageSize, [s => s.Department]);
-        var studentsDto = _mapper.Map<List<GetPaginatedStudentsQueryResponse>>(students);
-
-        var paginatedResponse = new PaginatedResponse<GetPaginatedStudentsQueryResponse>(studentsDto, pageNumber, pageSize, totalRecords);
-        return paginatedResponse;
-    }
+    #region Protected Methods
+    protected override Expression<Func<Domain.Entities.Student, object>>[]? GetIncludes()
+        => [s => s.Department];
     #endregion
 }

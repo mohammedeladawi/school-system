@@ -41,43 +41,19 @@ public class RegisterStudentValidator : AbstractValidator<RegisterStudentCommand
     private void ValidateEmail()
     {
         RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailRequired])
-
-            .Matches(RegxPatterns.EmailPattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailInvalid])
-
-            .MustAsync(async (email, cancellationToken) =>
-                !await _userManager.DoesEmailExist(email))
-            .WithMessage(_ => _localizer[SharedResourceKeys.EmailAlreadyInUse]);
+            .ValidateEmail(_localizer, _userManager);
     }
 
     private void ValidateUserName()
     {
         RuleFor(x => x.UserName)
-            .NotEmpty()
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameRequired])
-
-            .MaximumLength(50)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameTooLong])
-
-            .Matches(RegxPatterns.UserNamePattern)
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameInvalid])
-
-            .MustAsync(async (userName, cancellationToken) =>
-                !await _userManager.DoesUserNameExist(userName))
-            .WithMessage(_ => _localizer[SharedResourceKeys.UserNameAlreadyInUse]);
+            .ValidateUserName(_localizer, _userManager);
     }
 
     private void ValidateDepartmentId()
     {
         RuleFor(x => x.DepartmentId)
-            .GreaterThan(0)
-            .WithMessage(_localizer[SharedResourceKeys.DepartmentIdGreaterThanZero])
-
-            .MustAsync(async (departmentId, cancellationToken) =>
-                await _departmentRepository.DoesExistByIdAsync(departmentId))
-            .WithMessage(_localizer[SharedResourceKeys.DepartmentDoesNotExist]);
+            .ValidateDepartmentId(_localizer, _departmentRepository.DoesExistByIdAsync);
     }
 
     private void ValidatePassword()
@@ -90,5 +66,4 @@ public class RegisterStudentValidator : AbstractValidator<RegisterStudentCommand
     }
 
     #endregion
-
 }

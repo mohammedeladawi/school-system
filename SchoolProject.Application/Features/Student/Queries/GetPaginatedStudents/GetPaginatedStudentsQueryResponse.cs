@@ -1,9 +1,8 @@
+using SchoolProject.Application.Features.Base.Users.Queries.ResponseDTOs;
+
 namespace SchoolProject.Application.Features.Student.Queries.GetPaginatedStudents;
 
-public record GetPaginatedStudentsQueryResponse
+public record GetPaginatedStudentsQueryResponse : BaseGetPaginatedUsersResponse
 {
-    public int Id { get; init; }
-    public string Name { get; init; } = null!;
-    public string Address { get; init; } = null!;
-    public string? DepartmentName { get; init; } = null!;
+    public string? DepartmentName { get; set; }
 }

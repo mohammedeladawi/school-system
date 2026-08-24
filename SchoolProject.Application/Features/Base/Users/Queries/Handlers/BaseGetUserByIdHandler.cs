@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -17,8 +18,8 @@ public class BaseGetUserByIdHandler<TRequest, TResponse, TManager, TUser> :
     where TManager : IGenericIdentityUserManagerAsync<TUser>
     where TUser : Domain.Entities.Identities.ApplicationUser
 {
-    #region Private Fields
-    private readonly TManager _userManager;
+    #region Protected Fields
+    protected readonly TManager _userManager;
     #endregion
 
     #region Constructors
@@ -31,10 +32,14 @@ public class BaseGetUserByIdHandler<TRequest, TResponse, TManager, TUser> :
     }
     #endregion
 
+    #region Protected Methods
+    protected virtual Expression<Func<TUser, object>>[]? GetIncludes() => null;
+    #endregion
+
     #region Public Methods
     public async Task<Response<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.GetByIdAsync(request.Id);
+        var user = await _userManager.GetByIdAsync(request.Id, GetIncludes());
 
         if (user is null)
             return NotFound<TResponse>(_localizer[SharedResourceKeys.NotFound]);

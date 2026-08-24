@@ -1,7 +1,5 @@
-using MediatR;
-using SchoolProject.Application.Bases;
-using SchoolProject.Application.Features.Student.Queries.GetStudentById;
+using SchoolProject.Application.Features.Base.Users.Queries.RequestDTOs;
 
 namespace SchoolProject.Application.Features.Student.Queries.GetStudentById;
 
-public record GetStudentByIdQuery(int Id) : IRequest<Response<GetStudentByIdQueryResponse>>;
+public record GetStudentByIdQuery(int Id) : BaseGetUserByIdQuery<GetStudentByIdQueryResponse>(Id);

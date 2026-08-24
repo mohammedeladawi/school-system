@@ -18,9 +18,8 @@ public static class Router
         public const string Update = StudentBase + "Update";
 
         public const string Delete = StudentBase + "{id}";
-
         public const string PaginatedList = StudentBase + "Paginated-List";
-
+        public const string ChangePassword = StudentBase + "Change-Password";
     }
 
     public static class Department
